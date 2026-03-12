@@ -3,6 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Sebastian Thielke is a Systems Synthesist based in Berlin. Creator of 14 original frameworks spanning agentic enterprise architecture, platform economics, and organizational design including AME, ANIM, MLPlat, and Human in Meaning.">
+<meta name="keywords" content="Sebastian Thielke, Systems Synthesist, platform economics, agentic enterprise, AME, ANIM, Human in Meaning, AAST, MLPlat, Minimal Loveable Platform, Fifth Participant, Drift Detection, Temporary Company, Liquid Talent Deployment, enterprise AI, Berlin">
+<meta name="author" content="Sebastian Thielke">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sebastianthielke.com/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sebastianthielke.com/">
+<meta property="og:title" content="Sebastian Thielke · Systems Synthesist">
+<meta property="og:description" content="14 original frameworks spanning agentic enterprise, platform economics, and organizational design. Built from cross-domain synthesis across 11+ disciplines.">
+<meta property="og:site_name" content="Sebastian Thielke">
+<meta property="og:locale" content="en_GB">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sebastian Thielke · Systems Synthesist">
+<meta name="twitter:description" content="14 original frameworks spanning agentic enterprise, platform economics, and organizational design.">
+<meta name="twitter:site" content="@sebastianthielke">
+
+<!-- Geo -->
+<meta name="geo.region" content="DE-BE">
+<meta name="geo.placename" content="Berlin, Germany">
+<meta name="geo.position" content="52.5200;13.4050">
+<meta name="ICBM" content="52.5200, 13.4050">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Sebastian Thielke",
+  "jobTitle": "Systems Synthesist",
+  "url": "https://sebastianthielke.com",
+  "email": "sebastian.thielke@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Berlin",
+    "addressCountry": "DE"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/sebastianthielke/",
+    "https://schwarzpfad.substack.com"
+  ],
+  "knowsAbout": [
+    "Platform Economics",
+    "Agentic Enterprise Architecture",
+    "Organizational Design",
+    "AI Deployment",
+    "Systems Synthesis"
+  ]
+}
+</script>
 <title>Sebastian Thielke · Systems Synthesist</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -83,6 +136,82 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
 .foot-id { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal.in { opacity: 1; transform: none; }
+
+.substack-preview {
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 2px solid var(--rust);
+}
+.sp-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.sp-label::after { content: ''; width: 40px; height: 1px; background: var(--rust); opacity: 0.4; }
+.sp-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 2rem;
+  border: 1px solid var(--line);
+  transition: border-color 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.sp-card:hover { border-color: var(--rust); }
+.sp-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 3px; height: 0;
+  background: var(--rust);
+  transition: height 0.35s ease;
+}
+.sp-card:hover::before { height: 100%; }
+.sp-date {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.7rem;
+}
+.sp-title {
+  font-size: clamp(18px, 2.2vw, 28px);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+  transition: color 0.2s;
+}
+.sp-card:hover .sp-title { color: var(--rust); }
+.sp-excerpt {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 640px;
+}
+.sp-cta {
+  margin-top: 1.2rem;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rust);
+}
+.sp-loading {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 720px) {
   nav, .hero, section, footer { padding-left: 1.6rem; padding-right: 1.6rem; }
@@ -237,6 +366,19 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
     </div>
   </div>
 
+  <div class="substack-preview reveal">
+    <div class="sp-label">Latest from Substack</div>
+    <a id="sp-card" href="https://schwarzpfad.substack.com" target="_blank" class="sp-card">
+      <div class="sp-loading" id="sp-loading">Loading latest article...</div>
+      <div id="sp-content" style="display:none">
+        <div class="sp-date" id="sp-date"></div>
+        <div class="sp-title" id="sp-title"></div>
+        <div class="sp-excerpt" id="sp-excerpt"></div>
+        <div class="sp-cta">Read on Substack &#8594;</div>
+      </div>
+    </a>
+  </div>
+
 </section>
 
 <section id="writing" class="writing-section">
@@ -300,6 +442,30 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
       btn.classList.add('open');
     }
   }
+
+  fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://schwarzpfad.substack.com/feed'))
+    .then(r => r.json())
+    .then(data => {
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(data.contents, 'text/xml');
+      const item = xml.querySelector('item');
+      if (!item) return;
+      const title = item.querySelector('title').textContent;
+      const link = item.querySelector('link').textContent;
+      const pubDate = new Date(item.querySelector('pubDate').textContent);
+      const desc = item.querySelector('description').textContent;
+      const stripped = desc.replace(/<[^>]+>/g, '').substring(0, 200).trim() + '...';
+      const dateStr = pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      document.getElementById('sp-date').textContent = dateStr;
+      document.getElementById('sp-title').textContent = title;
+      document.getElementById('sp-excerpt').textContent = stripped;
+      document.getElementById('sp-card').href = link;
+      document.getElementById('sp-loading').style.display = 'none';
+      document.getElementById('sp-content').style.display = 'block';
+    })
+    .catch(() => {
+      document.getElementById('sp-loading').textContent = 'Read the latest on schwarzpfad.substack.com';
+    });
 </script>
 </body>
 </html>
