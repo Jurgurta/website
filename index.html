@@ -39,10 +39,20 @@ section { padding: 6rem 4rem; border-bottom: 1px solid var(--line); }
 .tag { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; border: 1px solid var(--line); color: var(--muted); transition: all 0.2s; cursor: default; }
 .tag:hover { border-color: var(--rust); color: var(--rust); }
 .fw-intro { max-width: 620px; font-size: 1.05rem; font-style: italic; color: var(--muted); margin-bottom: 3rem; line-height: 1.75; }
-.fw-group { margin-bottom: 4rem; }
-.fw-group-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0; padding-bottom: 0.8rem; border-bottom: 2px solid var(--gold); display: inline-block; }
-.fw-item { display: grid; grid-template-columns: 2.5rem 1fr 1.5rem; gap: 0 1.5rem; align-items: start; padding: 1.8rem 0; border-top: 1px solid var(--line); cursor: default; }
-.fw-item:last-child { border-bottom: 1px solid var(--line); }
+.fw-group { margin-bottom: 2rem; border: 1px solid var(--line); }
+.fw-group-toggle { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink); padding: 1.4rem 2rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: transparent; border: none; width: 100%; text-align: left; transition: background 0.2s; }
+.fw-group-toggle:hover { background: rgba(14,13,11,0.03); }
+.fw-group-toggle.open { background: var(--ink); color: var(--paper); }
+.fw-group-toggle .toggle-label { color: inherit; }
+.fw-group-toggle .toggle-cat { font-size: 0.58rem; letter-spacing: 0.18em; }
+.fw-group-toggle.open .toggle-cat { color: var(--gold); }
+.toggle-cat { color: var(--gold); }
+.fw-toggle-icon { font-family: var(--mono); font-size: 0.9rem; transition: transform 0.3s ease; display: inline-block; }
+.fw-group-toggle.open .fw-toggle-icon { transform: rotate(45deg); }
+.fw-group-body { display: none; border-top: 1px solid var(--line); }
+.fw-group-body.open { display: block; }
+.fw-item { display: grid; grid-template-columns: 2.5rem 1fr 1.5rem; gap: 0 1.5rem; align-items: start; padding: 1.8rem 2rem; border-top: 1px solid var(--line); cursor: default; }
+.fw-item:first-child { border-top: none; }
 .fw-item:hover .fw-name { color: var(--rust); }
 .fw-item:hover .fw-arrow { transform: translateX(4px); color: var(--rust); }
 .fw-num { font-family: var(--mono); font-size: 0.55rem; color: var(--muted); padding-top: 0.45rem; }
@@ -131,7 +141,11 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
   <p class="fw-intro reveal">14 original frameworks. None borrowed from existing literature. Each emerged from a specific problem encountered in practice, resolved through cross-domain synthesis, and stress-tested against real organizational conditions.</p>
 
   <div class="fw-group reveal">
-    <div class="fw-group-label">Agentic Enterprise</div>
+    <button class="fw-group-toggle" onclick="toggleGroup(this)">
+      <span class="toggle-cat">Agentic Enterprise</span>
+      <span class="fw-toggle-icon">+</span>
+    </button>
+    <div class="fw-group-body">
     <div class="fw-item">
       <span class="fw-num">01</span>
       <div><div class="fw-name">Adaptive Mesh Ecosystem (AME)</div><div class="fw-desc">A four-layer architecture: Foundation, Intelligence, Connectivity, Value Creation. For organizations where meaning is the prerequisite for agentic coordination, not an afterthought. The structural answer to why most AI deployments fail at scale.</div></div>
@@ -162,10 +176,15 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
       <div><div class="fw-name">Drift Detection</div><div class="fw-desc">A methodology for identifying semantic, behavioral, and structural drift in agentic systems over time. Addresses the gap between what an agent was designed to do and what it actually does after extended deployment.</div></div>
       <span class="fw-arrow">&#8594;</span>
     </div>
+    </div>
   </div>
 
   <div class="fw-group reveal">
-    <div class="fw-group-label">Platform Economics</div>
+    <button class="fw-group-toggle" onclick="toggleGroup(this)">
+      <span class="toggle-cat">Platform Economics</span>
+      <span class="fw-toggle-icon">+</span>
+    </button>
+    <div class="fw-group-body">
     <div class="fw-item">
       <span class="fw-num">07</span>
       <div><div class="fw-name">Platform Economics Acceleration (PEA)</div><div class="fw-desc">Built from zero. L100 to L300 certification pathways, multi-sided platform architecture, and ecosystem design applied across Fortune 500 clients in EMEA, APAC, and AMER.</div></div>
@@ -191,10 +210,15 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
       <div><div class="fw-name">End-to-End Capability Framework</div><div class="fw-desc">A mapping of the full capability chain required to deliver platform value: from technical infrastructure through product, commercial, and ecosystem layers. Exposes the gaps organizations mistake for execution problems when they are architecture problems.</div></div>
       <span class="fw-arrow">&#8594;</span>
     </div>
+    </div>
   </div>
 
   <div class="fw-group reveal">
-    <div class="fw-group-label">Organizational Design</div>
+    <button class="fw-group-toggle" onclick="toggleGroup(this)">
+      <span class="toggle-cat">Organizational Design</span>
+      <span class="fw-toggle-icon">+</span>
+    </button>
+    <div class="fw-group-body">
     <div class="fw-item">
       <span class="fw-num">12</span>
       <div><div class="fw-name">The Temporary Company</div><div class="fw-desc">A model for organizations that scale through composable, temporary structures rather than permanent headcount accumulation. Informed by the thermodynamic principle that fighting entropy with entropy generates disorder.</div></div>
@@ -209,6 +233,7 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
       <span class="fw-num">14</span>
       <div><div class="fw-name">Enterprise Product Management Enablement</div><div class="fw-desc">A capability-building system for product management in large organizations. Addresses the structural reasons enterprise PM fails: misaligned incentives, absent discovery discipline, and conflation of roadmap management with product leadership.</div></div>
       <span class="fw-arrow">&#8594;</span>
+    </div>
     </div>
   </div>
 
@@ -264,6 +289,17 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
     });
   }, { threshold: 0.07 });
   els.forEach(el => obs.observe(el));
+
+  function toggleGroup(btn) {
+    const body = btn.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    document.querySelectorAll('.fw-group-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.fw-group-toggle').forEach(b => b.classList.remove('open'));
+    if (!isOpen) {
+      body.classList.add('open');
+      btn.classList.add('open');
+    }
+  }
 </script>
 </body>
 </html>
