@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sebastian Thielke · Systems Synthesist</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0e0d0b; --paper: #f2ede3; --rust: #b83020;
+  --gold: #a07828; --muted: #7a7060; --line: rgba(14,13,11,0.13);
+  --serif: Georgia, 'Times New Roman', serif;
+  --mono: 'Courier New', Courier, monospace;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: 17px; line-height: 1.7; overflow-x: hidden; }
+nav { display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 4rem; border-bottom: 1px solid var(--line); }
+.nav-id { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--rust); }
+.hero { padding: 6rem 4rem 5rem; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+.hero-bg { position: absolute; font-size: clamp(180px, 28vw, 380px); font-family: var(--mono); font-weight: 700; color: rgba(14,13,11,0.03); top: 50%; right: -1rem; transform: translateY(-50%); pointer-events: none; user-select: none; line-height: 1; }
+.hero-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--rust); margin-bottom: 2rem; animation: fadeUp 0.7s ease both 0.1s; }
+.hero-name { font-size: clamp(56px, 9vw, 120px); font-weight: 400; font-style: italic; line-height: 0.92; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 2.5rem; animation: fadeUp 0.8s ease both 0.25s; }
+.hero-name strong { display: block; font-style: normal; font-weight: 400; color: var(--rust); }
+.hero-desc { max-width: 540px; font-size: 1.1rem; font-style: italic; color: var(--muted); line-height: 1.75; margin-bottom: 3.5rem; animation: fadeUp 0.9s ease both 0.4s; }
+.hero-stats { display: flex; gap: 4rem; border-top: 1px solid var(--line); padding-top: 2rem; flex-wrap: wrap; animation: fadeUp 1s ease both 0.6s; }
+.stat-num { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-style: italic; color: var(--ink); line-height: 1; margin-bottom: 0.25rem; }
+.stat-label { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+section { padding: 6rem 4rem; border-bottom: 1px solid var(--line); }
+.section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--rust); margin-bottom: 3rem; display: flex; align-items: center; gap: 1rem; }
+.section-label::after { content: ''; width: 60px; height: 1px; background: var(--line); }
+.about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; }
+.about-hed { font-size: clamp(26px, 3vw, 44px); font-weight: 400; font-style: italic; line-height: 1.2; color: var(--ink); }
+.about-body { font-size: 1rem; color: #3d3830; line-height: 1.85; }
+.about-body p + p { margin-top: 1rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 2rem; }
+.tag { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; border: 1px solid var(--line); color: var(--muted); transition: all 0.2s; cursor: default; }
+.tag:hover { border-color: var(--rust); color: var(--rust); }
+.fw-intro { max-width: 620px; font-size: 1.05rem; font-style: italic; color: var(--muted); margin-bottom: 3rem; line-height: 1.75; }
+.fw-group { margin-bottom: 4rem; }
+.fw-group-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0; padding-bottom: 0.8rem; border-bottom: 2px solid var(--gold); display: inline-block; }
+.fw-item { display: grid; grid-template-columns: 2.5rem 1fr 1.5rem; gap: 0 1.5rem; align-items: start; padding: 1.8rem 0; border-top: 1px solid var(--line); cursor: default; }
+.fw-item:last-child { border-bottom: 1px solid var(--line); }
+.fw-item:hover .fw-name { color: var(--rust); }
+.fw-item:hover .fw-arrow { transform: translateX(4px); color: var(--rust); }
+.fw-num { font-family: var(--mono); font-size: 0.55rem; color: var(--muted); padding-top: 0.45rem; }
+.fw-name { font-size: clamp(17px, 2vw, 26px); font-weight: 400; font-style: italic; color: var(--ink); line-height: 1.15; margin-bottom: 0.55rem; transition: color 0.2s; }
+.fw-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; max-width: 560px; }
+.fw-arrow { font-family: var(--mono); font-size: 0.9rem; color: var(--muted); padding-top: 0.35rem; transition: transform 0.2s, color 0.2s; }
+.writing-section { background: var(--ink); color: var(--paper); }
+.writing-section .section-label { color: var(--gold); }
+.writing-section .section-label::after { background: rgba(242,237,227,0.1); }
+.writing-intro { font-size: 1rem; font-style: italic; color: rgba(242,237,227,0.5); max-width: 580px; margin-bottom: 3rem; line-height: 1.75; }
+.wc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.wc { padding: 2.5rem; border: 1px solid rgba(242,237,227,0.08); text-decoration: none; color: inherit; display: block; position: relative; overflow: hidden; transition: border-color 0.3s; }
+.wc:hover { border-color: var(--gold); }
+.wc::before { content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 0; background: var(--gold); transition: height 0.35s ease; }
+.wc:hover::before { height: 100%; }
+.wc-type { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.wc-title { font-size: clamp(17px, 2vw, 24px); font-style: italic; color: var(--paper); margin-bottom: 1rem; line-height: 1.25; }
+.wc-desc { font-size: 0.88rem; color: rgba(242,237,227,0.5); line-height: 1.65; }
+.wc-cta { margin-top: 1.5rem; font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.contact-hed { font-size: clamp(34px, 4.5vw, 64px); font-style: italic; font-weight: 400; line-height: 1.05; color: var(--ink); }
+.contact-hed em { font-style: normal; color: var(--rust); display: block; }
+.contact-body { font-size: 0.97rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+.clinks { display: flex; flex-direction: column; }
+.clink { display: flex; align-items: center; justify-content: space-between; text-decoration: none; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); padding: 1rem 0; border-bottom: 1px solid var(--line); transition: color 0.2s; }
+.clink:hover { color: var(--rust); }
+footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+.foot-id { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 720px) {
+  nav, .hero, section, footer { padding-left: 1.6rem; padding-right: 1.6rem; }
+  .nav-links { display: none; }
+  .about-grid, .contact-grid, .wc-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .fw-item { grid-template-columns: 2rem 1fr 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-id">Sebastian Thielke / Systems Synthesist</span>
+  <ul class="nav-links">
+    <li><a href="#frameworks">Frameworks</a></li>
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg">ST</div>
+  <p class="hero-eyebrow">Systems Synthesist · Berlin</p>
+  <h1 class="hero-name">Sebastian<strong>Thielke.</strong></h1>
+  <p class="hero-desc">I build original frameworks from the intersection of domains most people keep separate: dentistry, rowing, nursing, LARP command, linguistics, and enterprise platform economics. The synthesis is the work.</p>
+  <div class="hero-stats">
+    <div><div class="stat-num">11+</div><div class="stat-label">Domains synthesised</div></div>
+    <div><div class="stat-num">14</div><div class="stat-label">Original frameworks</div></div>
+    <div><div class="stat-num">15+</div><div class="stat-label">Fortune 500 clients</div></div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="section-label">Who this is</div>
+  <div class="about-grid">
+    <div class="reveal"><h2 class="about-hed">Not a consultant. Not an advisor. A synthesist.</h2></div>
+    <div class="reveal">
+      <div class="about-body">
+        <p>Most people who reach my work arrive through one thread: a framework, a Substack article, a LinkedIn post. And then notice the others do not fit neatly into the same drawer. That is intentional.</p>
+        <p>I have spent decades acquiring deep capability in domains that seem unrelated: the timing mechanics of rowing synchronization, the command structures of large-scale LARP events, the semantic drift patterns in Old and Middle English, the thermodynamics of enterprise scaling. Each domain contributed specific, transferable principles. The synthesis is the rare thing.</p>
+        <p>The result is a set of frameworks for how agentic systems, platforms, and organizations can be designed to reduce entropy rather than fight it. Built from lived experience at every level, not borrowed from existing literature.</p>
+      </div>
+      <div class="tags">
+        <span class="tag">Dentistry</span><span class="tag">Rowing Coaching</span><span class="tag">Nursing</span>
+        <span class="tag">LARP Command</span><span class="tag">Old &amp; Middle English</span>
+        <span class="tag">Communication Science</span><span class="tag">Platform Economics</span>
+        <span class="tag">Agentic Systems</span><span class="tag">Enterprise Delivery</span>
+        <span class="tag">Cloud Architecture</span><span class="tag">Linguistics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="frameworks">
+  <div class="section-label">The work</div>
+  <p class="fw-intro reveal">14 original frameworks. None borrowed from existing literature. Each emerged from a specific problem encountered in practice, resolved through cross-domain synthesis, and stress-tested against real organizational conditions.</p>
+
+  <div class="fw-group reveal">
+    <div class="fw-group-label">Agentic Enterprise</div>
+    <div class="fw-item">
+      <span class="fw-num">01</span>
+      <div><div class="fw-name">Adaptive Mesh Ecosystem (AME)</div><div class="fw-desc">A four-layer architecture: Foundation, Intelligence, Connectivity, Value Creation. For organizations where meaning is the prerequisite for agentic coordination, not an afterthought. The structural answer to why most AI deployments fail at scale.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">02</span>
+      <div><div class="fw-name">Human in Meaning</div><div class="fw-desc">A governance principle that rejects Human-in-the-Loop as insufficient. Meaning must be architecturally embedded before agents act. Not inserted as a checkpoint after. Replaces oversight theater with semantic grounding.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">03</span>
+      <div><div class="fw-name">Adversarial Agent Stress Testing (AAST)</div><div class="fw-desc">A two-pass pre-deployment methodology for multi-agent systems addressing technical, semantic, and structural failure categories. Built from analysis of real platform failures, not theoretical scenarios.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">04</span>
+      <div><div class="fw-name">Adaptive Nodal Intelligence Mesh (ANIM)</div><div class="fw-desc">The active executor layer within the AME Foundation. ANIM operationalizes meaning as a dynamic signal across agent nodes, enabling coordinated action without centralized control. The connective tissue of agentic deployment at scale.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">05</span>
+      <div><div class="fw-name">Agent Deployability and Deployment Measurement</div><div class="fw-desc">A structured evaluation framework that assesses whether an AI agent is genuinely ready for deployment and measures actual value generated post-launch. Separates readiness theater from operational reality.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">06</span>
+      <div><div class="fw-name">Drift Detection</div><div class="fw-desc">A methodology for identifying semantic, behavioral, and structural drift in agentic systems over time. Addresses the gap between what an agent was designed to do and what it actually does after extended deployment.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+  </div>
+
+  <div class="fw-group reveal">
+    <div class="fw-group-label">Platform Economics</div>
+    <div class="fw-item">
+      <span class="fw-num">07</span>
+      <div><div class="fw-name">Platform Economics Acceleration (PEA)</div><div class="fw-desc">Built from zero. L100 to L300 certification pathways, multi-sided platform architecture, and ecosystem design applied across Fortune 500 clients in EMEA, APAC, and AMER.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">08</span>
+      <div><div class="fw-name">The Fifth Participant</div><div class="fw-desc">AI agents as a distinct participant type in platform economics: their own win condition, deployment value accumulation logic, and network effects. Distinct from the traditional four: producers, consumers, partners, orchestrators.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">09</span>
+      <div><div class="fw-name">Launchpad</div><div class="fw-desc">A structured acceleration framework for platform initiatives moving from concept to market. Defines the sequencing logic, stakeholder alignment, and minimum viable ecosystem conditions required for a platform to reach self-sustaining network effects.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">10</span>
+      <div><div class="fw-name">Minimal Loveable Platform (MLPlat)</div><div class="fw-desc">A platform cannot start with two participants. MLPlat defines the minimum viable starting condition: three participants, each interaction driven by a challenge, each challenge solved generating a product. Three products working in concert create the first transactions. Value flows across four dimensions: money, data, innovation, and collaboration. This is the missing logic in platform business creation. It is how you innovate, build, run, and scale a platform economy from the ground up.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">11</span>
+      <div><div class="fw-name">End-to-End Capability Framework</div><div class="fw-desc">A mapping of the full capability chain required to deliver platform value: from technical infrastructure through product, commercial, and ecosystem layers. Exposes the gaps organizations mistake for execution problems when they are architecture problems.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+  </div>
+
+  <div class="fw-group reveal">
+    <div class="fw-group-label">Organizational Design</div>
+    <div class="fw-item">
+      <span class="fw-num">12</span>
+      <div><div class="fw-name">The Temporary Company</div><div class="fw-desc">A model for organizations that scale through composable, temporary structures rather than permanent headcount accumulation. Informed by the thermodynamic principle that fighting entropy with entropy generates disorder.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">13</span>
+      <div><div class="fw-name">Liquid Talent Deployment</div><div class="fw-desc">A framework for matching capability to demand in real time across organizational boundaries. Treats talent as a flow rather than a stock, enabling organizations to respond to complexity without accumulating structural rigidity.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">14</span>
+      <div><div class="fw-name">Enterprise Product Management Enablement</div><div class="fw-desc">A capability-building system for product management in large organizations. Addresses the structural reasons enterprise PM fails: misaligned incentives, absent discovery discipline, and conflation of roadmap management with product leadership.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+  </div>
+
+</section>
+
+<section id="writing" class="writing-section">
+  <div class="section-label">Writing</div>
+  <p class="writing-intro reveal">The Substack is where frameworks develop in public. LinkedIn is where they get tested against the people who disagree.</p>
+  <div class="wc-grid">
+    <a href="https://schwarzpfad.substack.com" target="_blank" class="wc reveal">
+      <div class="wc-type">Substack · schwarzpfad</div>
+      <div class="wc-title">Human in Meaning: The Series</div>
+      <div class="wc-desc">Active publication exploring agentic systems, platform economics, and organizational entropy. Articles on AME architecture, ANIM as active executor, failure modes, and the governance principles missing from the AI deployment conversation.</div>
+      <div class="wc-cta">Read &#8594; schwarzpfad.substack.com</div>
+    </a>
+    <a href="https://www.linkedin.com/in/sebastianthielke/" target="_blank" class="wc reveal">
+      <div class="wc-type">LinkedIn</div>
+      <div class="wc-title">Where frameworks meet pushback</div>
+      <div class="wc-desc">Framework introductions, contrarian positions on AI governance, platform economics, and organizational design. The place where the ideas get stress-tested in public by people who disagree.</div>
+      <div class="wc-cta">Follow &#8594; linkedin.com/in/sebastianthielke</div>
+    </a>
+  </div>
+</section>
+
+<section id="contact" style="border-bottom: none;">
+  <div class="section-label">Reach</div>
+  <div class="contact-grid">
+    <div class="reveal"><h2 class="contact-hed">If you<em>recognise the work.</em></h2></div>
+    <div class="reveal">
+      <p class="contact-body">I am not difficult to find, but I am selective about where I spend conversation. If you have read enough to understand what is being built here and have something worth exchanging. Reach out.</p>
+      <div class="clinks">
+        <a href="https://www.linkedin.com/in/sebastianthielke/" target="_blank" class="clink"><span>LinkedIn</span><span>&#8594;</span></a>
+        <a href="https://schwarzpfad.substack.com" target="_blank" class="clink"><span>Substack · schwarzpfad</span><span>&#8594;</span></a>
+        <a href="mailto:sebastian.thielke@gmail.com" class="clink"><span>Email</span><span>&#8594;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="foot-id">Sebastian Thielke · Systems Synthesist · Berlin</span>
+  <span class="foot-id">&copy; 2026</span>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), i * 70);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  els.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
