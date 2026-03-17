@@ -444,17 +444,15 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
     }
   }
 
-  fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://schwarzpfad.substack.com/feed'))
+  fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://schwarzpfad.substack.com/feed'))
     .then(r => r.json())
     .then(data => {
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(data.contents, 'text/xml');
-      const item = xml.querySelector('item');
-      if (!item) return;
-      const title = item.querySelector('title').textContent;
-      const link = item.querySelector('link').textContent;
-      const pubDate = new Date(item.querySelector('pubDate').textContent);
-      const desc = item.querySelector('description').textContent;
+      if (!data.items || !data.items.length) return;
+      const item = data.items[0];
+      const title = item.title;
+      const link = item.link;
+      const pubDate = new Date(item.pubDate);
+      const desc = item.description || item.content || '';
       const stripped = desc.replace(/<[^>]+>/g, '').substring(0, 200).trim() + '...';
       const dateStr = pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
       document.getElementById('sp-date').textContent = dateStr;
