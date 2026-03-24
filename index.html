@@ -37,7 +37,7 @@
   "name": "Sebastian Thielke",
   "jobTitle": "Systems Synthesist",
   "url": "https://sebastianthielke.com",
-  "email": "sebastian.thielke@gmail.com",
+  "email": "sebastian@sebastianthielke.com",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Berlin",
@@ -423,7 +423,7 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
       <div class="clinks">
         <a href="https://www.linkedin.com/in/sebastianthielke/" target="_blank" class="clink"><span>LinkedIn</span><span>&#8594;</span></a>
         <a href="https://schwarzpfad.substack.com" target="_blank" class="clink"><span>Substack · schwarzpfad</span><span>&#8594;</span></a>
-        <a href="mailto:sebastian.thielke@gmail.com" class="clink"><span>Email</span><span>&#8594;</span></a>
+        <a href="mailto:sebastian@sebastianthielke.com" class="clink"><span>Email</span><span>&#8594;</span></a>
       </div>
     </div>
   </div>
@@ -457,7 +457,6 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
     }
   }
 
-  // Substack RSS
   fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://schwarzpfad.substack.com/feed'))
     .then(r => r.json())
     .then(data => {
@@ -480,7 +479,6 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
       document.getElementById('sp-loading').textContent = 'Read the latest on schwarzpfad.substack.com';
     });
 
-  // Medium RSS
   fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://medium.com/feed/@SThielke'))
     .then(r => r.json())
     .then(data => {
