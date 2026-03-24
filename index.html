@@ -379,6 +379,19 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
     </a>
   </div>
 
+  <div class="substack-preview reveal" style="margin-top:2rem;">
+    <div class="sp-label">Latest from Medium</div>
+    <a id="med-card" href="https://medium.com/@SThielke" target="_blank" class="sp-card">
+      <div class="sp-loading" id="med-loading">Loading latest article...</div>
+      <div id="med-content" style="display:none">
+        <div class="sp-date" id="med-date"></div>
+        <div class="sp-title" id="med-title"></div>
+        <div class="sp-excerpt" id="med-excerpt"></div>
+        <div class="sp-cta">Read on Medium &#8594;</div>
+      </div>
+    </a>
+  </div>
+
 </section>
 
 <section id="writing" class="writing-section">
@@ -444,6 +457,7 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
     }
   }
 
+  // Substack RSS
   fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://schwarzpfad.substack.com/feed'))
     .then(r => r.json())
     .then(data => {
@@ -464,6 +478,29 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
     })
     .catch(() => {
       document.getElementById('sp-loading').textContent = 'Read the latest on schwarzpfad.substack.com';
+    });
+
+  // Medium RSS
+  fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://medium.com/feed/@SThielke'))
+    .then(r => r.json())
+    .then(data => {
+      if (!data.items || !data.items.length) return;
+      const item = data.items[0];
+      const title = item.title;
+      const link = item.link;
+      const pubDate = new Date(item.pubDate);
+      const desc = item.description || item.content || '';
+      const stripped = desc.replace(/<[^>]+>/g, '').substring(0, 200).trim() + '...';
+      const dateStr = pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      document.getElementById('med-date').textContent = dateStr;
+      document.getElementById('med-title').textContent = title;
+      document.getElementById('med-excerpt').textContent = stripped;
+      document.getElementById('med-card').href = link;
+      document.getElementById('med-loading').style.display = 'none';
+      document.getElementById('med-content').style.display = 'block';
+    })
+    .catch(() => {
+      document.getElementById('med-loading').textContent = 'Read the latest on medium.com/@SThielke';
     });
 </script>
 </body>
