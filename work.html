@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Where Sebastian Thielke's frameworks were built. AWS, IBM, and enterprise engagements across Automotive, Manufacturing, Finance, and Energy.">
+<meta name="author" content="Sebastian Thielke">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sebastianthielke.com/work">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sebastianthielke.com/work">
+<meta property="og:title" content="Work · Sebastian Thielke">
+<meta property="og:description" content="Where the frameworks were built. AWS, IBM, and enterprise engagements across Automotive, Manufacturing, Finance, and Energy.">
+<meta property="og:site_name" content="Sebastian Thielke">
+<meta property="og:locale" content="en_GB">
+<meta name="geo.region" content="DE-BE">
+<meta name="geo.placename" content="Berlin, Germany">
+<title>Work · Sebastian Thielke</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0e0d0b; --paper: #f2ede3; --rust: #b83020;
+  --gold: #a07828; --muted: #7a7060; --line: rgba(14,13,11,0.13);
+  --serif: Georgia, 'Times New Roman', serif;
+  --mono: 'Courier New', Courier, monospace;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: 17px; line-height: 1.7; overflow-x: hidden; }
+nav { display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 4rem; border-bottom: 1px solid var(--line); }
+.nav-id { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+.nav-id:hover { color: var(--rust); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--rust); }
+.page-header { padding: 5rem 4rem 4rem; border-bottom: 1px solid var(--line); }
+.page-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--rust); margin-bottom: 1.5rem; }
+.page-title { font-size: clamp(42px, 7vw, 88px); font-weight: 400; font-style: italic; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 2rem; }
+.page-intro { max-width: 600px; font-size: 1.05rem; font-style: italic; color: var(--muted); line-height: 1.75; }
+section { padding: 5rem 4rem; border-bottom: 1px solid var(--line); }
+.section-label { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); margin-bottom: 3rem; display: flex; align-items: center; gap: 1.5rem; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+/* Engagement blocks */
+.engagement { display: grid; grid-template-columns: 200px 1fr; gap: 0 4rem; padding: 3rem 0; border-top: 1px solid var(--line); }
+.engagement:last-child { border-bottom: 1px solid var(--line); }
+.eng-meta { padding-top: 0.3rem; }
+.eng-company { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.4rem; }
+.eng-period { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.8rem; }
+.eng-sector-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.eng-tag { font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); padding: 0.2rem 0.5rem; }
+.eng-role { font-size: clamp(18px, 2.2vw, 26px); font-style: italic; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 1rem; }
+.eng-body { font-size: 0.92rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; max-width: 620px; }
+.eng-frameworks { margin-top: 1.2rem; }
+.eng-fw-label { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+.eng-fw-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.eng-fw-item { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.08em; color: var(--ink); background: rgba(160,120,40,0.08); border: 1px solid rgba(160,120,40,0.2); padding: 0.25rem 0.6rem; }
+
+/* Metrics */
+.metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 0; }
+.metric { padding: 2.5rem 2rem; border: 1px solid var(--line); }
+.metric-num { font-size: clamp(36px, 5vw, 56px); font-weight: 400; font-style: italic; color: var(--rust); line-height: 1; margin-bottom: 0.5rem; }
+.metric-label { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); line-height: 1.5; }
+
+/* Earlier career */
+.earlier-list { list-style: none; }
+.earlier-item { display: flex; justify-content: space-between; align-items: baseline; padding: 1.2rem 0; border-top: 1px solid var(--line); gap: 2rem; }
+.earlier-item:last-child { border-bottom: 1px solid var(--line); }
+.earlier-role { font-size: 0.92rem; color: var(--ink); }
+.earlier-period { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.1em; color: var(--muted); white-space: nowrap; }
+
+/* Skills */
+.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+.skill-group-title { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(160,120,40,0.25); }
+.skill-list { list-style: none; }
+.skill-list li { font-size: 0.88rem; color: var(--muted); padding: 0.3rem 0; border-bottom: 1px solid var(--line); line-height: 1.4; }
+
+/* Certifications & Education */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.cert-list, .edu-list { list-style: none; }
+.cert-list li, .edu-list li { font-size: 0.9rem; color: var(--muted); padding: 0.6rem 0; border-bottom: 1px solid var(--line); }
+.cert-list li:first-child, .edu-list li:first-child { border-top: 1px solid var(--line); }
+
+/* Languages */
+.lang-list { display: flex; gap: 3rem; flex-wrap: wrap; }
+.lang-item { }
+.lang-name { font-size: 1rem; color: var(--ink); font-style: italic; }
+.lang-level { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
+
+/* Footer */
+footer { padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+.footer-id { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.footer-back { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-back:hover { color: var(--rust); }
+
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Responsive */
+@media (max-width: 720px) {
+  nav { padding: 1.4rem 1.5rem; }
+  .page-header, section { padding: 3rem 1.5rem; }
+  .engagement { grid-template-columns: 1fr; gap: 1rem; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .two-col { grid-template-columns: 1fr; gap: 2rem; }
+  footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-id">Sebastian Thielke / Systems Synthesist</a>
+  <ul class="nav-links">
+    <li><a href="/#frameworks">Frameworks</a></li>
+    <li><a href="/#writing">Writing</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-label">The work</div>
+  <h1 class="page-title">Where the<br>frameworks<br>were built.</h1>
+  <p class="page-intro">Not a career summary. A record of where the problems were real, the scale was enterprise, and the frameworks emerged from necessity rather than theory.</p>
+</div>
+
+<!-- Key Metrics -->
+<section>
+  <div class="section-label reveal">Scale</div>
+  <div class="metrics-grid reveal">
+    <div class="metric">
+      <div class="metric-num">€550M</div>
+      <div class="metric-label">Direct and influenced revenue across global practice</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">15+</div>
+      <div class="metric-label">Fortune 500 clients across EMEA, APAC, and AMER</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">1,500+</div>
+      <div class="metric-label">Professionals trained through Learning from Amazon curriculum</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">14</div>
+      <div class="metric-label">Original frameworks developed and deployed at enterprise scale</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">10</div>
+      <div class="metric-label">Person expert team built and managed across 3 global regions</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">3</div>
+      <div class="metric-label">Global regions with full GTM strategy and pipeline ownership</div>
+    </div>
+  </div>
+</section>
+
+<!-- Engagements -->
+<section>
+  <div class="section-label reveal">Engagements</div>
+
+  <div class="engagement reveal">
+    <div class="eng-meta">
+      <div class="eng-company">Amazon Web Services</div>
+      <div class="eng-period">2020 — Present · Berlin</div>
+      <div class="eng-sector-tags">
+        <span class="eng-tag">Automotive</span>
+        <span class="eng-tag">Manufacturing</span>
+        <span class="eng-tag">Finance</span>
+        <span class="eng-tag">Insurance</span>
+        <span class="eng-tag">Energy</span>
+      </div>
+    </div>
+    <div class="eng-content">
+      <div class="eng-role">Global Practice Lead, Platform Ecosystem Strategy</div>
+      <div class="eng-body">Built the Platform Economics Acceleration practice from zero with full P&L ownership across EMEA, APAC, and AMER. Practice grew to 15+ Fortune 500 clients generating €550M in direct and influenced revenue across Automotive, Manufacturing, Finance, and Insurance — including BMW, Audi, Volkswagen, Continental, Bosch, and AVL. Built and managed a 10-person expert team alongside a global delivery and strategy partner network.</div>
+      <div class="eng-body" style="margin-top:1rem;">The problem that produced the frameworks was consistent across every engagement. Organisations arrived with no starting point — no way to identify who their participants actually were or what challenges those participants needed solved. They were building channels, not platforms, optimising for monetisation before they had generated any value. They misunderstood network effects as an outcome to be installed rather than a dynamic that emerges when the right participants are connected through the right products. The sequence from prototyping to validation to Minimal Loveable Platform to scale was either skipped entirely or executed in the wrong order. The flywheel logic was known but not operationalised. These were not strategic failures. They were perceptual ones — organisations could not see what they were building because no framework existed that showed them how to look. The frameworks built here were the direct response to that gap.</div>
+      <div class="eng-body" style="margin-top:1rem;">Led enterprise-wide Working Backwards transformations for Fortune 500 clients including Maersk. Architected and delivered the Innovation Engine programme — L100 to L300 certification curriculum training 1,500+ professionals through the Learning from Amazon curriculum. Enabled autonomous regional delivery across global markets through cultural adaptation mechanisms and local champion networks.</div>
+      <div class="eng-frameworks">
+        <div class="eng-fw-label">Frameworks originating here</div>
+        <div class="eng-fw-list">
+          <span class="eng-fw-item">Platform Economics Acceleration</span>
+          <span class="eng-fw-item">MLPlat</span>
+          <span class="eng-fw-item">The Fifth Participant</span>
+          <span class="eng-fw-item">Launchpad</span>
+          <span class="eng-fw-item">End-to-End Capability Framework</span>
+          <span class="eng-fw-item">AME</span>
+          <span class="eng-fw-item">ANIM</span>
+          <span class="eng-fw-item">AAST</span>
+          <span class="eng-fw-item">Drift Detection</span>
+          <span class="eng-fw-item">Human in Meaning</span>
+          <span class="eng-fw-item">Working Backwards</span>
+          <span class="eng-fw-item">Innovation Engine</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="engagement reveal">
+    <div class="eng-meta">
+      <div class="eng-company">IBM</div>
+      <div class="eng-period">2017 — 2020 · Munich</div>
+      <div class="eng-sector-tags">
+        <span class="eng-tag">Automotive</span>
+        <span class="eng-tag">Manufacturing</span>
+        <span class="eng-tag">Finance</span>
+      </div>
+    </div>
+    <div class="eng-content">
+      <div class="eng-role">Senior Managing Consultant and Product Lead</div>
+      <div class="eng-body">Led end-to-end development of an enterprise mobility platform in partnership with Apple, adopted by 10 Fortune 500 clients within six months — including Continental, Bosch, and BMW — achieving a 35% increase in field service efficiency and 25% reduction in response times. Developed and delivered a digital transformation strategy for BSH integrating AR technologies for real-time remote assistance, reducing operational downtime by 20% and cutting training costs by 15%. Directed a 15-person cross-functional team across the full delivery lifecycle. Led a $2M digital transformation programme across BSH, Bosch, and BASF implementing Cognitive Enterprise solutions, increasing operational efficiency by 35% and reducing service resolution times by 25%.</div>
+      <div class="eng-body" style="margin-top:1rem;">The recurring failure pattern across these engagements was the same. Organisations produced slides instead of products. Transformation programmes ran without ever validating whether the customer challenge being solved was real, whether the customers themselves were correctly identified, or whether the proposed solution generated actual value for them. There was no value streaming — no mechanism to test whether value was flowing from the work being done to the people it was meant to serve. The frameworks that emerged from IBM were built to close that gap: to replace delivery theatre with validated products, and to establish the discipline of proving customer challenge resolution before scaling anything.</div>
+      <div class="eng-frameworks">
+        <div class="eng-fw-label">Frameworks originating here</div>
+        <div class="eng-fw-list">
+          <span class="eng-fw-item">Liquid Talent Deployment</span>
+          <span class="eng-fw-item">The Temporary Company</span>
+          <span class="eng-fw-item">Enterprise PM Enablement</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Earlier Career -->
+<section>
+  <div class="section-label reveal">Earlier career</div>
+  <ul class="earlier-list reveal">
+    <li class="earlier-item">
+      <span class="earlier-role">Consultant Digital Transformation · Beck et Al. Services GmbH</span>
+      <span class="earlier-period">2014 — 2017</span>
+    </li>
+    <li class="earlier-item">
+      <span class="earlier-role">Junior Consulting Manager · Eck Consulting Group</span>
+      <span class="earlier-period">2013 — 2014</span>
+    </li>
+    <li class="earlier-item">
+      <span class="earlier-role">Junior Consultant · Engel &amp; Zimmermann GmbH</span>
+      <span class="earlier-period">2011 — 2012</span>
+    </li>
+  </ul>
+</section>
+
+<!-- Skills -->
+<section>
+  <div class="section-label reveal">Capabilities</div>
+  <div class="skills-grid reveal">
+    <div>
+      <div class="skill-group-title">Practice Leadership</div>
+      <ul class="skill-list">
+        <li>Industry &amp; Data and AI Practice Leadership</li>
+        <li>GTM Strategy &amp; Market Development</li>
+        <li>P&amp;L Ownership &amp; Pipeline Management</li>
+        <li>Large Deal Shaping &amp; Close</li>
+        <li>C-Suite Advisory &amp; Stakeholder Management</li>
+        <li>Multi-Region Team Leadership</li>
+      </ul>
+    </div>
+    <div>
+      <div class="skill-group-title">Agentic &amp; AI</div>
+      <ul class="skill-list">
+        <li>Agentic AI &amp; Agentic Enterprise</li>
+        <li>MCP and A2A Protocol</li>
+        <li>Enterprise Agentic AI Deployment</li>
+        <li>Salesforce Agentforce</li>
+        <li>Data &amp; Analytics Portfolio Design</li>
+        <li>Enterprise Design Thinking</li>
+      </ul>
+    </div>
+    <div>
+      <div class="skill-group-title">Commercial &amp; Delivery</div>
+      <ul class="skill-list">
+        <li>Strategic Partner &amp; Hyperscaler Ecosystems</li>
+        <li>Pre-Sales &amp; Deal Qualification</li>
+        <li>Market Sizing &amp; Business Cases</li>
+        <li>Innovation Practice Design &amp; Scaling</li>
+        <li>Partner Ecosystem Orchestration</li>
+        <li>Rapid Prototyping &amp; Deal Validation</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Certifications & Education -->
+<section>
+  <div class="section-label reveal">Credentials</div>
+  <div class="two-col reveal">
+    <div>
+      <div class="skill-group-title">Certifications</div>
+      <ul class="cert-list">
+        <li>AWS Certified GenAI Practitioner</li>
+        <li>AWS Certified Cloud Practitioner</li>
+        <li>MCP and A2A Protocols</li>
+        <li>Agentic AI Essentials</li>
+        <li>Building Agents Essentials</li>
+        <li>Enterprise Design Thinking</li>
+        <li>SCRUM Master</li>
+        <li>Salesforce Agentforce Champion</li>
+        <li>Salesforce Agentforce Innovator</li>
+      </ul>
+    </div>
+    <div>
+      <div class="skill-group-title">Education &amp; Languages</div>
+      <ul class="edu-list">
+        <li>BA Communication Science · University of Greifswald · 2011</li>
+        <li>Linguistics · University of Greifswald</li>
+        <li>Anglicism &amp; Americanism · University of Greifswald</li>
+        <li>Biomechanics · University of Greifswald</li>
+      </ul>
+      <div style="margin-top:2rem;">
+        <div class="lang-list">
+          <div class="lang-item">
+            <div class="lang-name">German</div>
+            <div class="lang-level">Native</div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-name">English</div>
+            <div class="lang-level">Fluent</div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-name">Russian</div>
+            <div class="lang-level">Conversational</div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-name">Norwegian</div>
+            <div class="lang-level">Basic</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-id">Sebastian Thielke · Systems Synthesist · Berlin</span>
+  <a href="/" class="footer-back">← Back to sebastianthielke.com</a>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), i * 70);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  els.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
