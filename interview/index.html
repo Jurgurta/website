@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Engine</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --paper: #f7f3ed;
+  --paper-dark: #ede8e0;
+  --ink: #1a1814;
+  --ink-mid: #4a4540;
+  --ink-dim: #8a8480;
+  --rule: #d8d0c4;
+  --accent: #8b2020;
+  --accent-warm: #c4501a;
+  --accent-dim: rgba(139,32,32,0.08);
+  --green: #2a6640;
+  --green-dim: rgba(42,102,64,0.08);
+  --amber: #7a5010;
+  --amber-dim: rgba(122,80,16,0.10);
+  --mono: 'JetBrains Mono', monospace;
+  --serif: 'Cormorant Garamond', serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* IMPORT OVERLAY */
+#importScreen {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  flex-direction: column;
+}
+
+.import-box {
+  width: 520px;
+  padding: 56px;
+  border: 1px solid rgba(247,243,237,0.12);
+  position: relative;
+}
+
+.import-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 48px;
+  width: 60px; height: 2px;
+  background: var(--accent);
+}
+
+.import-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.import-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--paper);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.import-sub {
+  font-size: 15px;
+  color: rgba(247,243,237,0.45);
+  margin-bottom: 40px;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.import-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-import {
+  background: var(--accent);
+  color: var(--paper);
+  border: none;
+  padding: 14px 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  text-align: center;
+}
+.btn-import:hover { opacity: 0.85; }
+
+.btn-manual {
+  background: transparent;
+  color: rgba(247,243,237,0.5);
+  border: 1px solid rgba(247,243,237,0.15);
+  padding: 14px 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+.btn-manual:hover {
+  color: rgba(247,243,237,0.8);
+  border-color: rgba(247,243,237,0.3);
+}
+
+.import-note {
+  margin-top: 24px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(247,243,237,0.25);
+  line-height: 1.6;
+}
+
+/* MANUAL SETUP */
+#manualSetup {
+  display: none;
+  margin-top: 24px;
+  border-top: 1px solid rgba(247,243,237,0.1);
+  padding-top: 24px;
+}
+
+.setup-field { margin-bottom: 16px; }
+
+.setup-field label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(247,243,237,0.4);
+  margin-bottom: 6px;
+}
+
+.setup-field input,
+.setup-field textarea {
+  width: 100%;
+  background: rgba(247,243,237,0.05);
+  border: 1px solid rgba(247,243,237,0.12);
+  padding: 10px 12px;
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--paper);
+  outline: none;
+  transition: border-color 0.15s;
+  resize: vertical;
+}
+
+.setup-field input:focus,
+.setup-field textarea:focus {
+  border-color: rgba(247,243,237,0.3);
+}
+
+.setup-field input::placeholder,
+.setup-field textarea::placeholder {
+  color: rgba(247,243,237,0.2);
+  font-style: italic;
+}
+
+/* MAIN APP */
+#app { display: none; min-height: 100vh; }
+
+/* HEADER */
+header {
+  background: var(--ink);
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-left { display: flex; align-items: baseline; gap: 20px; }
+
+.app-mark {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.company-display {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--paper);
+  font-style: italic;
+}
+
+.header-right { display: flex; align-items: center; gap: 20px; }
+
+.mode-toggle {
+  display: flex;
+  border: 1px solid rgba(247,243,237,0.15);
+}
+
+.mode-btn {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  background: transparent;
+  color: rgba(247,243,237,0.4);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mode-btn.active {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.reset-link {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: rgba(247,243,237,0.25);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+.reset-link:hover { color: rgba(247,243,237,0.6); }
+
+/* LAYOUT */
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: calc(100vh - 61px);
+}
+
+/* LEFT PANEL */
+.left-panel {
+  border-right: 1px solid var(--rule);
+  padding: 32px 0;
+  position: sticky;
+  top: 61px;
+  height: calc(100vh - 61px);
+  overflow-y: auto;
+  background: var(--paper);
+}
+
+.panel-section { margin-bottom: 8px; }
+
+.panel-heading {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  padding: 8px 28px;
+}
+
+.nav-item {
+  padding: 10px 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-left: 2px solid transparent;
+  transition: all 0.12s;
+}
+
+.nav-item:hover { background: var(--paper-dark); }
+
+.nav-item.active {
+  border-left-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.nav-item-label {
+  font-size: 14px;
+  color: var(--ink-mid);
+  font-weight: 400;
+}
+
+.nav-item.active .nav-item-label { color: var(--ink); font-weight: 600; }
+
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--rule);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.nav-dot.filled { background: var(--accent); }
+
+/* DIGEST BLOCK in sidebar */
+.digest-block {
+  margin: 20px 28px;
+  padding: 16px 18px;
+  border: 1px solid var(--rule);
+  background: white;
+}
+
+.digest-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 10px;
+}
+
+.digest-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.digest-key { color: var(--ink-dim); }
+.digest-val { font-weight: 600; color: var(--ink); font-family: var(--mono); font-size: 12px; }
+.digest-val.alert { color: var(--accent); }
+
+/* MAIN CONTENT */
+.main-content {
+  overflow-y: auto;
+  padding: 40px 52px;
+  max-width: 860px;
+}
+
+.view { display: none; }
+.view.active { display: block; }
+
+.view-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.view-title {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.view-desc {
+  font-size: 15px;
+  color: var(--ink-mid);
+  line-height: 1.75;
+  max-width: 580px;
+  margin-bottom: 36px;
+  font-style: italic;
+}
+
+hr.rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 32px 0;
+}
+
+/* DIAGNOSTIC STATEMENT */
+.statement-block {
+  border-left: 3px solid var(--accent);
+  padding: 24px 28px;
+  background: white;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.statement-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.statement-text {
+  font-size: 18px;
+  line-height: 1.75;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.statement-text em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.copy-btn {
+  position: absolute;
+  top: 16px; right: 16px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-dim);
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.copy-btn:hover { border-color: var(--ink-dim); color: var(--ink); }
+
+/* GAPS SUMMARY */
+.gaps-confirmed {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.gap-pill {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid var(--rule);
+  background: white;
+}
+
+.gap-pill-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.gap-pill-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.gap-pill-desc {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* QUESTION CARDS */
+.q-section { margin-bottom: 36px; }
+
+.q-section-title {
+  font-size: 13px;
+  font-family: var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.q-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.q-cards { display: flex; flex-direction: column; gap: 10px; }
+
+.q-card {
+  border: 1px solid var(--rule);
+  background: white;
+  padding: 18px 22px;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.q-card:hover {
+  border-color: var(--ink-mid);
+  box-shadow: 2px 2px 0 var(--rule);
+}
+
+.q-card.used {
+  opacity: 0.5;
+  background: var(--paper-dark);
+}
+
+.q-card-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  padding-right: 32px;
+}
+
+.q-card-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-top: 8px;
+}
+
+.q-card-mark {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 20px; height: 20px;
+  border: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.q-card-mark:hover,
+.q-card.used .q-card-mark {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* LIVE NOTES */
+.notes-area {
+  width: 100%;
+  min-height: 200px;
+  background: white;
+  border: 1px solid var(--rule);
+  padding: 20px 22px;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink);
+  outline: none;
+  resize: vertical;
+  line-height: 1.7;
+  transition: border-color 0.15s;
+}
+
+.notes-area:focus { border-color: var(--ink-mid); }
+.notes-area::placeholder { color: var(--ink-dim); font-style: italic; }
+
+.notes-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-dim);
+}
+
+/* MATRIX VIEW */
+.matrix-wrap { overflow-x: auto; margin-bottom: 28px; }
+
+table.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 640px;
+}
+
+.matrix th {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.matrix td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: middle;
+}
+
+.matrix tr:last-child td { border-bottom: none; }
+.matrix tr:hover td { background: var(--paper-dark); }
+
+.ini-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ini-serves {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-dim);
+  margin-top: 2px;
+}
+
+.score-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.score-badge.in-scope { background: var(--green-dim); color: var(--green); border: 1px solid rgba(42,102,64,0.2); }
+.score-badge.partial { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(122,80,16,0.2); }
+.score-badge.not-scope { background: transparent; color: var(--ink-dim); border: 1px solid var(--rule); }
+
+/* EXPORT */
+.export-preview {
+  background: white;
+  border: 1px solid var(--rule);
+  padding: 32px 36px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ink-mid);
+  white-space: pre-wrap;
+  font-family: var(--mono);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.action-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 11px 24px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.85; }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink-mid);
+  border: 1px solid var(--rule);
+  padding: 11px 24px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-secondary:hover { border-color: var(--ink-mid); color: var(--ink); }
+
+.empty-state {
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--ink-dim);
+  font-style: italic;
+  border: 1px dashed var(--rule);
+  font-size: 15px;
+}
+
+/* STRATEGIC Q */
+.strategic-block {
+  border: 1px solid var(--rule);
+  padding: 22px 26px;
+  background: white;
+  margin-bottom: 12px;
+}
+
+.strategic-block .s-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 10px;
+}
+
+.strategic-block p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+/* LIVE MODE overlay indicator */
+.live-indicator {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: livepulse 1.5s infinite;
+}
+
+@keyframes livepulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+body.live-mode .live-indicator { display: flex; }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.view.active { animation: fadeUp 0.2s ease; }
+</style>
+</head>
+<body>
+
+<!-- IMPORT SCREEN -->
+<div id="importScreen">
+  <div class="import-box">
+    <div class="import-eyebrow">Interview Engine</div>
+    <div class="import-title">Bring your audit.<br>Walk into the room.</div>
+    <div class="import-sub">Import the output from the AI Audit tool, or set up manually.</div>
+    <div class="import-actions">
+      <button class="btn-import" onclick="triggerImport()">Import from Audit Tool</button>
+      <button class="btn-manual" onclick="showManual()">Set up manually</button>
+    </div>
+
+    <div id="manualSetup">
+      <div class="setup-field">
+        <label>Company name</label>
+        <input type="text" id="m-company" placeholder="e.g. Zalando" />
+      </div>
+      <div class="setup-field">
+        <label>Diagnostic statement</label>
+        <textarea id="m-statement" rows="3" placeholder="Paste or write your diagnostic statement..."></textarea>
+      </div>
+      <div class="setup-field">
+        <label>Gaps confirmed (comma separated numbers, e.g. 1,2,4)</label>
+        <input type="text" id="m-gaps" placeholder="1,2,3" />
+      </div>
+      <div class="setup-field">
+        <label>Empty column</label>
+        <input type="text" id="m-empty" placeholder="e.g. Systemic Outcome" />
+      </div>
+      <div style="margin-top:16px;">
+        <button class="btn-import" onclick="loadManual()" style="width:100%">Launch interview engine</button>
+      </div>
+    </div>
+
+    <div class="import-note">
+      Import reads a JSON export from the AI Audit Tool.<br>
+      Manual setup lets you start from scratch.
+    </div>
+
+    <input type="file" id="fileInput" accept=".json" style="display:none" onchange="readFile(event)" />
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <header>
+    <div class="header-left">
+      <div class="app-mark">Interview Engine</div>
+      <div class="company-display" id="headerCompany"></div>
+    </div>
+    <div class="header-right">
+      <div class="live-indicator">
+        <div class="live-dot"></div>
+        Live
+      </div>
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="prepBtn" onclick="setMode('prep')">Prep</button>
+        <button class="mode-btn" id="liveBtn" onclick="setMode('live')">Live</button>
+      </div>
+      <button class="reset-link" onclick="resetAll()">Reset</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="left-panel">
+      <div class="panel-section">
+        <div class="panel-heading">Analysis</div>
+        <div class="nav-item active" data-view="statement" onclick="goTo('statement')">
+          <span class="nav-item-label">Diagnostic Statement</span>
+          <span class="nav-dot filled" id="dot-statement"></span>
+        </div>
+        <div class="nav-item" data-view="matrix" onclick="goTo('matrix')">
+          <span class="nav-item-label">Matrix Overview</span>
+          <span class="nav-dot" id="dot-matrix"></span>
+        </div>
+        <div class="nav-item" data-view="gaps" onclick="goTo('gaps')">
+          <span class="nav-item-label">Confirmed Gaps</span>
+          <span class="nav-dot" id="dot-gaps"></span>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-heading">Interview</div>
+        <div class="nav-item" data-view="opening" onclick="goTo('opening')">
+          <span class="nav-item-label">Opening Questions</span>
+          <span class="nav-dot" id="dot-opening"></span>
+        </div>
+        <div class="nav-item" data-view="deep" onclick="goTo('deep')">
+          <span class="nav-item-label">Deep Dive Questions</span>
+          <span class="nav-dot" id="dot-deep"></span>
+        </div>
+        <div class="nav-item" data-view="strategic" onclick="goTo('strategic')">
+          <span class="nav-item-label">Strategic Ask</span>
+          <span class="nav-dot" id="dot-strategic"></span>
+        </div>
+        <div class="nav-item" data-view="notes" onclick="goTo('notes')">
+          <span class="nav-item-label">Live Notes</span>
+          <span class="nav-dot" id="dot-notes"></span>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-heading">Output</div>
+        <div class="nav-item" data-view="export" onclick="goTo('export')">
+          <span class="nav-item-label">Export Session</span>
+          <span class="nav-dot" id="dot-export"></span>
+        </div>
+      </div>
+
+      <div class="digest-block" id="digestBlock"></div>
+    </nav>
+
+    <main class="main-content">
+
+      <!-- STATEMENT VIEW -->
+      <div class="view active" id="view-statement">
+        <div class="view-eyebrow">Diagnostic Statement</div>
+        <div class="view-title">What you say in the room.</div>
+        <div class="view-desc">This is your compressed analysis. It names the shape of the portfolio, the empty column, and the work that has not been commissioned. Deliver it early. Let it land.</div>
+
+        <div class="statement-block">
+          <div class="statement-label">Deliver verbatim or adapt</div>
+          <div class="statement-text" id="statementText"></div>
+          <button class="copy-btn" onclick="copyStatement()">Copy</button>
+        </div>
+
+        <div class="strategic-block">
+          <div class="s-label">The question that follows</div>
+          <p id="followQ"></p>
+        </div>
+      </div>
+
+      <!-- MATRIX VIEW -->
+      <div class="view" id="view-matrix">
+        <div class="view-eyebrow">Matrix Overview</div>
+        <div class="view-title">What the portfolio can and cannot see.</div>
+        <div class="view-desc">Use this to anchor your analysis in the room. Reference specific initiatives when the conversation goes deep on individual tools.</div>
+        <div class="matrix-wrap">
+          <table class="matrix" id="matrixTable">
+            <thead>
+              <tr>
+                <th>Initiative</th>
+                <th>Buyer Signal</th>
+                <th>Seller Signal</th>
+                <th>Partner Layer</th>
+                <th>Cross-Participant</th>
+                <th>Internal Ops</th>
+                <th>Systemic Outcome</th>
+              </tr>
+            </thead>
+            <tbody id="matrixBody"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="matrixEmpty">No initiative data imported. Set up manually or import from the Audit Tool.</div>
+      </div>
+
+      <!-- GAPS VIEW -->
+      <div class="view" id="view-gaps">
+        <div class="view-eyebrow">Confirmed Gaps</div>
+        <div class="view-title">The structural absences.</div>
+        <div class="view-desc">These are the gaps your matrix confirmed. Each one is a commissioning failure, not a capability failure. Name them in that order.</div>
+        <div class="gaps-confirmed" id="gapsList"></div>
+        <div class="empty-state" id="gapsEmpty" style="display:none">No gaps confirmed. Go back to the Audit Tool and mark which gaps are present.</div>
+      </div>
+
+      <!-- OPENING QUESTIONS -->
+      <div class="view" id="view-opening">
+        <div class="view-eyebrow">Opening Questions</div>
+        <div class="view-title">How you enter the conversation.</div>
+        <div class="view-desc">These questions establish the structural frame before you deliver the diagnosis. They invite the interviewer to describe the portfolio in their own terms first. Mark each one used as you go.</div>
+        <div class="q-section">
+          <div class="q-cards" id="openingCards"></div>
+        </div>
+      </div>
+
+      <!-- DEEP DIVE -->
+      <div class="view" id="view-deep">
+        <div class="view-eyebrow">Deep Dive Questions</div>
+        <div class="view-title">Where the conversation goes next.</div>
+        <div class="view-desc">These questions are keyed to the gaps you confirmed. They probe the structural absences without naming them as failures. Use them after you have delivered the diagnostic statement.</div>
+        <div id="deepCards"></div>
+      </div>
+
+      <!-- STRATEGIC ASK -->
+      <div class="view" id="view-strategic">
+        <div class="view-eyebrow">Strategic Ask</div>
+        <div class="view-title">The question you leave in the room.</div>
+        <div class="view-desc">This is the last move. Ask it after the diagnostic statement has landed. It names the gap without labeling the company.</div>
+
+        <div class="strategic-block">
+          <div class="s-label">Primary strategic question</div>
+          <p>Which AI initiative, if any, is designed to improve outcomes for both sides of the business simultaneously?</p>
+        </div>
+
+        <div class="strategic-block">
+          <div class="s-label">If they name one</div>
+          <p>Ask what data from the other participant type flows into that initiative as a primary input. If they hesitate, the initiative is likely scoped to one side only. That is your confirmation.</p>
+        </div>
+
+        <div class="strategic-block">
+          <div class="s-label">If they cannot name one</div>
+          <p>The gap has been located. Do not press. Move to articulating what filling it would require, and use the confirmed gaps to name the specific structural absences the commissioning brief would need to address.</p>
+        </div>
+
+        <div class="strategic-block">
+          <div class="s-label">The follow-on if the conversation opens up</div>
+          <p>Where does the demand-side signal go after it is captured? Does it inform supply-side strategy, or does it stay inside the interaction it was collected in?</p>
+        </div>
+      </div>
+
+      <!-- LIVE NOTES -->
+      <div class="view" id="view-notes">
+        <div class="view-eyebrow">Live Notes</div>
+        <div class="view-title">What you hear in the room.</div>
+        <div class="view-desc">Use this during the interview. Note what the interviewer confirms, disputes, or reveals that was not in the public record. This feeds your export.</div>
+
+        <textarea class="notes-area" id="notesArea" placeholder="Note what confirms or contradicts your analysis. Note anything that reveals how the company thinks about the systemic question..."></textarea>
+        <div class="notes-meta">
+          <span id="noteCount">0 characters</span>
+          <span id="noteSaved" style="color:var(--green)"></span>
+        </div>
+
+        <hr class="rule">
+
+        <div class="view-eyebrow" style="margin-bottom:12px;">Quick capture</div>
+        <div class="q-cards" id="captureCards">
+          <div class="q-card" onclick="appendNote('They confirmed the empty column.')">
+            <div class="q-card-text">They confirmed the empty column.</div>
+            <div class="q-card-tag">Confirmation</div>
+          </div>
+          <div class="q-card" onclick="appendNote('They disputed the gap analysis.')">
+            <div class="q-card-text">They disputed the gap analysis.</div>
+            <div class="q-card-tag">Pushback</div>
+          </div>
+          <div class="q-card" onclick="appendNote('They named a cross-participant initiative.')">
+            <div class="q-card-text">They named a cross-participant initiative.</div>
+            <div class="q-card-tag">New information</div>
+          </div>
+          <div class="q-card" onclick="appendNote('They could not name a systemic outcome initiative.')">
+            <div class="q-card-text">They could not name a systemic outcome initiative.</div>
+            <div class="q-card-tag">Gap confirmed live</div>
+          </div>
+          <div class="q-card" onclick="appendNote('Data architecture came up as a barrier.')">
+            <div class="q-card-text">Data architecture came up as a barrier.</div>
+            <div class="q-card-tag">Blind spot surfaced</div>
+          </div>
+          <div class="q-card" onclick="appendNote('Organizational ownership of the systemic question is unclear.')">
+            <div class="q-card-text">Organizational ownership of the systemic question is unclear.</div>
+            <div class="q-card-tag">Blind spot surfaced</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPORT -->
+      <div class="view" id="view-export">
+        <div class="view-eyebrow">Export Session</div>
+        <div class="view-title">Take the debrief with you.</div>
+        <div class="view-desc">Your diagnostic statement, confirmed gaps, and live notes combined into a single document you can save or share.</div>
+
+        <div class="export-preview" id="exportPreview"></div>
+
+        <div class="action-row">
+          <button class="btn-primary" onclick="downloadExport()">Download as .txt</button>
+          <button class="btn-secondary" onclick="copyExport()">Copy to clipboard</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+// STATE
+let S = {
+  company: '',
+  statement: '',
+  gaps: [],
+  emptyColumn: '',
+  initiatives: [],
+  matrix: {},
+  notes: '',
+  usedQuestions: new Set()
+};
+
+const GAP_DATA = {
+  1: { title: 'No cross-participant intelligence', desc: 'AI serves one participant type or another, never the relationship between them simultaneously. The business is a system. None of the AI treats it as one.' },
+  2: { title: 'Internal and external are disconnected', desc: 'Efficiency gains from internal AI do not compound into business value. There is no design intent connecting internal AI behavior to external outcomes for participants.' },
+  3: { title: 'Infrastructure without brief', desc: 'A platform or framework exists but has no business-level strategy to serve. The capability is ahead of the intent. The blueprint exists. The strategy it should serve does not yet exist.' },
+  4: { title: 'Partner and ecosystem layer absent', desc: 'Financing partners, integrations, and third-party ecosystem participants generate significant value and data. AI is not touching that layer at all.' },
+  5: { title: 'No demand-to-supply feedback loop', desc: 'Demand-side behavior data is not feeding supply-side strategy. The signal is used for one interaction. It is not completing a circuit back to supply-side participants.' },
+  6: { title: 'Adoption is cultural, not structural', desc: 'Teams experiment independently and share learnings. This produces local competency without systemic coherence. Gap 6 is the condition that prevents the other gaps from being closed.' }
+};
+
+const OPENING_QS = [
+  { text: 'How do you think about your AI portfolio as a whole, as opposed to the individual initiatives within it?', tag: 'Portfolio framing' },
+  { text: 'Which AI initiative has produced the most value for the business, and how do you measure that?', tag: 'Value definition' },
+  { text: 'Where is AI currently touching both sides of the business simultaneously?', tag: 'Cross-participant probe' },
+  { text: 'How does the team think about the difference between AI that improves internal efficiency and AI that changes what the business produces for its participants?', tag: 'Internal vs external' },
+  { text: 'What is the infrastructure layer currently being asked to do, beyond standardizing development?', tag: 'Infrastructure brief' }
+];
+
+const DEEP_QS = {
+  1: [
+    { text: 'What data from the demand side flows into your supply-side tooling as a primary input?', tag: 'Gap 1' },
+    { text: 'If you removed the buyer-facing AI entirely, what would change for sellers? And vice versa?', tag: 'Gap 1' }
+  ],
+  2: [
+    { text: 'How do the productivity gains from the internal tooling translate into outcomes for external participants?', tag: 'Gap 2' },
+    { text: 'Is there a design intent that connects what internal AI does to what participants experience?', tag: 'Gap 2' }
+  ],
+  3: [
+    { text: 'What marketplace or business-level brief has been given to the infrastructure layer?', tag: 'Gap 3' },
+    { text: 'What is the agent development platform expected to do for the business system once it is mature?', tag: 'Gap 3' }
+  ],
+  4: [
+    { text: 'Which ecosystem partners are currently generating data that any AI initiative is reading?', tag: 'Gap 4' },
+    { text: 'Is there a roadmap for bringing financing or insurance partners into the AI layer?', tag: 'Gap 4' }
+  ],
+  5: [
+    { text: 'Where does the demand-side behavioral signal go after it is captured in a buyer interaction?', tag: 'Gap 5' },
+    { text: 'Is there a feedback loop that completes a circuit from demand-side data back to supply-side strategy?', tag: 'Gap 5' }
+  ],
+  6: [
+    { text: 'How does AI adoption get coordinated across teams at the portfolio level, not just the initiative level?', tag: 'Gap 6' },
+    { text: 'Who is accountable for what all the AI initiatives produce together, as opposed to what each one produces individually?', tag: 'Gap 6' }
+  ]
+};
+
+const DIMS = ['buyerSignal','sellerSignal','partnerLayer','crossParticipant','internalOps','systemicOutcome'];
+const DIM_LABELS = ['Buyer Signal','Seller Signal','Partner Layer','Cross-Participant','Internal Ops','Systemic Outcome'];
+
+// IMPORT
+function triggerImport() {
+  document.getElementById('fileInput').click();
+}
+
+function readFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      loadFromAudit(data);
+    } catch(err) {
+      alert('Could not read the file. Make sure it is a valid JSON export from the Audit Tool.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function loadFromAudit(data) {
+  S.company = data.company || '';
+  S.statement = data.diagnosticStatement || '';
+  S.gaps = data.confirmedGaps || [];
+  S.emptyColumn = data.emptyColumn || 'Systemic Outcome';
+  S.initiatives = data.initiatives || [];
+  S.matrix = data.matrix || {};
+  launch();
+}
+
+function showManual() {
+  const ms = document.getElementById('manualSetup');
+  ms.style.display = ms.style.display === 'block' ? 'none' : 'block';
+}
+
+function loadManual() {
+  S.company = document.getElementById('m-company').value.trim() || 'Company';
+  S.statement = document.getElementById('m-statement').value.trim();
+  S.emptyColumn = document.getElementById('m-empty').value.trim() || 'Systemic Outcome';
+  const gapStr = document.getElementById('m-gaps').value.trim();
+  S.gaps = gapStr ? gapStr.split(',').map(g => parseInt(g.trim())).filter(n => !isNaN(n)) : [];
+
+  if (!S.statement) {
+    S.statement = `${S.company}'s AI portfolio has not been given a system-level brief. The ${S.emptyColumn} column is empty across every initiative. That is the work that has not yet been commissioned.`;
+  }
+  launch();
+}
+
+function launch() {
+  document.getElementById('importScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('headerCompany').textContent = S.company;
+  renderAll();
+  buildExport();
+}
+
+// NAVIGATION
+function goTo(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.querySelector(`[data-view="${view}"]`).classList.add('active');
+  if (view === 'export') buildExport();
+}
+
+function setMode(mode) {
+  document.getElementById('prepBtn').classList.toggle('active', mode === 'prep');
+  document.getElementById('liveBtn').classList.toggle('active', mode === 'live');
+  document.body.classList.toggle('live-mode', mode === 'live');
+  if (mode === 'live') goTo('notes');
+  else goTo('statement');
+}
+
+function resetAll() {
+  if (!confirm('Reset the session?')) return;
+  location.reload();
+}
+
+// RENDER ALL
+function renderAll() {
+  renderStatement();
+  renderMatrix();
+  renderGaps();
+  renderOpeningQuestions();
+  renderDeepQuestions();
+  renderDigest();
+}
+
+function renderStatement() {
+  const el = document.getElementById('statementText');
+  el.textContent = S.statement || 'No diagnostic statement loaded.';
+
+  const fq = document.getElementById('followQ');
+  fq.textContent = `Which AI initiative at ${S.company}, if any, is designed to improve outcomes for both sides of the business simultaneously? If no one can name one, the ${S.emptyColumn} gap has been located in the room.`;
+}
+
+function renderMatrix() {
+  const tbody = document.getElementById('matrixBody');
+  const empty = document.getElementById('matrixEmpty');
+
+  if (!S.initiatives || S.initiatives.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  tbody.innerHTML = S.initiatives.map(ini => {
+    const scores = S.matrix[ini.id] || {};
+    return `<tr>
+      <td>
+        <div class="ini-name">${ini.name}</div>
+        <div class="ini-serves">${ini.serves} / ${ini.layer}</div>
+      </td>
+      ${DIMS.map(d => {
+        const score = scores[d] || 'not-scope';
+        const label = score === 'in-scope' ? 'In Scope' : score === 'partial' ? 'Partial' : 'Not in Scope';
+        return `<td><span class="score-badge ${score}">${label}</span></td>`;
+      }).join('')}
+    </tr>`;
+  }).join('');
+
+  document.getElementById('dot-matrix').classList.add('filled');
+}
+
+function renderGaps() {
+  const list = document.getElementById('gapsList');
+  const empty = document.getElementById('gapsEmpty');
+
+  if (!S.gaps || S.gaps.length === 0) {
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  list.innerHTML = S.gaps.map(n => {
+    const g = GAP_DATA[n];
+    if (!g) return '';
+    return `<div class="gap-pill">
+      <div class="gap-pill-num">Gap ${n}</div>
+      <div>
+        <div class="gap-pill-title">${g.title}</div>
+        <div class="gap-pill-desc">${g.desc}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('dot-gaps').classList.add('filled');
+}
+
+function renderOpeningQuestions() {
+  const container = document.getElementById('openingCards');
+  container.innerHTML = OPENING_QS.map((q, i) => `
+    <div class="q-card" id="oq-${i}">
+      <div class="q-card-text">${q.text}</div>
+      <div class="q-card-tag">${q.tag}</div>
+      <div class="q-card-mark" onclick="toggleUsed('oq-${i}', event)" title="Mark used">✓</div>
+    </div>
+  `).join('');
+}
+
+function renderDeepQuestions() {
+  const container = document.getElementById('deepCards');
+
+  if (!S.gaps || S.gaps.length === 0) {
+    container.innerHTML = '<div class="empty-state">No gaps confirmed. The deep dive questions are keyed to your confirmed gaps. Import from the Audit Tool or set gaps manually.</div>';
+    return;
+  }
+
+  let html = '';
+  S.gaps.forEach(n => {
+    const qs = DEEP_QS[n];
+    if (!qs) return;
+    const g = GAP_DATA[n];
+    html += `<div class="q-section">
+      <div class="q-section-title">Gap ${n}: ${g ? g.title : ''}</div>
+      <div class="q-cards">
+        ${qs.map((q, i) => `
+          <div class="q-card" id="dq-${n}-${i}">
+            <div class="q-card-text">${q.text}</div>
+            <div class="q-card-tag">${q.tag}</div>
+            <div class="q-card-mark" onclick="toggleUsed('dq-${n}-${i}', event)" title="Mark used">✓</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function renderDigest() {
+  const el = document.getElementById('digestBlock');
+  const totalInis = S.initiatives ? S.initiatives.length : 0;
+  const confirmedGaps = S.gaps ? S.gaps.length : 0;
+  const emptyCol = S.emptyColumn || 'Systemic Outcome';
+
+  el.innerHTML = `
+    <div class="digest-label">Session digest</div>
+    <div class="digest-row">
+      <span class="digest-key">Initiatives</span>
+      <span class="digest-val">${totalInis}</span>
+    </div>
+    <div class="digest-row">
+      <span class="digest-key">Gaps confirmed</span>
+      <span class="digest-val ${confirmedGaps > 0 ? 'alert' : ''}">${confirmedGaps}</span>
+    </div>
+    <div class="digest-row">
+      <span class="digest-key">Empty column</span>
+      <span class="digest-val alert">${emptyCol}</span>
+    </div>
+  `;
+}
+
+// INTERACTIONS
+function toggleUsed(id, e) {
+  e.stopPropagation();
+  const card = document.getElementById(id);
+  card.classList.toggle('used');
+}
+
+function appendNote(text) {
+  const area = document.getElementById('notesArea');
+  const ts = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  area.value += (area.value ? '\n' : '') + `[${ts}] ${text}`;
+  S.notes = area.value;
+  updateNotesMeta();
+  goTo('notes');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const area = document.getElementById('notesArea');
+  if (area) {
+    area.addEventListener('input', () => {
+      S.notes = area.value;
+      updateNotesMeta();
+    });
+  }
+});
+
+function updateNotesMeta() {
+  const count = document.getElementById('notesArea').value.length;
+  document.getElementById('noteCount').textContent = `${count} character${count !== 1 ? 's' : ''}`;
+  const saved = document.getElementById('noteSaved');
+  saved.textContent = 'Saved';
+  setTimeout(() => { saved.textContent = ''; }, 1500);
+}
+
+function copyStatement() {
+  const text = document.getElementById('statementText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
+// EXPORT
+function buildExport() {
+  const lines = [];
+  lines.push(`INTERVIEW SESSION: ${S.company.toUpperCase()}`);
+  lines.push(`${'='.repeat(60)}`);
+  lines.push('');
+  lines.push('DIAGNOSTIC STATEMENT');
+  lines.push('-'.repeat(40));
+  lines.push(S.statement || 'Not set.');
+  lines.push('');
+
+  if (S.gaps && S.gaps.length > 0) {
+    lines.push('CONFIRMED GAPS');
+    lines.push('-'.repeat(40));
+    S.gaps.forEach(n => {
+      const g = GAP_DATA[n];
+      if (g) lines.push(`Gap ${n}: ${g.title}`);
+    });
+    lines.push('');
+  }
+
+  lines.push('EMPTY COLUMN');
+  lines.push('-'.repeat(40));
+  lines.push(S.emptyColumn || 'Systemic Outcome');
+  lines.push('');
+
+  if (S.notes) {
+    lines.push('LIVE NOTES');
+    lines.push('-'.repeat(40));
+    lines.push(S.notes);
+    lines.push('');
+  }
+
+  lines.push('STRATEGIC QUESTION');
+  lines.push('-'.repeat(40));
+  lines.push(`Which AI initiative at ${S.company}, if any, is designed to improve outcomes for both sides of the business simultaneously?`);
+
+  const text = lines.join('\n');
+  document.getElementById('exportPreview').textContent = text;
+  return text;
+}
+
+function downloadExport() {
+  const text = buildExport();
+  const blob = new Blob([text], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `interview-${S.company.toLowerCase().replace(/\s+/g,'-')}.txt`;
+  a.click();
+}
+
+function copyExport() {
+  const text = buildExport();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelectorAll('.btn-secondary')[0];
+    btn.textContent = 'Copied';
+    setTimeout(() => btn.textContent = 'Copy to clipboard', 2000);
+  });
+}
+</script>
+</body>
+</html>

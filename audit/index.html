@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Initiative Audit — Sebastian Thielke</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0e0e;
+  --surface: #161616;
+  --border: #2a2a2a;
+  --border-light: #333;
+  --text: #d4cfc8;
+  --text-dim: #6b6560;
+  --text-mid: #9a9490;
+  --accent: #c8401a;
+  --accent-dim: rgba(200,64,26,0.15);
+  --green: #3a7d44;
+  --green-dim: rgba(58,125,68,0.15);
+  --amber: #b07d2a;
+  --amber-dim: rgba(176,125,42,0.15);
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Libre Baskerville', serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 13px; line-height: 1.6; min-height: 100vh; }
+
+/* MASK */
+#mask { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 100; }
+.mask-inner { width: 460px; border: 1px solid var(--border-light); padding: 48px; position: relative; }
+.mask-inner::before { content: ''; position: absolute; top: -1px; left: 40px; width: 80px; height: 1px; background: var(--accent); }
+.mask-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; }
+.mask-title { font-family: var(--serif); font-size: 26px; font-weight: 700; line-height: 1.2; margin-bottom: 10px; }
+.mask-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 36px; line-height: 1.7; }
+.mask-field-label { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+.mask-input { width: 100%; background: transparent; border: 1px solid var(--border-light); border-top-color: var(--text-dim); padding: 11px 14px; font-family: var(--serif); font-size: 19px; color: var(--text); outline: none; margin-bottom: 28px; transition: border-color .2s; }
+.mask-input:focus { border-color: var(--accent); }
+.mask-input::placeholder { color: var(--border-light); font-style: italic; }
+.mask-btn { background: var(--accent); color: #fff; border: none; padding: 12px 28px; font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; width: 100%; transition: opacity .15s; }
+.mask-btn:hover { opacity: .85; }
+.mask-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* APP */
+#app { display: none; }
+header { border-bottom: 1px solid var(--border); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--bg); z-index: 10; }
+.header-left { display: flex; align-items: baseline; gap: 14px; }
+.app-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.company-name { font-family: var(--serif); font-size: 17px; font-weight: 700; }
+.header-right { display: flex; align-items: center; gap: 20px; }
+.step-ind { font-size: 10px; letter-spacing: .1em; color: var(--text-dim); text-transform: uppercase; }
+.step-ind span { color: var(--accent); }
+.reset-btn { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); background: none; border: 1px solid var(--border); padding: 5px 11px; cursor: pointer; font-family: var(--mono); transition: all .15s; }
+.reset-btn:hover { color: var(--text); border-color: var(--text-dim); }
+
+.layout { display: grid; grid-template-columns: 260px 1fr; height: calc(100vh - 57px); }
+
+/* SIDEBAR */
+.sidebar { border-right: 1px solid var(--border); overflow-y: auto; padding: 20px 0; }
+.sb-head { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--text-dim); padding: 6px 20px; }
+.sb-item { padding: 9px 20px; cursor: pointer; display: flex; align-items: center; gap: 8px; border-left: 2px solid transparent; transition: background .1s; font-size: 11px; color: var(--text-mid); }
+.sb-item:hover { background: var(--surface); }
+.sb-item.active { background: var(--surface); border-left-color: var(--accent); color: var(--text); }
+.sb-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border-light); flex-shrink: 0; margin-left: auto; }
+.sb-dot.done { background: var(--green); }
+.sb-dot.active { background: var(--accent); }
+
+/* MAIN */
+.main { overflow-y: auto; padding: 36px 44px; }
+.panel { display: none; }
+.panel.active { display: block; }
+.eyebrow { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.ptitle { font-family: var(--serif); font-size: 24px; font-weight: 700; margin-bottom: 10px; }
+.pdesc { font-size: 12px; color: var(--text-dim); line-height: 1.75; max-width: 560px; margin-bottom: 28px; }
+
+/* BUTTONS */
+.btn-main { background: var(--accent); color: #fff; border: none; padding: 10px 22px; font-family: var(--mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: opacity .15s; }
+.btn-main:hover { opacity: .85; }
+.btn-main:disabled { opacity: .4; cursor: not-allowed; }
+.btn-ghost { background: transparent; color: var(--text-mid); border: 1px solid var(--border); padding: 9px 18px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: all .15s; }
+.btn-ghost:hover { color: var(--text); border-color: var(--text-dim); }
+
+/* STATUS */
+.status { font-size: 11px; color: var(--text-dim); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; min-height: 18px; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.2} }
+.pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.4s infinite; flex-shrink: 0; }
+.warn { border: 1px solid var(--amber); background: var(--amber-dim); padding: 12px 16px; font-size: 11px; color: var(--text-mid); line-height: 1.65; margin-bottom: 20px; display: none; }
+.warn.on { display: block; }
+
+/* INITIATIVE CARDS */
+.ini-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.ini-card { border: 1px solid var(--border); background: var(--surface); }
+.ini-header { padding: 10px 14px; display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--border); }
+.ini-num { font-size: 9px; color: var(--text-dim); flex-shrink: 0; }
+.ini-name { font-weight: 700; font-family: var(--serif); font-size: 13px; flex: 1; }
+.layer-tag { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; padding: 2px 7px; border: 1px solid; flex-shrink: 0; }
+.layer-tag.product { color: var(--green); border-color: var(--green); }
+.layer-tag.internal { color: var(--text-dim); border-color: var(--border-light); }
+.layer-tag.infrastructure { color: var(--amber); border-color: var(--amber); }
+.ini-body { padding: 10px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.card-f label { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 3px; }
+.card-f p { font-size: 11px; color: var(--text-mid); line-height: 1.5; }
+.conf-flag { font-size: 10px; color: var(--amber); margin-top: 2px; }
+
+/* ADD FORM */
+.add-form { border: 1px solid var(--border); background: var(--surface); padding: 16px; margin-bottom: 16px; display: none; }
+.add-form-title { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 14px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.fg label { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 4px; }
+.fg input, .fg select, .fg textarea { width: 100%; background: var(--bg); border: 1px solid var(--border-light); padding: 7px 10px; font-family: var(--mono); font-size: 11px; color: var(--text); outline: none; resize: vertical; }
+.fg select option { background: var(--bg); }
+.form-actions { display: flex; gap: 8px; }
+
+/* MATRIX */
+.matrix-wrap { overflow-x: auto; margin-bottom: 24px; }
+table.mx { width: 100%; border-collapse: collapse; min-width: 600px; }
+.mx th { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.mx td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.mx tr:last-child td { border-bottom: none; }
+.ini-nc { font-weight: 700; font-family: var(--serif); font-size: 12px; }
+.ini-ns { font-size: 9px; color: var(--text-dim); margin-top: 2px; }
+.score-sel { background: transparent; border: 1px solid var(--border); color: var(--text-mid); font-family: var(--mono); font-size: 10px; padding: 4px 6px; outline: none; cursor: pointer; width: 100%; }
+.score-sel option { background: var(--bg); }
+.score-sel.in-scope { background: var(--green-dim); border-color: var(--green); color: #6dbd7a; }
+.score-sel.partial { background: var(--amber-dim); border-color: var(--amber); color: #d4a43a; }
+.mx-note { font-size: 11px; color: var(--text-dim); padding: 12px 14px; border: 1px solid var(--border); background: var(--surface); margin-bottom: 16px; line-height: 1.65; }
+.empty-col-banner { display: none; padding: 10px 14px; border: 1px solid var(--accent); background: var(--accent-dim); font-size: 11px; color: var(--text-mid); margin-bottom: 16px; }
+.empty-col-banner.on { display: block; }
+.score-legend { display: flex; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text-dim); }
+.leg-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* GAPS */
+.gaps-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.gap-row { border: 1px solid var(--border); display: flex; align-items: stretch; }
+.gap-num { width: 40px; background: var(--surface); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-dim); border-right: 1px solid var(--border); flex-shrink: 0; }
+.gap-body { padding: 12px 14px; flex: 1; }
+.gap-title { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.gap-desc { font-size: 11px; color: var(--text-dim); line-height: 1.6; }
+.gap-toggle { display: flex; align-items: center; padding: 12px 14px; flex-shrink: 0; }
+.chk { width: 16px; height: 16px; border: 1px solid var(--border-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; background: transparent; flex-shrink: 0; font-size: 9px; color: transparent; }
+.chk.on { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* DIAGNOSIS */
+.diag-block { border-left: 3px solid var(--accent); padding: 18px 22px; background: var(--surface); margin-bottom: 14px; position: relative; }
+.diag-label { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.diag-text { font-family: var(--serif); font-size: 15px; line-height: 1.75; }
+.copy-btn { position: absolute; top: 12px; right: 12px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--text-dim); padding: 4px 8px; cursor: pointer; transition: all .15s; }
+.copy-btn:hover { color: var(--text); border-color: var(--text-mid); }
+
+/* EXPORT */
+.export-box { background: var(--surface); border: 1px solid var(--border); padding: 18px; font-size: 11px; line-height: 1.75; color: var(--text-mid); white-space: pre-wrap; font-family: var(--mono); max-height: 320px; overflow-y: auto; margin-bottom: 16px; }
+.action-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* NAV */
+.nav-actions { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid var(--border); margin-top: 8px; }
+.empty-state { text-align: center; padding: 32px; color: var(--text-dim); font-size: 12px; border: 1px dashed var(--border); }
+</style>
+</head>
+<body>
+
+<div id="mask">
+  <div class="mask-inner">
+    <div class="mask-label">AI Initiative Audit</div>
+    <div class="mask-title">Name the organization.</div>
+    <div class="mask-sub">The framework runs against this company throughout all six steps.</div>
+    <div class="mask-field-label">Organization name</div>
+    <input class="mask-input" id="orgInput" type="text" placeholder="e.g. Zalando" autocomplete="off" />
+    <button class="mask-btn" id="startBtn">Begin audit</button>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <div class="header-left">
+      <span class="app-label">AI Audit</span>
+      <span class="company-name" id="hCompany"></span>
+    </div>
+    <div class="header-right">
+      <span class="step-ind">Step <span id="hStep">1</span> of 6</span>
+      <button class="reset-btn" onclick="resetApp()">New audit</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar">
+      <div class="sb-head">Workflow</div>
+      <div class="sb-item active" data-p="research" onclick="goTo('research')"><span>01 Research</span><span class="sb-dot active" id="sd-research"></span></div>
+      <div class="sb-item" data-p="map" onclick="goTo('map')"><span>02 Map</span><span class="sb-dot" id="sd-map"></span></div>
+      <div class="sb-item" data-p="matrix" onclick="goTo('matrix')"><span>03 Matrix</span><span class="sb-dot" id="sd-matrix"></span></div>
+      <div class="sb-item" data-p="gaps" onclick="goTo('gaps')"><span>04 Gaps</span><span class="sb-dot" id="sd-gaps"></span></div>
+      <div class="sb-item" data-p="diagnosis" onclick="goTo('diagnosis')"><span>05 Diagnosis</span><span class="sb-dot" id="sd-diagnosis"></span></div>
+      <div class="sb-item" data-p="export" onclick="goTo('export')"><span>06 Export</span><span class="sb-dot" id="sd-export"></span></div>
+    </nav>
+
+    <main class="main">
+
+      <!-- RESEARCH -->
+      <div class="panel active" id="panel-research">
+        <div class="eyebrow">Part 1 — Input Gathering</div>
+        <div class="ptitle" id="researchTitle">Research initiatives</div>
+        <div class="pdesc">The LLM searches public sources for AI initiatives: product announcements, engineering blogs, job postings, investor materials. Verify every result. Low-confidence items are flagged.</div>
+        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+          <button class="btn-main" id="researchBtn" onclick="runResearch()">Run LLM research</button>
+          <button class="btn-ghost" onclick="toggleAddForm()">+ Add manually</button>
+        </div>
+        <div class="status" id="statusLine"></div>
+        <div class="warn" id="warnBox"><b>Verification required.</b> Results are derived from public sources and inference. Treat every initiative as a hypothesis until verified against a primary source.</div>
+        <div class="ini-list" id="iniList"><div class="empty-state">No initiatives yet. Run research or add manually.</div></div>
+        <div class="add-form" id="addForm">
+          <div class="add-form-title">Add initiative manually</div>
+          <div class="form-grid">
+            <div class="fg" style="grid-column:1/-1"><label>Initiative name</label><input type="text" id="f-name" placeholder="e.g. ML pricing engine" /></div>
+            <div class="fg"><label>Who it serves</label><select id="f-serves"><option value="">Select...</option><option>Buyer</option><option>Seller or dealer</option><option>Internal employee</option><option>Partner or ecosystem participant</option></select></div>
+            <div class="fg"><label>Layer</label><select id="f-layer"><option value="">Select...</option><option value="product">Product</option><option value="internal">Internal efficiency</option><option value="infrastructure">Infrastructure</option></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Signal consumed</label><textarea id="f-signal" rows="2" placeholder="What data flows in as primary input?"></textarea></div>
+          </div>
+          <div class="form-actions"><button class="btn-main" onclick="addManual()">Add</button><button class="btn-ghost" onclick="toggleAddForm()">Cancel</button></div>
+        </div>
+        <div class="nav-actions"><div></div><button class="btn-main" onclick="goTo('map')">Continue to mapping</button></div>
+      </div>
+
+      <!-- MAP -->
+      <div class="panel" id="panel-map">
+        <div class="eyebrow">Part 2 — Mapping</div>
+        <div class="ptitle">Classify each initiative</div>
+        <div class="pdesc">Confirm the layer and participant for each initiative. Use the language that fits the business model.</div>
+        <div class="ini-list" id="mapList"></div>
+        <div class="nav-actions"><button class="btn-ghost" onclick="goTo('research')">Back</button><button class="btn-main" onclick="goTo('matrix')">Continue to matrix</button></div>
+      </div>
+
+      <!-- MATRIX -->
+      <div class="panel" id="panel-matrix">
+        <div class="eyebrow">Part 3 — Disjunction Matrix</div>
+        <div class="ptitle">Score each initiative</div>
+        <div class="pdesc">Apply the four-question test per cell. In Scope requires primary data input, output affecting the dimension, and stated design intent. Partial covers incidental data or unintended output.</div>
+        <div class="score-legend">
+          <div class="leg"><div class="leg-dot" style="background:var(--green)"></div>In Scope</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--amber)"></div>Partial</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--border-light)"></div>Not in Scope</div>
+        </div>
+        <div class="mx-note"><b>Infrastructure and internal efficiency initiatives</b> score Not in Scope on all participant-facing dimensions. Internal efficiency scores In Scope on Internal Ops by definition. Infrastructure may or may not, depending on whether employees benefit directly from the platform itself.</div>
+        <div class="empty-col-banner" id="emptyColBanner"></div>
+        <div class="matrix-wrap">
+          <table class="mx">
+            <thead><tr>
+              <th>Initiative</th>
+              <th title="Reads demand-side behavior as primary input">Buyer Signal</th>
+              <th title="Reads supply-side behavior as primary input">Seller Signal</th>
+              <th title="Touches ecosystem partners">Partner Layer</th>
+              <th title="Processes both participant signals simultaneously">Cross-Participant</th>
+              <th title="Primary beneficiary is internal employee">Internal Ops</th>
+              <th title="Optimizes aggregate value across all participants">Systemic Outcome</th>
+            </tr></thead>
+            <tbody id="mxBody"></tbody>
+          </table>
+        </div>
+        <div class="nav-actions"><button class="btn-ghost" onclick="goTo('map')">Back</button><button class="btn-main" onclick="goTo('gaps')">Continue to gaps</button></div>
+      </div>
+
+      <!-- GAPS -->
+      <div class="panel" id="panel-gaps">
+        <div class="eyebrow">Part 4 — Structural Gaps</div>
+        <div class="ptitle">Mark which gaps are present</div>
+        <div class="pdesc">Gap 6 is not what the portfolio is missing. It is why the portfolio is unlikely to close the other gaps without deliberate structural intervention.</div>
+        <div class="gaps-grid" id="gapsGrid"></div>
+        <div class="nav-actions"><button class="btn-ghost" onclick="goTo('matrix')">Back</button><button class="btn-main" onclick="buildDiagnosis();goTo('diagnosis')">Build diagnostic statement</button></div>
+      </div>
+
+      <!-- DIAGNOSIS -->
+      <div class="panel" id="panel-diagnosis">
+        <div class="eyebrow">Part 5 and 6 — Diagnosis and Strategic Ask</div>
+        <div class="ptitle">The compressed analysis</div>
+        <div class="pdesc">Built from your matrix and gap selections. Deliver it early. Let it land.</div>
+        <div class="diag-block">
+          <div class="diag-label">Diagnostic statement</div>
+          <div class="diag-text" id="diagText"></div>
+          <button class="copy-btn" onclick="copyDiag(event)">Copy</button>
+        </div>
+        <div class="diag-block" style="border-color:var(--border)">
+          <div class="diag-label">Confirmed gaps</div>
+          <div id="gapsSummary" style="font-size:12px;color:var(--text-mid);line-height:1.8"></div>
+        </div>
+        <div class="diag-block" style="border-color:var(--border)">
+          <div class="diag-label">The strategic ask</div>
+          <div style="font-size:13px;line-height:1.7;font-family:var(--serif)">Which AI initiative, if any, is designed to improve outcomes for both sides of the business simultaneously? If no one can name one, the gap has been located.</div>
+        </div>
+        <div class="diag-block" style="border-color:var(--border)">
+          <div class="diag-label">What filling it requires</div>
+          <div id="fillingText" style="font-size:12px;color:var(--text-mid);line-height:1.7"></div>
+        </div>
+        <div class="nav-actions"><button class="btn-ghost" onclick="goTo('gaps')">Back</button><button class="btn-main" onclick="goTo('export')">Export session</button></div>
+      </div>
+
+      <!-- EXPORT -->
+      <div class="panel" id="panel-export">
+        <div class="eyebrow">Part 6 — Export</div>
+        <div class="ptitle">Take your analysis with you.</div>
+        <div class="pdesc">Export as JSON to import into the Interview Tool, or download as plain text.</div>
+        <div class="export-box" id="exportBox"></div>
+        <div class="action-row">
+          <button class="btn-main" onclick="exportJSON()">Export for Interview Tool (.json)</button>
+          <button class="btn-ghost" onclick="exportTxt()">Download .txt</button>
+          <button class="btn-ghost" onclick="copyExport(event)">Copy</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+// Replace with your Cloudflare Worker URL after deployment
+const WORKER_URL = 'https://ai-audit-proxy.sebastian-thielke.workers.dev';
+
+// ── STATE ───────────────────────────────────────────────────────────────────
+const DIMS = ['buyerSignal','sellerSignal','partnerLayer','crossParticipant','internalOps','systemicOutcome'];
+const DIM_LABELS = {buyerSignal:'Buyer Signal',sellerSignal:'Seller Signal',partnerLayer:'Partner Layer',crossParticipant:'Cross-Participant',internalOps:'Internal Ops',systemicOutcome:'Systemic Outcome'};
+const GAPS = {
+  1:{title:'No cross-participant intelligence',desc:'AI serves one participant type or another, never the relationship between them simultaneously.'},
+  2:{title:'Internal and external are disconnected',desc:'Efficiency gains from internal AI do not compound into business value for external participants.'},
+  3:{title:'Infrastructure without brief',desc:'A platform exists but has no business-level strategy to serve. The blueprint exists. The strategy does not.'},
+  4:{title:'Partner and ecosystem layer absent',desc:'Third-party ecosystem participants generate value and data. AI is not touching that layer.'},
+  5:{title:'No demand-to-supply feedback loop',desc:'Demand-side data is not feeding supply-side strategy. The signal is used once and not connected back.'},
+  6:{title:'Adoption is cultural, not structural',desc:'Teams experiment independently. This produces local competency without systemic coherence. Gap 6 is the condition that prevents the others from being closed.',meta:true}
+};
+
+let S = { company:'', initiatives:[], matrix:{}, gaps:{} };
+
+// ── MASK ────────────────────────────────────────────────────────────────────
+document.getElementById('orgInput').addEventListener('keydown', e => { if(e.key==='Enter') startApp(); });
+document.getElementById('startBtn').addEventListener('click', startApp);
+
+function startApp() {
+  const v = document.getElementById('orgInput').value.trim();
+  if(!v) return;
+  S.company = v;
+  document.getElementById('mask').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('hCompany').textContent = v;
+  document.getElementById('researchTitle').textContent = 'Research AI initiatives at ' + v;
+  renderGapsGrid();
+}
+
+function resetApp() { S = {company:'',initiatives:[],matrix:{},gaps:{}}; location.reload(); }
+
+// ── NAVIGATION ───────────────────────────────────────────────────────────────
+function goTo(p) {
+  document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(x => x.classList.remove('active'));
+  document.getElementById('panel-'+p).classList.add('active');
+  document.querySelector('[data-p="'+p+'"]').classList.add('active');
+  const steps = ['research','map','matrix','gaps','diagnosis','export'];
+  document.getElementById('hStep').textContent = steps.indexOf(p)+1;
+  if(p==='map') renderMapList();
+  if(p==='matrix') renderMatrix();
+  if(p==='export') buildExport();
+}
+
+function updateSidebarDots(current) {
+  const steps = ['research','map','matrix','gaps','diagnosis','export'];
+  const idx = steps.indexOf(current);
+  steps.forEach((s,i) => {
+    const el = document.getElementById('sd-'+s);
+    if(!el) return;
+    el.className = 'sb-dot';
+    if(i < idx) el.classList.add('done');
+    else if(i === idx) el.classList.add('active');
+  });
+}
+
+// ── RESEARCH ─────────────────────────────────────────────────────────────────
+async function runResearch() {
+  const btn = document.getElementById('researchBtn');
+  const sl = document.getElementById('statusLine');
+  btn.disabled = true;
+  sl.innerHTML = '<span class="pulse"></span><span>Searching public sources for ' + S.company + '...</span>';
+
+  // Cost-optimized system prompt: compact, no excess tokens
+  const sys = `Research AI initiatives at "${S.company}" from public sources only. Extract each as JSON with these fields: name, serves (one of: Buyer/Seller or dealer/Internal employee/Partner or ecosystem participant), layer (product/internal/infrastructure), signal (primary data input, 1 sentence), confidence (high=announced/low=inferred), source.
+Return ONLY valid JSON: {"initiatives":[...]}. No markdown, no preamble. Do not invent initiatives.`;
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 600,
+        system: sys,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: 'Find all known AI initiatives at ' + S.company + '.' }]
+      })
+    });
+
+    if(!res.ok) throw new Error('Worker returned ' + res.status);
+    const data = await res.json();
+    const txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    const m = txt.match(/\{[\s\S]*\}/);
+    if(!m) throw new Error('No structured data returned. Try again or add manually.');
+    const parsed = JSON.parse(m[0]);
+    if(!parsed.initiatives || !parsed.initiatives.length) throw new Error('No initiatives found. Add manually.');
+
+    S.initiatives = parsed.initiatives.map((x,i) => ({
+      id: 'ini-' + Date.now() + '-' + i,
+      name: x.name || 'Unnamed',
+      serves: x.serves || 'Internal employee',
+      layer: x.layer || 'internal',
+      signal: x.signal || 'Not specified',
+      confidence: x.confidence || 'low',
+      source: x.source || ''
+    }));
+
+    S.initiatives.forEach(ini => {
+      if(!S.matrix[ini.id]) { S.matrix[ini.id] = {}; DIMS.forEach(d => S.matrix[ini.id][d] = 'not-scope'); }
+    });
+
+    renderIniList();
+    sl.innerHTML = '<span>Found ' + S.initiatives.length + ' initiative' + (S.initiatives.length!==1?'s':'') + '. Verify before proceeding.</span>';
+    document.getElementById('warnBox').classList.add('on');
+    document.getElementById('sd-research').classList.add('done');
+
+  } catch(e) {
+    sl.innerHTML = '<span style="color:var(--amber)">' + e.message + '</span>';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function renderIniList() {
+  const c = document.getElementById('iniList');
+  if(!S.initiatives.length) { c.innerHTML = '<div class="empty-state">No initiatives yet.</div>'; return; }
+  c.innerHTML = S.initiatives.map((ini,i) => `
+    <div class="ini-card">
+      <div class="ini-header">
+        <span class="ini-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="ini-name">${ini.name}</span>
+        <span class="layer-tag ${ini.layer}">${ini.layer}</span>
+      </div>
+      <div class="ini-body">
+        <div class="card-f"><label>Serves</label><p>${ini.serves}</p></div>
+        <div class="card-f"><label>Signal consumed</label><p>${ini.signal}${ini.confidence==='low'?'<div class="conf-flag">⚠ Low confidence</div>':''}</p></div>
+        ${ini.source?`<div class="card-f" style="grid-column:1/-1"><label>Source</label><p style="color:var(--text-dim)">${ini.source}</p></div>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function toggleAddForm() {
+  const f = document.getElementById('addForm');
+  f.style.display = f.style.display === 'block' ? 'none' : 'block';
+}
+
+function addManual() {
+  const name = document.getElementById('f-name').value.trim();
+  const serves = document.getElementById('f-serves').value;
+  const layer = document.getElementById('f-layer').value;
+  const signal = document.getElementById('f-signal').value.trim();
+  if(!name||!serves||!layer) return;
+  const ini = { id:'ini-m-'+Date.now(), name, serves, layer, signal:signal||'Not specified', confidence:'high', source:'Manual entry' };
+  S.initiatives.push(ini);
+  S.matrix[ini.id] = {}; DIMS.forEach(d => S.matrix[ini.id][d] = 'not-scope');
+  ['f-name','f-signal'].forEach(id => document.getElementById(id).value='');
+  ['f-serves','f-layer'].forEach(id => document.getElementById(id).value='');
+  toggleAddForm(); renderIniList();
+}
+
+// ── MAP ───────────────────────────────────────────────────────────────────────
+function renderMapList() {
+  const c = document.getElementById('mapList');
+  if(!S.initiatives.length) { c.innerHTML = '<div class="empty-state">No initiatives. Go back and add some.</div>'; return; }
+  c.innerHTML = S.initiatives.map((ini,i) => `
+    <div class="ini-card">
+      <div class="ini-header">
+        <span class="ini-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="ini-name">${ini.name}</span>
+        <span class="layer-tag ${ini.layer}">${ini.layer}</span>
+      </div>
+      <div class="ini-body">
+        <div class="card-f"><label>Participant served</label>
+          <select onchange="updateF('${ini.id}','serves',this.value)" style="width:100%;background:var(--bg);border:1px solid var(--border-light);color:var(--text);font-family:var(--mono);font-size:11px;padding:6px 8px;outline:none">
+            ${['Buyer','Seller or dealer','Internal employee','Partner or ecosystem participant'].map(o=>`<option ${ini.serves===o?'selected':''}>${o}</option>`).join('')}
+          </select>
+        </div>
+        <div class="card-f"><label>Layer</label>
+          <select onchange="updateF('${ini.id}','layer',this.value)" style="width:100%;background:var(--bg);border:1px solid var(--border-light);color:var(--text);font-family:var(--mono);font-size:11px;padding:6px 8px;outline:none">
+            ${[['product','Product'],['internal','Internal efficiency'],['infrastructure','Infrastructure']].map(([v,l])=>`<option value="${v}" ${ini.layer===v?'selected':''}>${l}</option>`).join('')}
+          </select>
+        </div>
+        <div class="card-f" style="grid-column:1/-1"><label>Signal consumed</label><p style="color:var(--text-dim)">${ini.signal}</p></div>
+      </div>
+    </div>`).join('');
+}
+
+function updateF(id, field, val) { const ini = S.initiatives.find(i=>i.id===id); if(ini) ini[field]=val; }
+
+// ── MATRIX ────────────────────────────────────────────────────────────────────
+function renderMatrix() {
+  const tbody = document.getElementById('mxBody');
+  if(!S.initiatives.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-dim)">No initiatives. Go back and add some.</td></tr>'; return; }
+  tbody.innerHTML = S.initiatives.map(ini => `
+    <tr>
+      <td><div class="ini-nc">${ini.name}</div><div class="ini-ns">${ini.serves}</div></td>
+      ${DIMS.map(d => {
+        const v = S.matrix[ini.id]?.[d]||'not-scope';
+        return `<td><select class="score-sel ${v}" onchange="updateScore('${ini.id}','${d}',this.value);this.className='score-sel '+this.value;checkEmpty()">
+          <option value="in-scope" ${v==='in-scope'?'selected':''}>In Scope</option>
+          <option value="partial" ${v==='partial'?'selected':''}>Partial</option>
+          <option value="not-scope" ${v==='not-scope'?'selected':''}>Not in Scope</option>
+        </select></td>`;
+      }).join('')}
+    </tr>`).join('');
+  checkEmpty();
+}
+
+function updateScore(id, dim, val) { if(!S.matrix[id]) S.matrix[id]={}; S.matrix[id][dim]=val; }
+
+function checkEmpty() {
+  if(!S.initiatives.length) return;
+  const empty = DIMS.filter(d => S.initiatives.every(i => (S.matrix[i.id]?.[d]||'not-scope')==='not-scope'));
+  const b = document.getElementById('emptyColBanner');
+  if(empty.length) {
+    b.classList.add('on');
+    b.innerHTML = '<b>Empty column' + (empty.length>1?'s':'') + ' detected:</b> ' + empty.map(d=>DIM_LABELS[d]).join(', ') + '. Every initiative scores Not in Scope. This is your primary structural finding.';
+  } else { b.classList.remove('on'); }
+}
+
+// ── GAPS ──────────────────────────────────────────────────────────────────────
+function renderGapsGrid() {
+  document.getElementById('gapsGrid').innerHTML = Object.entries(GAPS).map(([n,g]) => `
+    <div class="gap-row" ${g.meta?'style="opacity:.8"':''}>
+      <div class="gap-num">${n}</div>
+      <div class="gap-body"><div class="gap-title">${g.title}</div><div class="gap-desc">${g.desc}</div></div>
+      <div class="gap-toggle"><div class="chk" id="gap-${n}" onclick="toggleGap(${n})"></div></div>
+    </div>`).join('');
+}
+
+function toggleGap(n) {
+  const el = document.getElementById('gap-'+n);
+  el.classList.toggle('on');
+  S.gaps[n] = el.classList.contains('on');
+  el.textContent = el.classList.contains('on') ? '✓' : '';
+}
+
+// ── DIAGNOSIS ─────────────────────────────────────────────────────────────────
+function buildDiagnosis() {
+  const total = S.initiatives.length;
+  const prod = S.initiatives.filter(i=>i.layer==='product').length;
+  const intl = S.initiatives.filter(i=>i.layer==='internal').length;
+  const infra = S.initiatives.filter(i=>i.layer==='infrastructure').length;
+  const emptyCols = DIMS.filter(d => S.initiatives.length>0 && S.initiatives.every(i=>(S.matrix[i.id]?.[d]||'not-scope')==='not-scope'));
+  const confirmed = Object.entries(S.gaps).filter(([,v])=>v).map(([k])=>parseInt(k));
+
+  let parts = [];
+  if(total>0) {
+    parts.push(S.company + ' has ' + total + ' AI initiative' + (total!==1?'s':'') + ': ');
+    const bd = [];
+    if(prod) bd.push(prod + ' optimise' + (prod===1?'s':'') + ' individual interactions');
+    if(intl) bd.push(intl + ' improve' + (intl===1?'s':'') + ' internal efficiency');
+    if(infra) bd.push(infra + ' provide' + (infra===1?'s':'') + ' infrastructure');
+    parts.push(bd.join(', ') + '. ');
+  }
+  if(emptyCols.length) {
+    const names = emptyCols.map(d=>DIM_LABELS[d]).join(' and ');
+    parts.push('No initiative is designed to address ' + names + '. ');
+    if(emptyCols.includes('systemicOutcome')) parts.push('The Systemic Outcome column is empty across every row because no initiative has been given a system-level brief. That is the work that has not yet been commissioned.');
+    else parts.push('The ' + names + ' column' + (emptyCols.length>1?'s are':' is') + ' empty across every row. Name what the business should be producing systemically that no initiative is currently designed to create.');
+  } else if(!total) { parts.push('No initiatives entered yet.'); }
+  else { parts.push('No column is fully empty. Review Partial scores — partial coverage is not the same as designed-in intent.'); }
+
+  document.getElementById('diagText').textContent = parts.join('');
+
+  document.getElementById('gapsSummary').innerHTML = confirmed.length
+    ? confirmed.map(n=>`<div style="margin-bottom:5px"><span style="color:var(--accent);margin-right:8px">Gap ${n}</span>${GAPS[n]?GAPS[n].title:''}</div>`).join('')
+    : 'No gaps marked. Go back to Part 4.';
+
+  const filling = [];
+  if(confirmed.includes(1)||confirmed.includes(5)) filling.push('A cross-participant intelligence layer needs to be commissioned: a single initiative reading both participant signals simultaneously.');
+  if(confirmed.includes(2)) filling.push('Internal AI investments need a design brief connecting them to external participant outcomes.');
+  if(confirmed.includes(3)) filling.push('The infrastructure layer needs a business-level brief. The capability exists. The strategy it should serve does not yet exist.');
+  if(confirmed.includes(4)) filling.push('The ecosystem and partner layer needs to be brought into scope.');
+  if(confirmed.includes(6)) filling.push('Structural adoption mechanisms need to replace cultural ones. Closing systemic gaps requires centrally-commissioned strategy.');
+  document.getElementById('fillingText').innerHTML = filling.length ? filling.map(f=>`<p style="margin-bottom:8px">${f}</p>`).join('') : 'Mark gaps to generate the filling argument.';
+
+  document.getElementById('sd-diagnosis').classList.add('done');
+}
+
+function copyDiag(e) {
+  navigator.clipboard.writeText(document.getElementById('diagText').textContent).then(() => {
+    const b = e.target; b.textContent = 'Copied'; setTimeout(()=>b.textContent='Copy', 2000);
+  });
+}
+
+// ── EXPORT ────────────────────────────────────────────────────────────────────
+function buildExport() {
+  const emptyCols = DIMS.filter(d => S.initiatives.length>0 && S.initiatives.every(i=>(S.matrix[i.id]?.[d]||'not-scope')==='not-scope'));
+  const confirmed = Object.entries(S.gaps).filter(([,v])=>v).map(([k])=>parseInt(k));
+  const payload = {
+    company: S.company,
+    diagnosticStatement: document.getElementById('diagText').textContent,
+    confirmedGaps: confirmed,
+    emptyColumn: emptyCols.length ? DIM_LABELS[emptyCols[0]] : 'Systemic Outcome',
+    initiatives: S.initiatives,
+    matrix: S.matrix
+  };
+  document.getElementById('exportBox').textContent = JSON.stringify(payload, null, 2);
+  document.getElementById('sd-export').classList.add('done');
+  return payload;
+}
+
+function exportJSON() {
+  const p = buildExport();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(p,null,2)],{type:'application/json'}));
+  a.download = 'audit-' + S.company.toLowerCase().replace(/\s+/g,'-') + '.json';
+  a.click();
+}
+
+function exportTxt() {
+  const p = buildExport();
+  const confirmed = Object.entries(S.gaps).filter(([,v])=>v).map(([k])=>parseInt(k));
+  const lines = [
+    'AI INITIATIVE AUDIT: ' + S.company.toUpperCase(),
+    '='.repeat(50), '',
+    'DIAGNOSTIC STATEMENT', '-'.repeat(40), p.diagnosticStatement, '',
+    'CONFIRMED GAPS', '-'.repeat(40),
+    ...confirmed.map(n => 'Gap ' + n + ': ' + (GAPS[n]?GAPS[n].title:'')), '',
+    'EMPTY COLUMN', '-'.repeat(40), p.emptyColumn
+  ];
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain'}));
+  a.download = 'audit-' + S.company.toLowerCase().replace(/\s+/g,'-') + '.txt';
+  a.click();
+}
+
+function copyExport(e) {
+  navigator.clipboard.writeText(document.getElementById('exportBox').textContent).then(() => {
+    const b = e.target; b.textContent = 'Copied'; setTimeout(()=>b.textContent='Copy', 2000);
+  });
+}
+</script>
+</body>
+</html>
