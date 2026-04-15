@@ -5,24 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interview Engine</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --paper: #f7f3ed;
-  --paper-dark: #ede8e0;
-  --ink: #1a1814;
-  --ink-mid: #4a4540;
-  --ink-dim: #8a8480;
-  --rule: #d8d0c4;
-  --accent: #8b2020;
-  --accent-warm: #c4501a;
-  --accent-dim: rgba(139,32,32,0.08);
-  --green: #2a6640;
-  --green-dim: rgba(42,102,64,0.08);
-  --amber: #7a5010;
-  --amber-dim: rgba(122,80,16,0.10);
-  --mono: 'JetBrains Mono', monospace;
-  --serif: 'Cormorant Garamond', serif;
+  --paper: #f2ede3;
+  --paper-dark: #ede8dc;
+  --ink: #0e0d0b;
+  --ink-mid: #4a4438;
+  --ink-dim: #7a7060;
+  --rule: rgba(14,13,11,0.13);
+  --accent: #b83020;
+  --accent-warm: #a07828;
+  --accent-dim: rgba(184,48,32,0.08);
+  --green: #2a6040;
+  --green-dim: rgba(42,96,64,0.08);
+  --amber: #a07828;
+  --amber-dim: rgba(160,120,40,0.08);
+  --mono: 'Courier New', monospace;
+  --serif: Georgia, serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,8 +29,8 @@
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--serif);
-  font-size: 16px;
+  font-family: var(--mono);
+  font-size: 13px;
   line-height: 1.6;
   min-height: 100vh;
 }
@@ -40,7 +39,7 @@ body {
 #importScreen {
   position: fixed;
   inset: 0;
-  background: var(--ink);
+  background: var(--paper);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,9 +48,10 @@ body {
 }
 
 .import-box {
-  width: 520px;
-  padding: 56px;
-  border: 1px solid rgba(247,243,237,0.12);
+  width: 460px;
+  padding: 48px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
   position: relative;
 }
 
@@ -69,23 +69,24 @@ body {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .import-title {
-  font-size: 32px;
-  font-weight: 600;
-  color: var(--paper);
-  line-height: 1.15;
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.2;
   margin-bottom: 12px;
 }
 
 .import-sub {
-  font-size: 15px;
-  color: rgba(247,243,237,0.45);
-  margin-bottom: 40px;
+  font-size: 12px;
+  color: var(--ink-dim);
+  margin-bottom: 36px;
   line-height: 1.7;
-  font-style: italic;
 }
 
 .import-actions {
@@ -96,9 +97,9 @@ body {
 
 .btn-import {
   background: var(--accent);
-  color: var(--paper);
+  color: #fff;
   border: none;
-  padding: 14px 28px;
+  padding: 12px 28px;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.15em;
@@ -106,13 +107,14 @@ body {
   cursor: pointer;
   transition: opacity 0.15s;
   text-align: center;
+  width: 100%;
 }
 .btn-import:hover { opacity: 0.85; }
 
 .btn-manual {
   background: transparent;
   color: rgba(247,243,237,0.5);
-  border: 1px solid rgba(247,243,237,0.15);
+  border: 1px solid var(--rule);
   padding: 14px 28px;
   font-family: var(--mono);
   font-size: 11px;
@@ -123,15 +125,15 @@ body {
   text-align: center;
 }
 .btn-manual:hover {
-  color: rgba(247,243,237,0.8);
-  border-color: rgba(247,243,237,0.3);
+  color: var(--ink);
+  border-color: var(--ink-dim);
 }
 
 .import-note {
   margin-top: 24px;
   font-family: var(--mono);
   font-size: 10px;
-  color: rgba(247,243,237,0.25);
+  color: var(--ink-dim);
   line-height: 1.6;
 }
 
@@ -151,19 +153,19 @@ body {
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(247,243,237,0.4);
+  color: var(--ink-dim);
   margin-bottom: 6px;
 }
 
 .setup-field input,
 .setup-field textarea {
   width: 100%;
-  background: rgba(247,243,237,0.05);
-  border: 1px solid rgba(247,243,237,0.12);
+  background: var(--surface);
+  border: 1px solid var(--rule);
   padding: 10px 12px;
   font-family: var(--serif);
   font-size: 15px;
-  color: var(--paper);
+  color: var(--ink);
   outline: none;
   transition: border-color 0.15s;
   resize: vertical;
@@ -185,8 +187,9 @@ body {
 
 /* HEADER */
 header {
-  background: var(--ink);
-  padding: 20px 40px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  padding: 18px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -203,20 +206,22 @@ header {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent);
+  font-weight: 400;
 }
 
 .company-display {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--paper);
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
   font-style: italic;
+  color: var(--ink);
 }
 
 .header-right { display: flex; align-items: center; gap: 20px; }
 
 .mode-toggle {
   display: flex;
-  border: 1px solid rgba(247,243,237,0.15);
+  border: 1px solid var(--rule);
 }
 
 .mode-btn {
@@ -226,7 +231,7 @@ header {
   text-transform: uppercase;
   padding: 7px 16px;
   background: transparent;
-  color: rgba(247,243,237,0.4);
+  color: var(--ink-dim);
   border: none;
   cursor: pointer;
   transition: all 0.15s;
@@ -234,21 +239,21 @@ header {
 
 .mode-btn.active {
   background: var(--accent);
-  color: var(--paper);
+  color: var(--ink);
 }
 
 .reset-link {
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.1em;
-  color: rgba(247,243,237,0.25);
+  color: var(--ink-dim);
   background: none;
   border: none;
   cursor: pointer;
   text-transform: uppercase;
   transition: color 0.15s;
 }
-.reset-link:hover { color: rgba(247,243,237,0.6); }
+.reset-link:hover { color: var(--ink); }
 
 /* LAYOUT */
 .layout {
@@ -260,10 +265,10 @@ header {
 /* LEFT PANEL */
 .left-panel {
   border-right: 1px solid var(--rule);
-  padding: 32px 0;
+  padding: 20px 0;
   position: sticky;
-  top: 61px;
-  height: calc(100vh - 61px);
+  top: 57px;
+  height: calc(100vh - 57px);
   overflow-y: auto;
   background: var(--paper);
 }
@@ -318,7 +323,7 @@ header {
   margin: 20px 28px;
   padding: 16px 18px;
   border: 1px solid var(--rule);
-  background: white;
+  background: var(--surface);
 }
 
 .digest-label {
@@ -354,27 +359,28 @@ header {
 
 .view-eyebrow {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 16px;
-}
-
-.view-title {
-  font-size: 34px;
-  font-weight: 700;
-  line-height: 1.15;
   margin-bottom: 12px;
 }
 
-.view-desc {
-  font-size: 15px;
-  color: var(--ink-mid);
-  line-height: 1.75;
-  max-width: 580px;
-  margin-bottom: 36px;
+.view-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
   font-style: italic;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.view-desc {
+  font-size: 12px;
+  color: var(--ink-dim);
+  line-height: 1.75;
+  max-width: 560px;
+  margin-bottom: 28px;
 }
 
 hr.rule {
@@ -386,9 +392,9 @@ hr.rule {
 /* DIAGNOSTIC STATEMENT */
 .statement-block {
   border-left: 3px solid var(--accent);
-  padding: 24px 28px;
-  background: white;
-  margin-bottom: 24px;
+  padding: 18px 22px;
+  background: var(--surface);
+  margin-bottom: 14px;
   position: relative;
 }
 
@@ -402,9 +408,9 @@ hr.rule {
 }
 
 .statement-text {
-  font-size: 18px;
+  font-family: var(--serif);
+  font-size: 15px;
   line-height: 1.75;
-  font-weight: 400;
   color: var(--ink);
 }
 
@@ -443,7 +449,7 @@ hr.rule {
   gap: 14px;
   padding: 14px 18px;
   border: 1px solid var(--rule);
-  background: white;
+  background: var(--surface);
 }
 
 .gap-pill-num {
@@ -494,7 +500,7 @@ hr.rule {
 
 .q-card {
   border: 1px solid var(--rule);
-  background: white;
+  background: var(--surface);
   padding: 18px 22px;
   cursor: pointer;
   transition: all 0.15s;
@@ -552,7 +558,7 @@ hr.rule {
 .notes-area {
   width: 100%;
   min-height: 200px;
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--rule);
   padding: 20px 22px;
   font-family: var(--serif);
@@ -636,7 +642,7 @@ table.matrix {
 
 /* EXPORT */
 .export-preview {
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--rule);
   padding: 32px 36px;
   margin-bottom: 24px;
@@ -695,8 +701,8 @@ table.matrix {
 /* STRATEGIC Q */
 .strategic-block {
   border: 1px solid var(--rule);
-  padding: 22px 26px;
-  background: white;
+  padding: 18px 22px;
+  background: var(--surface);
   margin-bottom: 12px;
 }
 
