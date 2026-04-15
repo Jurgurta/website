@@ -207,12 +207,19 @@ table.mx { width: 100%; border-collapse: collapse; min-width: 600px; }
         <div class="status" id="statusLine"></div>
 
         <div id="promptBox" style="display:none;margin-bottom:20px;">
-          <div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-family:var(--mono);">Research prompt — copy and run in Claude, ChatGPT, or Perplexity</div>
-          <textarea id="promptText" readonly style="width:100%;height:180px;background:var(--surface);border:1px solid var(--border);padding:14px;font-family:var(--mono);font-size:11px;color:var(--text-mid);line-height:1.65;resize:vertical;outline:none;"></textarea>
-          <div style="margin-top:8px;display:flex;gap:10px;">
+          <div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-family:var(--mono);">Step 1 — Copy this prompt and run it in Claude or any LLM</div>
+          <textarea id="promptText" readonly style="width:100%;height:160px;background:var(--surface);border:1px solid var(--border);padding:14px;font-family:var(--mono);font-size:11px;color:var(--text-mid);line-height:1.65;resize:vertical;outline:none;"></textarea>
+          <div style="margin-top:8px;display:flex;gap:10px;margin-bottom:28px;">
             <button class="btn-main" id="copyPromptBtn" onclick="copyPrompt()">Copy prompt</button>
-            <a id="openClaude" href="#" onclick="openInClaude()" class="btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center;">Open in Claude</a>
+            <a href="#" onclick="openInClaude();return false;" class="btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center;">Open in Claude</a>
           </div>
+
+          <div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-family:var(--mono);">Step 2 — Paste the full LLM response here</div>
+          <textarea id="pasteBack" style="width:100%;height:200px;background:var(--surface);border:1px solid var(--border);padding:14px;font-family:var(--mono);font-size:11px;color:var(--text);line-height:1.65;resize:vertical;outline:none;" placeholder="Paste the full response from Claude or your LLM here. The tool will extract the initiatives automatically."></textarea>
+          <div style="margin-top:8px;">
+            <button class="btn-main" onclick="parseFromPaste()">Extract initiatives from response</button>
+          </div>
+          <div id="parseStatus" style="font-size:11px;color:var(--amber);margin-top:10px;font-family:var(--mono);"></div>
         </div>
         <div class="warn" id="warnBox"><b>Verification required.</b> Results are derived from public sources and inference. Treat every initiative as a hypothesis until verified against a primary source.</div>
         <div class="ini-list" id="iniList"><div class="empty-state">No initiatives yet. Run research or add manually.</div></div>
@@ -409,6 +416,107 @@ function openInClaude() {
   const text = document.getElementById('promptText').value;
   const url = 'https://claude.ai/new?q=' + encodeURIComponent(text);
   window.open(url, '_blank');
+}
+
+function parseFromPaste() {
+  const raw = document.getElementById('pasteBack').value.trim();
+  const status = document.getElementById('parseStatus');
+  if(!raw) { status.textContent = 'Nothing pasted yet.'; return; }
+
+  // Strategy 1: find {"initiatives":[...]} JSON block
+  const jsonMatch = raw.match(/\{\s*"initiatives"\s*:/);
+  if(jsonMatch) {
+    try {
+      const start = raw.indexOf(jsonMatch[0]);
+      let depth = 0, i = start, jsonStr = '';
+      for(; i < raw.length; i++) {
+        if(raw[i] === '{') depth++;
+        else if(raw[i] === '}') { depth--; if(depth === 0) { jsonStr = raw.slice(start, i+1); break; } }
+      }
+      if(jsonStr) {
+        const parsed = JSON.parse(jsonStr);
+        if(parsed.initiatives && parsed.initiatives.length) {
+          loadInitiatives(parsed.initiatives);
+          status.textContent = '';
+          return;
+        }
+      }
+    } catch(e) {}
+  }
+
+  // Strategy 2: parse structured text line by line
+  // Look for numbered or bulleted initiative blocks
+  const initiatives = [];
+  const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+
+  let current = null;
+  for(const line of lines) {
+    // Detect initiative header: numbered line or line with initiative name pattern
+    const headerMatch = line.match(/^(?:\d+\.?|[-*])\s+\*{0,2}(.+?)\*{0,2}$/);
+    const nameMatch = line.match(/^(?:name|initiative)\s*[:\-]\s*(.+)$/i);
+    const servesMatch = line.match(/^(?:serves?|participant|who)\s*[:\-]\s*(.+)$/i);
+    const layerMatch = line.match(/^(?:layer|type)\s*[:\-]\s*(.+)$/i);
+    const signalMatch = line.match(/^(?:signal|data|input)\s*[:\-]\s*(.+)$/i);
+    const sourceMatch = line.match(/^(?:source|from|found)\s*[:\-]\s*(.+)$/i);
+    const confMatch = line.match(/^(?:confidence)\s*[:\-]\s*(.+)$/i);
+
+    if(nameMatch) {
+      if(current) initiatives.push(current);
+      current = { name: nameMatch[1].trim(), serves:'Internal employee', layer:'internal', signal:'Not specified', confidence:'low', source:'' };
+    } else if(headerMatch && !servesMatch && !layerMatch && !signalMatch) {
+      if(current) initiatives.push(current);
+      current = { name: headerMatch[1].trim(), serves:'Internal employee', layer:'internal', signal:'Not specified', confidence:'low', source:'' };
+    } else if(current) {
+      if(servesMatch) current.serves = normalizeServes(servesMatch[1].trim());
+      if(layerMatch) current.layer = normalizeLayer(layerMatch[1].trim());
+      if(signalMatch) current.signal = signalMatch[1].trim();
+      if(sourceMatch) current.source = sourceMatch[1].trim();
+      if(confMatch) current.confidence = confMatch[1].toLowerCase().includes('high') ? 'high' : 'low';
+    }
+  }
+  if(current) initiatives.push(current);
+
+  if(initiatives.length > 0) {
+    loadInitiatives(initiatives);
+    status.textContent = '';
+    return;
+  }
+
+  status.textContent = 'Could not parse initiatives automatically. Use the Add manually button to enter them one by one.';
+}
+
+function normalizeServes(s) {
+  s = s.toLowerCase();
+  if(s.includes('buyer') || s.includes('customer') || s.includes('demand')) return 'Buyer';
+  if(s.includes('seller') || s.includes('dealer') || s.includes('supply') || s.includes('vendor')) return 'Seller or dealer';
+  if(s.includes('partner') || s.includes('ecosystem') || s.includes('oem') || s.includes('insurance')) return 'Partner or ecosystem participant';
+  return 'Internal employee';
+}
+
+function normalizeLayer(s) {
+  s = s.toLowerCase();
+  if(s.includes('product') || s.includes('customer-facing') || s.includes('buyer') || s.includes('seller')) return 'product';
+  if(s.includes('infra') || s.includes('platform') || s.includes('framework')) return 'infrastructure';
+  return 'internal';
+}
+
+function loadInitiatives(list) {
+  S.initiatives = list.map((x,i) => ({
+    id: 'ini-' + Date.now() + '-' + i,
+    name: x.name || 'Unnamed',
+    serves: x.serves || 'Internal employee',
+    layer: x.layer || 'internal',
+    signal: x.signal || 'Not specified',
+    confidence: x.confidence || 'low',
+    source: x.source || ''
+  }));
+  S.initiatives.forEach(ini => {
+    if(!S.matrix[ini.id]) { S.matrix[ini.id] = {}; DIMS.forEach(d => S.matrix[ini.id][d] = 'not-scope'); }
+  });
+  renderIniList();
+  document.getElementById('warnBox').classList.add('on');
+  document.getElementById('sd-research').classList.add('done');
+  document.getElementById('statusLine').innerHTML = '<span>Loaded ' + S.initiatives.length + ' initiative' + (S.initiatives.length!==1?'s':'') + '. Verify before proceeding.</span>';
 }
 
 function copyPrompt() {
