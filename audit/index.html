@@ -423,8 +423,18 @@ function parseFromPaste() {
   const status = document.getElementById('parseStatus');
   if(!raw) { status.textContent = 'Nothing pasted yet.'; return; }
 
-  // Strategy 1: find {"initiatives":[...]} JSON block
-  const jsonMatch = raw.match(/\{\s*"initiatives"\s*:/);
+  // Strategy 1: direct JSON with initiatives array
+  try {
+    const direct = JSON.parse(raw);
+    if(direct.initiatives && direct.initiatives.length) {
+      loadInitiatives(direct.initiatives);
+      status.textContent = '';
+      return;
+    }
+  } catch(e) {}
+
+  // Strategy 2: find {"initiatives":[...]} JSON block anywhere in text
+  const jsonMatch = raw.match(/\{[\s\S]*?"initiatives"\s*:\s*\[/);
   if(jsonMatch) {
     try {
       const start = raw.indexOf(jsonMatch[0]);
@@ -444,28 +454,50 @@ function parseFromPaste() {
     } catch(e) {}
   }
 
-  // Strategy 2: parse structured text line by line
-  // Look for numbered or bulleted initiative blocks
+  // Strategy 3: markdown table rows — | name | serves | layer | signal | conf | source |
+  const tableRows = raw.match(/\|[^\n]+\|/g);
+  if(tableRows && tableRows.length > 1) {
+    const initiatives = [];
+    for(const row of tableRows) {
+      const cells = row.split('|').map(c => c.trim()).filter(Boolean);
+      if(cells.length < 3) continue;
+      if(cells[0].match(/^[-:]+$/)) continue; // separator row
+      if(cells[0].toLowerCase().includes('name') || cells[0].toLowerCase().includes('initiative')) continue; // header
+      initiatives.push({
+        name: cells[0],
+        serves: normalizeServes(cells[1] || ''),
+        layer: normalizeLayer(cells[2] || ''),
+        signal: cells[3] || 'Not specified',
+        confidence: (cells[4] || '').toLowerCase().includes('high') ? 'high' : 'low',
+        source: cells[5] || ''
+      });
+    }
+    if(initiatives.length > 0) {
+      loadInitiatives(initiatives);
+      status.textContent = '';
+      return;
+    }
+  }
+
+  // Strategy 4: structured text blocks with name:/serves:/layer: fields
   const initiatives = [];
   const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
-
   let current = null;
   for(const line of lines) {
-    // Detect initiative header: numbered line or line with initiative name pattern
-    const headerMatch = line.match(/^(?:\d+\.?|[-*])\s+\*{0,2}(.+?)\*{0,2}$/);
-    const nameMatch = line.match(/^(?:name|initiative)\s*[:\-]\s*(.+)$/i);
-    const servesMatch = line.match(/^(?:serves?|participant|who)\s*[:\-]\s*(.+)$/i);
-    const layerMatch = line.match(/^(?:layer|type)\s*[:\-]\s*(.+)$/i);
-    const signalMatch = line.match(/^(?:signal|data|input)\s*[:\-]\s*(.+)$/i);
-    const sourceMatch = line.match(/^(?:source|from|found)\s*[:\-]\s*(.+)$/i);
-    const confMatch = line.match(/^(?:confidence)\s*[:\-]\s*(.+)$/i);
+    const nameMatch = line.match(/^(?:\d+\.\s*)?(?:name|initiative)\s*[:\-]\s*(.+)$/i);
+    const servesMatch = line.match(/^(?:serves?|participant|audience|who)\s*[:\-]\s*(.+)$/i);
+    const layerMatch = line.match(/^(?:layer|type|category)\s*[:\-]\s*(.+)$/i);
+    const signalMatch = line.match(/^(?:signal|data|input|primary input)\s*[:\-]\s*(.+)$/i);
+    const sourceMatch = line.match(/^(?:source|from|found at|reference)\s*[:\-]\s*(.+)$/i);
+    const confMatch = line.match(/^(?:confidence|conf)\s*[:\-]\s*(.+)$/i);
+    const numHeader = line.match(/^\d+\.\s+\*{0,2}([^\*\n]+?)\*{0,2}\s*$/);
 
     if(nameMatch) {
       if(current) initiatives.push(current);
       current = { name: nameMatch[1].trim(), serves:'Internal employee', layer:'internal', signal:'Not specified', confidence:'low', source:'' };
-    } else if(headerMatch && !servesMatch && !layerMatch && !signalMatch) {
+    } else if(numHeader && !servesMatch && !layerMatch) {
       if(current) initiatives.push(current);
-      current = { name: headerMatch[1].trim(), serves:'Internal employee', layer:'internal', signal:'Not specified', confidence:'low', source:'' };
+      current = { name: numHeader[1].trim(), serves:'Internal employee', layer:'internal', signal:'Not specified', confidence:'low', source:'' };
     } else if(current) {
       if(servesMatch) current.serves = normalizeServes(servesMatch[1].trim());
       if(layerMatch) current.layer = normalizeLayer(layerMatch[1].trim());
@@ -482,7 +514,7 @@ function parseFromPaste() {
     return;
   }
 
-  status.textContent = 'Could not parse initiatives automatically. Use the Add manually button to enter them one by one.';
+  status.textContent = 'Could not parse automatically. Paste the JSON format shown in the prompt, or use Add manually.';
 }
 
 function normalizeServes(s) {
