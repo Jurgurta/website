@@ -397,19 +397,24 @@ Return ONLY valid JSON: {"initiatives":[...]}. No markdown, no preamble. Do not 
     if(!res.ok) throw new Error('Worker returned ' + res.status);
     const data = await res.json();
 
-    // Collect all text from text blocks AND tool result blocks
+    // Collect all text from every block type comprehensively
     const allText = (data.content||[]).map(b => {
       if(b.type === 'text') return b.text || '';
-      if(b.type === 'tool_result' && b.content) {
+      if(b.type === 'tool_use' && b.input) return JSON.stringify(b.input);
+      if(b.type === 'tool_result') {
         if(typeof b.content === 'string') return b.content;
-        if(Array.isArray(b.content)) return b.content.map(c => c.text || '').join('');
+        if(Array.isArray(b.content)) return b.content.map(c => c.text || c.content || '').join('');
       }
-      return '';
+      return JSON.stringify(b);
     }).join('\n');
 
     // Find the initiatives JSON block specifically
     const m = allText.match(/\{\s*"initiatives"\s*:\s*\[/);
-    if(!m) throw new Error('No structured data in response. Try again or add manually.');
+    if(!m) {
+      // Show what we actually got to help debug
+      const preview = allText.substring(0, 300);
+      throw new Error('No initiatives JSON found. Response preview: ' + preview);
+    }
     const startIdx = allText.indexOf(m[0]);
 
     // Extract balanced JSON object
