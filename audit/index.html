@@ -201,10 +201,19 @@ table.mx { width: 100%; border-collapse: collapse; min-width: 600px; }
         <div class="ptitle" id="researchTitle">Research initiatives</div>
         <div class="pdesc">The LLM searches public sources for AI initiatives: product announcements, engineering blogs, job postings, investor materials. Verify every result. Low-confidence items are flagged.</div>
         <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
-          <button class="btn-main" id="researchBtn" onclick="runResearch()">Run LLM research</button>
+          <button class="btn-main" id="researchBtn" onclick="runResearch()">Generate research prompt</button>
           <button class="btn-ghost" onclick="toggleAddForm()">+ Add manually</button>
         </div>
         <div class="status" id="statusLine"></div>
+
+        <div id="promptBox" style="display:none;margin-bottom:20px;">
+          <div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-family:var(--mono);">Research prompt — copy and run in Claude, ChatGPT, or Perplexity</div>
+          <textarea id="promptText" readonly style="width:100%;height:180px;background:var(--surface);border:1px solid var(--border);padding:14px;font-family:var(--mono);font-size:11px;color:var(--text-mid);line-height:1.65;resize:vertical;outline:none;"></textarea>
+          <div style="margin-top:8px;display:flex;gap:10px;">
+            <button class="btn-main" id="copyPromptBtn" onclick="copyPrompt()">Copy prompt</button>
+            <a id="openClaude" href="#" onclick="openInClaude()" class="btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center;">Open in Claude</a>
+          </div>
+        </div>
         <div class="warn" id="warnBox"><b>Verification required.</b> Results are derived from public sources and inference. Treat every initiative as a hypothesis until verified against a primary source.</div>
         <div class="ini-list" id="iniList"><div class="empty-state">No initiatives yet. Run research or add manually.</div></div>
         <div class="add-form" id="addForm">
@@ -371,88 +380,45 @@ function updateSidebarDots(current) {
 }
 
 // ── RESEARCH ─────────────────────────────────────────────────────────────────
-async function runResearch() {
-  const btn = document.getElementById('researchBtn');
-  const sl = document.getElementById('statusLine');
-  btn.disabled = true;
-  sl.innerHTML = '<span class="pulse"></span><span>Searching public sources for ' + S.company + '...</span>';
+function runResearch() {
+  const prompt = `Research all known AI initiatives at ${S.company}.
 
-  // Cost-optimized system prompt: compact, no excess tokens
-  const sys = `Research AI initiatives at "${S.company}" from public sources only. Extract each as JSON with these fields: name, serves (one of: Buyer/Seller or dealer/Internal employee/Partner or ecosystem participant), layer (product/internal/infrastructure), signal (primary data input, 1 sentence), confidence (high=announced/low=inferred), source.
-Return ONLY valid JSON: {"initiatives":[...]}. No markdown, no preamble. Do not invent initiatives.`;
+For each initiative you find, extract exactly these fields:
+- name: short descriptive name of the initiative
+- serves: one of — Buyer / Seller or dealer / Internal employee / Partner or ecosystem participant
+- layer: one of — product / internal / infrastructure
+- signal: what data flows into this initiative as a primary input (1 sentence)
+- confidence: high if sourced from a direct announcement or product feature, low if inferred from job postings or indirect signals
+- source: brief note on where this was found
 
-  try {
-    const res = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 600,
-        system: sys,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: 'Find all known AI initiatives at ' + S.company + '.' }]
-      })
-    });
+Sources to search: product announcements, engineering blog, job postings, investor materials, and the product itself.
 
-    if(!res.ok) throw new Error('Worker returned ' + res.status);
-    const data = await res.json();
+Rules:
+- Only report initiatives that exist in public information. Do not invent.
+- Mark confidence low for anything inferred rather than directly stated.
+- Infrastructure means it enables other AI to be built, not that it serves participants directly.`;
 
-    // Collect all text from every block type comprehensively
-    const allText = (data.content||[]).map(b => {
-      if(b.type === 'text') return b.text || '';
-      if(b.type === 'tool_use' && b.input) return JSON.stringify(b.input);
-      if(b.type === 'tool_result') {
-        if(typeof b.content === 'string') return b.content;
-        if(Array.isArray(b.content)) return b.content.map(c => c.text || c.content || '').join('');
-      }
-      return JSON.stringify(b);
-    }).join('\n');
+  const promptBox = document.getElementById('promptBox');
+  const promptText = document.getElementById('promptText');
+  promptText.value = prompt;
+  promptBox.style.display = 'block';
+  document.getElementById('statusLine').innerHTML = '<span>Research prompt generated. Copy and run it in your preferred LLM or search tool.</span>';
+}
 
-    // Find the initiatives JSON block specifically
-    const m = allText.match(/\{\s*"initiatives"\s*:\s*\[/);
-    if(!m) {
-      // Show what we actually got to help debug
-      const preview = allText.substring(0, 300);
-      throw new Error('No initiatives JSON found. Response preview: ' + preview);
-    }
-    const startIdx = allText.indexOf(m[0]);
+function openInClaude() {
+  const text = document.getElementById('promptText').value;
+  const url = 'https://claude.ai/new?q=' + encodeURIComponent(text);
+  window.open(url, '_blank');
+}
 
-    // Extract balanced JSON object
-    let depth = 0, idx = startIdx, jsonStr = '';
-    for(; idx < allText.length; idx++) {
-      const ch = allText[idx];
-      if(ch === '{') depth++;
-      else if(ch === '}') { depth--; if(depth === 0) { jsonStr = allText.slice(startIdx, idx+1); break; } }
-    }
-    if(!jsonStr) throw new Error('Could not extract initiatives JSON. Try again or add manually.');
-
-    const parsed = JSON.parse(jsonStr);
-    if(!parsed.initiatives || !parsed.initiatives.length) throw new Error('No initiatives found. Add manually.');
-
-    S.initiatives = parsed.initiatives.map((x,i) => ({
-      id: 'ini-' + Date.now() + '-' + i,
-      name: x.name || 'Unnamed',
-      serves: x.serves || 'Internal employee',
-      layer: x.layer || 'internal',
-      signal: x.signal || 'Not specified',
-      confidence: x.confidence || 'low',
-      source: x.source || ''
-    }));
-
-    S.initiatives.forEach(ini => {
-      if(!S.matrix[ini.id]) { S.matrix[ini.id] = {}; DIMS.forEach(d => S.matrix[ini.id][d] = 'not-scope'); }
-    });
-
-    renderIniList();
-    sl.innerHTML = '<span>Found ' + S.initiatives.length + ' initiative' + (S.initiatives.length!==1?'s':'') + '. Verify before proceeding.</span>';
-    document.getElementById('warnBox').classList.add('on');
-    document.getElementById('sd-research').classList.add('done');
-
-  } catch(e) {
-    sl.innerHTML = '<span style="color:var(--amber)">' + e.message + '</span>';
-  } finally {
-    btn.disabled = false;
-  }
+function copyPrompt() {
+  const t = document.getElementById('promptText');
+  t.select();
+  navigator.clipboard.writeText(t.value).then(() => {
+    const btn = document.getElementById('copyPromptBtn');
+    btn.textContent = 'Copied';
+    setTimeout(() => btn.textContent = 'Copy prompt', 2000);
+  });
 }
 
 function renderIniList() {
