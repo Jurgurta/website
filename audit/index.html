@@ -397,23 +397,27 @@ Return ONLY valid JSON: {"initiatives":[...]}. No markdown, no preamble. Do not 
     if(!res.ok) throw new Error('Worker returned ' + res.status);
     const data = await res.json();
 
-    // Extract text blocks only, ignore tool_use and tool_result blocks
-    const txt = (data.content||[])
-      .filter(b => b.type === 'text')
-      .map(b => b.text)
-      .join('');
+    // Collect all text from text blocks AND tool result blocks
+    const allText = (data.content||[]).map(b => {
+      if(b.type === 'text') return b.text || '';
+      if(b.type === 'tool_result' && b.content) {
+        if(typeof b.content === 'string') return b.content;
+        if(Array.isArray(b.content)) return b.content.map(c => c.text || '').join('');
+      }
+      return '';
+    }).join('\n');
 
     // Find the initiatives JSON block specifically
-    const m = txt.match(/\{\s*"initiatives"\s*:\s*\[/);
-    if(!m) throw new Error('No structured data returned. Try again or add manually.');
-    const startIdx = txt.indexOf(m[0]);
+    const m = allText.match(/\{\s*"initiatives"\s*:\s*\[/);
+    if(!m) throw new Error('No structured data in response. Try again or add manually.');
+    const startIdx = allText.indexOf(m[0]);
 
-    // Extract balanced JSON object starting from that position
-    let depth = 0, i = startIdx, jsonStr = '';
-    for(; i < txt.length; i++) {
-      const ch = txt[i];
+    // Extract balanced JSON object
+    let depth = 0, idx = startIdx, jsonStr = '';
+    for(; idx < allText.length; idx++) {
+      const ch = allText[idx];
       if(ch === '{') depth++;
-      else if(ch === '}') { depth--; if(depth === 0) { jsonStr = txt.slice(startIdx, i+1); break; } }
+      else if(ch === '}') { depth--; if(depth === 0) { jsonStr = allText.slice(startIdx, idx+1); break; } }
     }
     if(!jsonStr) throw new Error('Could not extract initiatives JSON. Try again or add manually.');
 
