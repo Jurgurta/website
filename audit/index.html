@@ -629,6 +629,18 @@ function updateF(id, field, val) { const ini = S.initiatives.find(i=>i.id===id);
 function renderMatrix() {
   const tbody = document.getElementById('mxBody');
   if(!S.initiatives.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-dim)">No initiatives. Go back and add some.</td></tr>'; return; }
+
+  // Auto-score cells using framework logic, preserve any manual overrides
+  S.initiatives.forEach(ini => {
+    if(!S.matrix[ini.id]) S.matrix[ini.id] = {};
+    const auto = autoScore(ini);
+    DIMS.forEach(d => {
+      if(!S.matrix[ini.id][d] || S.matrix[ini.id][d] === 'not-scope') {
+        S.matrix[ini.id][d] = auto[d];
+      }
+    });
+  });
+
   tbody.innerHTML = S.initiatives.map(ini => `
     <tr>
       <td><div class="ini-nc">${ini.name}</div><div class="ini-ns">${ini.serves}</div></td>
@@ -642,6 +654,27 @@ function renderMatrix() {
       }).join('')}
     </tr>`).join('');
   checkEmpty();
+}
+
+function autoScore(ini) {
+  const serves = ini.serves || '';
+  const layer = ini.layer || '';
+  const signal = (ini.signal || '').toLowerCase();
+  const isBuyer = serves === 'Buyer';
+  const isSeller = serves === 'Seller or dealer';
+  const isPartner = serves === 'Partner or ecosystem participant';
+  const isEmployee = serves === 'Internal employee';
+  const isInternal = layer === 'internal';
+  const isInfra = layer === 'infrastructure';
+
+  return {
+    buyerSignal: isBuyer ? 'in-scope' : 'not-scope',
+    sellerSignal: isSeller ? 'in-scope' : 'not-scope',
+    partnerLayer: isPartner ? 'in-scope' : 'not-scope',
+    crossParticipant: 'not-scope',
+    internalOps: (isEmployee || isInternal || isInfra) ? 'in-scope' : 'not-scope',
+    systemicOutcome: 'not-scope'
+  };
 }
 
 function updateScore(id, dim, val) { if(!S.matrix[id]) S.matrix[id]={}; S.matrix[id][dim]=val; }
