@@ -388,22 +388,20 @@ function updateSidebarDots(current) {
 
 // ── RESEARCH ─────────────────────────────────────────────────────────────────
 function runResearch() {
-  const prompt = `Research all known AI initiatives at ${S.company}.
+  const prompt = `Research all known AI initiatives at ${S.company}. Return ONLY a JSON object in this exact format with no other text, no markdown, no explanation before or after:
 
-For each initiative you find, extract exactly these fields:
-- name: short descriptive name of the initiative
-- serves: one of — Buyer / Seller or dealer / Internal employee / Partner or ecosystem participant
-- layer: one of — product / internal / infrastructure
-- signal: what data flows into this initiative as a primary input (1 sentence)
-- confidence: high if sourced from a direct announcement or product feature, low if inferred from job postings or indirect signals
-- source: brief note on where this was found
+{"initiatives":[{"name":"...","serves":"...","layer":"...","signal":"...","confidence":"...","source":"..."}]}
 
-Sources to search: product announcements, engineering blog, job postings, investor materials, and the product itself.
+Field rules:
+- name: short descriptive name
+- serves: exactly one of these values: Buyer | Seller or dealer | Internal employee | Partner or ecosystem participant
+- layer: exactly one of these values: product | internal | infrastructure
+- signal: what data flows in as primary input, 1 sentence
+- confidence: high if from direct announcement, low if inferred
+- source: where you found it
 
-Rules:
-- Only report initiatives that exist in public information. Do not invent.
-- Mark confidence low for anything inferred rather than directly stated.
-- Infrastructure means it enables other AI to be built, not that it serves participants directly.`;
+Sources to search: product announcements, engineering blog, job postings, investor materials, the product itself.
+Only include initiatives confirmed in public information. Do not invent. Return raw JSON only.`;
 
   const promptBox = document.getElementById('promptBox');
   const promptText = document.getElementById('promptText');
