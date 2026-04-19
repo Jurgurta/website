@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Sebastian Thielke is a Systems Synthesist based in Berlin. Creator of 14 original frameworks spanning agentic enterprise architecture, platform economics, and organizational design including AME, ANIM, MLPlat, and Human in Meaning.">
+<meta name="description" content="Sebastian Thielke is a Systems Synthesist based in Berlin. Creator of 16 original frameworks spanning agentic enterprise architecture, platform economics, and organizational design including AME, ANIM, MLPlat, and Human in Meaning.">
 <meta name="keywords" content="Sebastian Thielke, Systems Synthesist, platform economics, agentic enterprise, AME, ANIM, Human in Meaning, AAST, MLPlat, Minimal Loveable Platform, Fifth Participant, Drift Detection, Temporary Company, Liquid Talent Deployment, enterprise AI, Berlin">
 <meta name="author" content="Sebastian Thielke">
 <meta name="robots" content="index, follow">
@@ -13,14 +13,14 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sebastianthielke.com/">
 <meta property="og:title" content="Sebastian Thielke · Systems Synthesist">
-<meta property="og:description" content="14 original frameworks spanning agentic enterprise, platform economics, and organizational design. Built from cross-domain synthesis across 11+ disciplines.">
+<meta property="og:description" content="16 original frameworks spanning agentic enterprise, platform economics, and organizational design. Built from cross-domain synthesis across 11+ disciplines.">
 <meta property="og:site_name" content="Sebastian Thielke">
 <meta property="og:locale" content="en_GB">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sebastian Thielke · Systems Synthesist">
-<meta name="twitter:description" content="14 original frameworks spanning agentic enterprise, platform economics, and organizational design.">
+<meta name="twitter:description" content="16 original frameworks spanning agentic enterprise, platform economics, and organizational design.">
 <meta name="twitter:site" content="@sebastianthielke">
 
 <!-- Geo -->
@@ -116,7 +116,7 @@ section { padding: 6rem 4rem; border-bottom: 1px solid var(--line); }
 .writing-section .section-label { color: var(--gold); }
 .writing-section .section-label::after { background: rgba(242,237,227,0.1); }
 .writing-intro { font-size: 1rem; font-style: italic; color: rgba(242,237,227,0.5); max-width: 580px; margin-bottom: 3rem; line-height: 1.75; }
-.wc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.wc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
 .wc { padding: 2.5rem; border: 1px solid rgba(242,237,227,0.08); text-decoration: none; color: inherit; display: block; position: relative; overflow: hidden; transition: border-color 0.3s; }
 .wc:hover { border-color: var(--gold); }
 .wc::before { content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 0; background: var(--gold); transition: height 0.35s ease; }
@@ -125,6 +125,10 @@ section { padding: 6rem 4rem; border-bottom: 1px solid var(--line); }
 .wc-title { font-size: clamp(17px, 2vw, 24px); font-style: italic; color: var(--paper); margin-bottom: 1rem; line-height: 1.25; }
 .wc-desc { font-size: 0.88rem; color: rgba(242,237,227,0.5); line-height: 1.65; }
 .wc-cta { margin-top: 1.5rem; font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.wc-expand { display: none; margin-top: 1.5rem; font-size: 0.88rem; color: rgba(242,237,227,0.6); line-height: 1.7; border-top: 1px solid rgba(242,237,227,0.08); padding-top: 1.2rem; }
+.wc.expanded .wc-expand { display: block; }
+.wc.expanded .wc-cta-text::after { content: ' ↑'; }
+.wc:not(.expanded) .wc-cta-text::after { content: ' ↓'; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
 .contact-hed { font-size: clamp(34px, 4.5vw, 64px); font-style: italic; font-weight: 400; line-height: 1.05; color: var(--ink); }
 .contact-hed em { font-style: normal; color: var(--rust); display: block; }
@@ -240,7 +244,7 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
   <p class="hero-desc">I build original frameworks from the intersection of domains most people keep separate: dentistry, rowing, nursing, LARP command, linguistics, and enterprise platform economics. The synthesis is the work.</p>
   <div class="hero-stats">
     <div><div class="stat-num">11+</div><div class="stat-label">Domains synthesised</div></div>
-    <div><div class="stat-num">14</div><div class="stat-label">Original frameworks</div></div>
+    <div><div class="stat-num">16</div><div class="stat-label">Original frameworks</div></div>
     <div><div class="stat-num">15+</div><div class="stat-label">Fortune 500 clients</div></div>
   </div>
 </div>
@@ -268,7 +272,7 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
 
 <section id="frameworks">
   <div class="section-label">The work</div>
-  <p class="fw-intro reveal">14 original frameworks. None borrowed from existing literature. Each emerged from a specific problem encountered in practice, resolved through cross-domain synthesis, and stress-tested against real organizational conditions.</p>
+  <p class="fw-intro reveal">16 original frameworks. None borrowed from existing literature. Each emerged from a specific problem encountered in practice, resolved through cross-domain synthesis, and stress-tested against real organizational conditions.</p>
 
   <div class="fw-group reveal">
     <button class="fw-group-toggle open" onclick="toggleGroup(this)">
@@ -306,6 +310,14 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
       <div><div class="fw-name">Drift Detection</div><div class="fw-desc">A methodology for identifying semantic, behavioral, and structural drift in agentic systems over time. Addresses the gap between what an agent was designed to do and what it actually does after extended deployment.</div></div>
       <span class="fw-arrow">&#8594;</span>
     </div>
+    <div class="fw-item">
+      <div class="fw-num">07</div>
+      <div>
+        <div class="fw-name">Human-Agent Organisation Architecture</div>
+        <div class="fw-desc">Most organisations add agents to existing structures and wonder why nothing fundamentally changes. This architecture starts from a different premise. The organisation operates across three levels simultaneously — team, platform, ecosystem — with agents woven in from the foundation up. Humans hold meaning. Augments maintain coherence against that meaning. Outcome-driven speed at scale.</div>
+      </div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
     </div>
   </div>
 
@@ -316,27 +328,32 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
     </button>
     <div class="fw-group-body">
     <div class="fw-item">
-      <span class="fw-num">07</span>
+      <span class="fw-num">08</span>
       <div><div class="fw-name">Platform Economics Acceleration (PEA)</div><div class="fw-desc">Built from zero. L100 to L300 certification pathways, multi-sided platform architecture, and ecosystem design applied across Fortune 500 clients in EMEA, APAC, and AMER.</div></div>
       <span class="fw-arrow">&#8594;</span>
     </div>
     <div class="fw-item">
-      <span class="fw-num">08</span>
+      <span class="fw-num">09</span>
       <div><div class="fw-name">The Fifth Participant</div><div class="fw-desc">AI agents as a distinct participant type in platform economics: their own win condition, deployment value accumulation logic, and network effects. Distinct from the traditional four: producers, consumers, partners, orchestrators.</div></div>
       <span class="fw-arrow">&#8594;</span>
     </div>
     <div class="fw-item">
-      <span class="fw-num">09</span>
-      <div><div class="fw-name">Launchpad</div><div class="fw-desc">A structured acceleration framework for platform initiatives moving from concept to market. Defines the sequencing logic, stakeholder alignment, and minimum viable ecosystem conditions required for a platform to reach self-sustaining network effects.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
       <span class="fw-num">10</span>
-      <div><div class="fw-name">Minimal Loveable Platform (MLPlat)</div><div class="fw-desc">A platform cannot start with two participants. MLPlat defines the minimum viable starting condition: three participants, each interaction driven by a challenge, each challenge solved generating a product. Three products working in concert create the first transactions. Value flows across four dimensions: money, data, innovation, and collaboration. This is the missing logic in platform business creation. It is how you innovate, build, run, and scale a platform economy from the ground up.</div></div>
+      <div><div class="fw-name">Disjunction Matrix</div><div class="fw-desc">A structural analysis framework that makes the invisible visible in AI portfolios. Every initiative is mapped against six dimensions of the business. One column is almost always empty across every row — not because the capability is absent, but because nobody commissioned the work. That column is the diagnosis. The gap between individual initiative quality and systemic portfolio outcome.</div></div>
       <span class="fw-arrow">&#8594;</span>
     </div>
     <div class="fw-item">
       <span class="fw-num">11</span>
+      <div><div class="fw-name">Launchpad</div><div class="fw-desc">A structured acceleration framework for platform initiatives moving from concept to market. Defines the sequencing logic, stakeholder alignment, and minimum viable ecosystem conditions required for a platform to reach self-sustaining network effects.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">12</span>
+      <div><div class="fw-name">Minimal Loveable Platform (MLPlat)</div><div class="fw-desc">A platform cannot start with two participants. MLPlat defines the minimum viable starting condition: three participants, each interaction driven by a challenge, each challenge solved generating a product. Three products working in concert create the first transactions. Value flows across four dimensions: money, data, innovation, and collaboration. This is the missing logic in platform business creation. It is how you innovate, build, run, and scale a platform economy from the ground up.</div></div>
+      <span class="fw-arrow">&#8594;</span>
+    </div>
+    <div class="fw-item">
+      <span class="fw-num">13</span>
       <div><div class="fw-name">End-to-End Capability Framework</div><div class="fw-desc">A mapping of the full capability chain required to deliver platform value: from technical infrastructure through product, commercial, and ecosystem layers. Exposes the gaps organizations mistake for execution problems when they are architecture problems.</div></div>
       <span class="fw-arrow">&#8594;</span>
     </div>
@@ -350,17 +367,17 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
     </button>
     <div class="fw-group-body">
     <div class="fw-item">
-      <span class="fw-num">12</span>
+      <span class="fw-num">14</span>
       <div><div class="fw-name">The Temporary Company</div><div class="fw-desc">A model for organizations that scale through composable, temporary structures rather than permanent headcount accumulation. Informed by the thermodynamic principle that fighting entropy with entropy generates disorder.</div></div>
       <span class="fw-arrow">&#8594;</span>
     </div>
     <div class="fw-item">
-      <span class="fw-num">13</span>
+      <span class="fw-num">15</span>
       <div><div class="fw-name">Liquid Talent Deployment</div><div class="fw-desc">A framework for matching capability to demand in real time across organizational boundaries. Treats talent as a flow rather than a stock, enabling organizations to respond to complexity without accumulating structural rigidity.</div></div>
       <span class="fw-arrow">&#8594;</span>
     </div>
     <div class="fw-item">
-      <span class="fw-num">14</span>
+      <span class="fw-num">16</span>
       <div><div class="fw-name">Enterprise Product Management Enablement</div><div class="fw-desc">A capability-building system for product management in large organizations. Addresses the structural reasons enterprise PM fails: misaligned incentives, absent discovery discipline, and conflation of roadmap management with product leadership.</div></div>
       <span class="fw-arrow">&#8594;</span>
     </div>
@@ -405,6 +422,13 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
       <div class="wc-desc">Active publication exploring agentic systems, platform economics, and organizational entropy. Articles on AME architecture, ANIM as active executor, failure modes, and the governance principles missing from the AI deployment conversation.</div>
       <div class="wc-cta">Read &#8594; schwarzpfad.substack.com</div>
     </a>
+    <div class="wc reveal" onclick="this.classList.toggle('expanded')" style="cursor:pointer;">
+      <div class="wc-type">Framework</div>
+      <div class="wc-title">Human-Agent Organisation Architecture</div>
+      <div class="wc-desc">Most organisations add agents to existing structures. The Human-Agent Organisation Architecture is what you build instead. A three-level operating system for outcome-driven speed at scale.</div>
+      <div class="wc-expand">Speed without direction fills the bin faster. Direction without speed fills it with things nobody needed in time. Most organisations solve one and neglect the other. HAO is the architecture that runs both simultaneously.<br><br>HAO organises around three levels. The team is the operating unit — it crystallises around an outcome, activates when the viability conditions are met, and dissolves when the work is done. The platform is organisational memory — it retains what every team learns and makes it available to the next team before they start. The ecosystem is the compounding mechanism — each build makes the next one faster and cheaper to validate.<br><br>Agents are not added to this system. They are woven into it as augments. Not tools. Not teammates. Extensions of human reach that maintain coherence against the meaning humans hold. ANIM routes signal without command and control. AME orchestrates participants without hierarchy. Human in Meaning keeps the whole system oriented toward what the work is actually for.</div>
+      <div class="wc-cta"><span class="wc-cta-text">Read more</span></div>
+    </div>
     <a href="https://www.linkedin.com/in/sebastianthielke/" target="_blank" class="wc reveal">
       <div class="wc-type">LinkedIn</div>
       <div class="wc-title">Where frameworks meet pushback</div>
