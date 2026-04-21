@@ -764,10 +764,17 @@ function buildDiagnosis() {
     parts.push(bd.join(', ') + '. ');
   }
   if(emptyCols.length) {
-    const names = emptyCols.map(d=>DIM_LABELS[d]).join(' and ');
-    parts.push('No initiative is designed to address ' + names + '. ');
-    if(emptyCols.includes('systemicOutcome')) parts.push('The Systemic Outcome column is empty across every row because no initiative has been given a system-level brief. That is the work that has not yet been commissioned.');
-    else parts.push('The ' + names + ' column' + (emptyCols.length>1?'s are':' is') + ' empty across every row. Name what the business should be producing systemically that no initiative is currently designed to create.');
+    // Systemic Outcome is always the primary finding if present
+    if(emptyCols.includes('systemicOutcome')) {
+      const others = emptyCols.filter(d=>d!=='systemicOutcome');
+      if(others.length) {
+        parts.push('No initiative addresses the ' + others.map(d=>DIM_LABELS[d]).join(' or ') + ' dimension. ');
+      }
+      parts.push('The Systemic Outcome column is empty across every row because no initiative has been given a system-level brief. That is the work that has not yet been commissioned.');
+    } else {
+      const names = emptyCols.map(d=>DIM_LABELS[d]).join(' and ');
+      parts.push('The ' + names + ' column' + (emptyCols.length>1?'s are':' is') + ' empty across every row. No initiative was designed to address this dimension. Name what the business should be producing at this level that no initiative currently creates.');
+    }
   } else if(!total) { parts.push('No initiatives entered yet.'); }
   else { parts.push('No column is fully empty. Review Partial scores — partial coverage is not the same as designed-in intent.'); }
 
@@ -802,7 +809,7 @@ function buildPayload() {
     company: S.company,
     diagnosticStatement: document.getElementById('diagText').textContent,
     confirmedGaps: confirmed,
-    emptyColumn: emptyCols.length ? DIM_LABELS[emptyCols[0]] : 'Systemic Outcome',
+    emptyColumn: emptyCols.includes('systemicOutcome') ? 'Systemic Outcome' : (emptyCols.length ? DIM_LABELS[emptyCols[0]] : 'Systemic Outcome'),
     emptyCols: emptyCols,
     initiatives: S.initiatives,
     matrix: S.matrix
