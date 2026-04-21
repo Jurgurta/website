@@ -24,7 +24,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 13px; line-height: 1.6; min-height: 100vh; }
 
-/* IMPORT SCREEN */
 #importScreen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 100; }
 .import-box { width: 480px; border: 1px solid var(--border-light); padding: 48px; position: relative; background: var(--bg); }
 .import-box::before { content: ''; position: absolute; top: -1px; left: 40px; width: 80px; height: 2px; background: var(--accent); }
@@ -35,64 +34,65 @@ body { background: var(--bg); color: var(--text); font-family: var(--mono); font
 .import-btn:hover { opacity: .85; }
 .import-note { font-size: 10px; color: var(--text-dim); line-height: 1.6; margin-top: 20px; }
 
-/* APP */
 #app { display: none; }
+
 header { border-bottom: 1px solid var(--border); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--bg); z-index: 10; }
 .header-left { display: flex; align-items: baseline; gap: 14px; }
 .app-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
 .company-tag { font-family: var(--serif); font-size: 18px; font-weight: 400; font-style: italic; }
-.reset-btn { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); background: none; border: 1px solid var(--border-light); padding: 5px 11px; cursor: pointer; font-family: var(--mono); transition: all .15s; }
-.reset-btn:hover { color: var(--text); border-color: var(--text); }
+.header-right { display: flex; gap: 12px; align-items: center; }
+.btn-header { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); background: none; border: 1px solid var(--border-light); padding: 5px 11px; cursor: pointer; font-family: var(--mono); transition: all .15s; }
+.btn-header:hover { color: var(--text); border-color: var(--text); }
+.btn-header.primary { background: var(--accent); color: white; border-color: var(--accent); }
+.btn-header.primary:hover { opacity: .85; }
 
-.main { max-width: 860px; margin: 0 auto; padding: 40px 32px; }
+.main { max-width: 820px; margin: 0 auto; padding: 40px 32px 80px; }
 
-/* DIGEST */
-.digest { border: 1px solid var(--border); background: var(--surface); padding: 20px 24px; margin-bottom: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.digest-item label { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 4px; }
-.digest-item p { font-size: 14px; font-family: var(--serif); font-style: italic; color: var(--text); }
-.digest-item p.alert { color: var(--accent); }
+/* DIAGNOSIS BANNER */
+.diag-banner { border-left: 3px solid var(--accent); padding: 20px 24px; background: var(--surface); margin-bottom: 40px; }
+.diag-banner .label { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.diag-banner .text { font-family: var(--serif); font-size: 15px; line-height: 1.75; font-style: italic; }
+.diag-meta { display: flex; gap: 24px; margin-top: 12px; flex-wrap: wrap; }
+.diag-meta span { font-size: 10px; color: var(--text-dim); }
+.diag-meta strong { color: var(--accent); }
 
 /* SECTION */
-.section { margin-bottom: 40px; }
-.section-eyebrow { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.section-head { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
 
-/* QUESTIONS */
-.q-list { display: flex; flex-direction: column; gap: 8px; }
-.q-item { border: 1px solid var(--border); background: var(--surface); padding: 14px 18px; display: flex; align-items: flex-start; gap: 14px; cursor: pointer; transition: border-color .15s; }
-.q-item:hover { border-color: var(--border-light); }
-.q-item.used { opacity: .45; }
-.q-num { font-size: 9px; color: var(--text-dim); flex-shrink: 0; padding-top: 2px; min-width: 20px; }
-.q-body { flex: 1; }
-.q-text { font-size: 13px; color: var(--text); line-height: 1.6; margin-bottom: 4px; }
-.q-tag { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); }
-.q-mark { width: 18px; height: 18px; border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 9px; color: transparent; flex-shrink: 0; cursor: pointer; transition: all .15s; margin-top: 2px; }
-.q-item.used .q-mark { background: var(--accent); border-color: var(--accent); color: white; }
+/* QUESTION BLOCK */
+.q-block { margin-bottom: 28px; border: 1px solid var(--border); background: white; }
+.q-block.answered { border-color: var(--green); }
+.q-header { padding: 14px 18px; display: flex; align-items: flex-start; gap: 14px; border-bottom: 1px solid var(--border); }
+.q-block.answered .q-header { border-bottom-color: rgba(42,96,64,0.2); }
+.q-num { font-size: 9px; color: var(--text-dim); flex-shrink: 0; padding-top: 3px; min-width: 24px; }
+.q-content { flex: 1; }
+.q-source { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
+.q-text { font-size: 14px; color: var(--text); line-height: 1.6; font-family: var(--serif); font-style: italic; }
+.q-status { flex-shrink: 0; width: 20px; height: 20px; border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer; transition: all .15s; margin-top: 2px; }
+.q-block.answered .q-status { background: var(--green); border-color: var(--green); color: white; }
+.q-answer { padding: 0; }
+.q-answer textarea { width: 100%; background: transparent; border: none; padding: 14px 18px; font-family: var(--mono); font-size: 12px; color: var(--text); outline: none; resize: vertical; min-height: 80px; line-height: 1.65; }
+.q-answer textarea::placeholder { color: var(--text-dim); font-style: italic; }
+.q-answer textarea:focus { background: rgba(255,255,255,0.6); }
 
 /* STRATEGIC ASK */
-.strategic { border-left: 3px solid var(--accent); padding: 16px 20px; background: var(--surface); margin-bottom: 10px; }
-.strategic .s-label { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-.strategic p { font-size: 14px; font-family: var(--serif); font-style: italic; line-height: 1.7; color: var(--text); }
+.strategic-block { border: 1px solid var(--accent); background: var(--accent-dim); padding: 20px 24px; margin-bottom: 28px; }
+.strategic-block .s-label { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.strategic-block .s-q { font-family: var(--serif); font-size: 15px; font-style: italic; line-height: 1.7; margin-bottom: 12px; }
+.strategic-block .s-answer textarea { width: 100%; background: white; border: 1px solid var(--border); padding: 12px 14px; font-family: var(--mono); font-size: 12px; color: var(--text); outline: none; resize: vertical; min-height: 80px; line-height: 1.65; margin-top: 8px; }
+.strategic-block .s-answer textarea::placeholder { color: var(--text-dim); font-style: italic; }
 
-/* NOTES */
-.notes-area { width: 100%; min-height: 180px; background: var(--surface); border: 1px solid var(--border); padding: 16px 18px; font-family: var(--mono); font-size: 12px; color: var(--text); outline: none; resize: vertical; line-height: 1.7; transition: border-color .15s; }
-.notes-area:focus { border-color: var(--border-light); }
-.notes-area::placeholder { color: var(--text-dim); font-style: italic; }
-.notes-meta { display: flex; justify-content: space-between; margin-top: 6px; font-size: 10px; color: var(--text-dim); }
+hr.rule { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
 
-/* CAPTURE */
-.capture-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
-.cap-btn { background: transparent; border: 1px solid var(--border); padding: 8px 12px; font-family: var(--mono); font-size: 10px; color: var(--text-dim); cursor: pointer; text-align: left; line-height: 1.5; transition: all .15s; }
-.cap-btn:hover { color: var(--text); border-color: var(--border-light); background: var(--surface); }
-
-/* EXPORT */
-.export-area { background: var(--surface); border: 1px solid var(--border); padding: 18px; font-size: 11px; line-height: 1.75; color: var(--text-mid); white-space: pre-wrap; font-family: var(--mono); max-height: 280px; overflow-y: auto; margin-bottom: 14px; }
+/* OUTPUT */
+.output-preview { background: var(--surface); border: 1px solid var(--border); padding: 20px; font-size: 11px; line-height: 1.8; color: var(--text-mid); white-space: pre-wrap; font-family: var(--mono); max-height: 320px; overflow-y: auto; margin-bottom: 14px; }
 .action-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .btn-main { background: var(--accent); color: #fff; border: none; padding: 10px 22px; font-family: var(--mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: opacity .15s; }
 .btn-main:hover { opacity: .85; }
 .btn-ghost { background: transparent; color: var(--text-mid); border: 1px solid var(--border); padding: 9px 18px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: all .15s; }
 .btn-ghost:hover { color: var(--text); border-color: var(--text-dim); }
 
-hr.rule { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+.section-mb { margin-bottom: 40px; }
 </style>
 </head>
 <body>
@@ -101,10 +101,10 @@ hr.rule { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
   <div class="import-box">
     <div class="import-label">Interview Tool</div>
     <div class="import-title">Import your audit.</div>
-    <div class="import-sub">Load the JSON export from the AI Audit Tool. Questions are generated from the actual findings.</div>
+    <div class="import-sub">Load the JSON from the AI Audit Tool. Questions are generated from your specific findings, with space to record answers during the interview.</div>
     <button class="import-btn" onclick="document.getElementById('fileInput').click()">Import audit JSON</button>
     <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadFile(event)">
-    <div class="import-note">Export the JSON from sebastianthielke.com/audit after completing the matrix and gap steps.</div>
+    <div class="import-note">Complete the audit at sebastianthielke.com/audit, then export the JSON from Step 6.</div>
   </div>
 </div>
 
@@ -114,54 +114,45 @@ hr.rule { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
       <span class="app-label">Interview</span>
       <span class="company-tag" id="hCompany"></span>
     </div>
-    <button class="reset-btn" onclick="location.reload()">Reset</button>
+    <div class="header-right">
+      <button class="btn-header" onclick="openFullReport()">Open full report</button>
+      <button class="btn-header primary" onclick="buildAndShowOutput()">Export session</button>
+      <button class="btn-header" onclick="location.reload()">Reset</button>
+    </div>
   </header>
 
   <div class="main">
 
-    <!-- DIGEST -->
-    <div class="digest" id="digest"></div>
+    <!-- DIAGNOSIS -->
+    <div class="diag-banner" id="diagBanner"></div>
 
     <!-- OPENING QUESTIONS -->
-    <div class="section">
-      <div class="section-eyebrow">Opening — establish the structural frame</div>
-      <div class="q-list" id="openingQs"></div>
+    <div class="section-mb">
+      <div class="section-head">Opening — establish the structural frame</div>
+      <div id="openingQs"></div>
     </div>
 
-    <!-- GAP-SPECIFIC QUESTIONS -->
-    <div class="section" id="gapQsSection">
-      <div class="section-eyebrow">Gap-specific — derived from your matrix</div>
-      <div class="q-list" id="gapQs"></div>
+    <!-- GAP QUESTIONS -->
+    <div class="section-mb" id="gapSection">
+      <div class="section-head">Gap-specific questions — derived from your matrix</div>
+      <div id="gapQs"></div>
     </div>
 
     <!-- STRATEGIC ASK -->
-    <div class="section">
-      <div class="section-eyebrow">The strategic ask</div>
+    <div class="section-mb">
+      <div class="section-head">The strategic ask</div>
       <div id="strategicAsk"></div>
     </div>
 
     <hr class="rule">
 
-    <!-- LIVE NOTES -->
-    <div class="section">
-      <div class="section-eyebrow">Live notes</div>
-      <textarea class="notes-area" id="notesArea" placeholder="Note what confirms or contradicts your analysis. What does the interviewer reveal about how the company thinks about the systemic question?"></textarea>
-      <div class="notes-meta">
-        <span id="noteCount">0 characters</span>
-        <span id="noteSaved" style="color:var(--green)"></span>
-      </div>
-      <div class="capture-grid" id="captureGrid"></div>
-    </div>
-
-    <hr class="rule">
-
-    <!-- EXPORT -->
-    <div class="section">
-      <div class="section-eyebrow">Export session</div>
-      <div class="export-area" id="exportArea"></div>
+    <!-- OUTPUT -->
+    <div class="section-mb" id="outputSection" style="display:none">
+      <div class="section-head">Session export</div>
+      <div class="output-preview" id="outputPreview"></div>
       <div class="action-row">
-        <button class="btn-main" onclick="downloadTxt()">Download .txt</button>
-        <button class="btn-ghost" onclick="copyExport(event)">Copy</button>
+        <button class="btn-main" onclick="downloadSession()">Download .txt</button>
+        <button class="btn-ghost" onclick="copySession(event)">Copy</button>
       </div>
     </div>
 
@@ -170,54 +161,69 @@ hr.rule { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
 
 <script>
 const GAP_DATA = {
-  1: { title: 'No cross-participant intelligence', questions: [
-    { text: 'What data from the demand side flows into your supply-side tooling as a primary input?', tag: 'Gap 1' },
-    { text: 'If you removed the buyer-facing AI entirely, what would change for sellers? And vice versa?', tag: 'Gap 1' },
-    { text: 'Which initiative, if any, holds signals from both sides of the business simultaneously?', tag: 'Gap 1' }
-  ]},
-  2: { title: 'Internal and external are disconnected', questions: [
-    { text: 'How do the productivity gains from internal AI tooling translate into outcomes for external participants?', tag: 'Gap 2' },
-    { text: 'Is there a design intent connecting what internal AI does to what participants experience?', tag: 'Gap 2' }
-  ]},
-  3: { title: 'Infrastructure without brief', questions: [
-    { text: 'What business-level brief has been given to the infrastructure layer?', tag: 'Gap 3' },
-    { text: 'What is the platform expected to do for the business system once it is mature?', tag: 'Gap 3' }
-  ]},
-  4: { title: 'Partner and ecosystem layer absent', questions: [
-    { text: 'Which ecosystem partners are currently generating data that any AI initiative is reading?', tag: 'Gap 4' },
-    { text: 'Is there a roadmap for bringing partners into the AI layer?', tag: 'Gap 4' }
-  ]},
-  5: { title: 'No demand-to-supply feedback loop', questions: [
-    { text: 'Where does the demand-side behavioral signal go after it is captured in an interaction?', tag: 'Gap 5' },
-    { text: 'Is there a feedback loop that completes a circuit from demand-side data back to supply-side strategy?', tag: 'Gap 5' }
-  ]},
-  6: { title: 'Adoption is cultural, not structural', questions: [
-    { text: 'How does AI adoption get coordinated across teams at the portfolio level, not just the initiative level?', tag: 'Gap 6' },
-    { text: 'Who is accountable for what all the AI initiatives produce together, as opposed to individually?', tag: 'Gap 6' }
-  ]}
+  1: {
+    title: 'No cross-participant intelligence',
+    questions: [
+      'What data from the demand side flows into your supply-side tooling as a primary input?',
+      'If you removed the buyer-facing AI entirely, what would change for sellers? And vice versa?',
+      'Which initiative, if any, holds signals from both sides of the business simultaneously?'
+    ]
+  },
+  2: {
+    title: 'Internal and external are disconnected',
+    questions: [
+      'How do the productivity gains from internal AI translate into outcomes for external participants?',
+      'Is there a design intent connecting what internal AI does to what participants actually experience?'
+    ]
+  },
+  3: {
+    title: 'Infrastructure without brief',
+    questions: [
+      'What business-level brief has been given to the infrastructure or platform layer?',
+      'What is the platform expected to do for the business system once it matures?'
+    ]
+  },
+  4: {
+    title: 'Partner and ecosystem layer absent',
+    questions: [
+      'Which ecosystem partners are currently generating data that any AI initiative is reading?',
+      'Is there a roadmap for bringing partners or ecosystem participants into the AI layer?'
+    ]
+  },
+  5: {
+    title: 'No demand-to-supply feedback loop',
+    questions: [
+      'Where does the demand-side signal go after it is captured in an interaction?',
+      'Is there a feedback loop that routes demand-side data back into supply-side strategy?'
+    ]
+  },
+  6: {
+    title: 'Adoption is cultural, not structural',
+    questions: [
+      'How is AI adoption coordinated across teams at the portfolio level, not just initiative level?',
+      'Who is accountable for what all the AI initiatives produce together, as opposed to individually?'
+    ]
+  }
 };
 
 const OPENING_QS = [
-  { text: 'How do you think about your AI portfolio as a whole, as opposed to the individual initiatives within it?', tag: 'Portfolio framing' },
-  { text: 'Which AI initiative has produced the most value for the business, and how do you measure that?', tag: 'Value definition' },
-  { text: 'Where is AI currently touching both sides of the business simultaneously?', tag: 'Cross-participant probe' },
-  { text: 'What is the infrastructure layer currently being asked to do beyond standardizing development?', tag: 'Infrastructure brief' }
+  { q: 'How do you think about your AI portfolio as a whole, as opposed to individual initiatives?', tag: 'Portfolio framing' },
+  { q: 'Which AI initiative has produced the most value for the business, and how do you measure that?', tag: 'Value definition' },
+  { q: 'Where is AI currently touching both sides of the business simultaneously?', tag: 'Cross-participant probe' },
+  { q: 'What is the infrastructure layer currently being asked to do beyond standardising development?', tag: 'Infrastructure brief' }
 ];
 
-let S = { company: '', gaps: [], emptyColumn: '', diagnosticStatement: '', initiatives: [], notes: '' };
+let S = {};
+let answers = {};
+let strategicAnswer = '';
 
 function loadFile(e) {
   const file = e.target.files[0];
-  if(!file) return;
+  if (!file) return;
   const reader = new FileReader();
   reader.onload = ev => {
     try {
-      const data = JSON.parse(ev.target.result);
-      S.company = data.company || '';
-      S.gaps = data.confirmedGaps || [];
-      S.emptyColumn = data.emptyColumn || 'Systemic Outcome';
-      S.diagnosticStatement = data.diagnosticStatement || '';
-      S.initiatives = data.initiatives || [];
+      S = JSON.parse(ev.target.result);
       launch();
     } catch(err) {
       alert('Could not read the file. Make sure it is a valid JSON export from the Audit Tool.');
@@ -229,158 +235,256 @@ function loadFile(e) {
 function launch() {
   document.getElementById('importScreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  document.getElementById('hCompany').textContent = S.company;
-  renderDigest();
+  document.getElementById('hCompany').textContent = S.company || '';
+  renderDiagnosis();
   renderOpeningQuestions();
   renderGapQuestions();
   renderStrategicAsk();
-  renderCapture();
-  buildExport();
 }
 
-function renderDigest() {
-  const prod = S.initiatives.filter(i=>i.layer==='product').length;
-  const intl = S.initiatives.filter(i=>i.layer==='internal').length;
-  const infra = S.initiatives.filter(i=>i.layer==='infrastructure').length;
-  document.getElementById('digest').innerHTML = `
-    <div class="digest-item"><label>Company</label><p>${S.company}</p></div>
-    <div class="digest-item"><label>Empty column</label><p class="alert">${S.emptyColumn}</p></div>
-    <div class="digest-item"><label>Gaps confirmed</label><p class="alert">${S.gaps.length}</p></div>
-    <div class="digest-item"><label>Initiatives</label><p>${S.initiatives.length} total</p></div>
-    <div class="digest-item"><label>Layers</label><p>${prod} product / ${intl} internal / ${infra} infra</p></div>
-    <div class="digest-item"><label>Diagnosis</label><p style="font-size:11px;font-style:normal;font-family:var(--mono);color:var(--text-dim)">${S.diagnosticStatement.slice(0,80)}...</p></div>
-  `;
+function renderDiagnosis() {
+  const prod = (S.initiatives||[]).filter(i=>i.layer==='product').length;
+  const intl = (S.initiatives||[]).filter(i=>i.layer==='internal').length;
+  const infra = (S.initiatives||[]).filter(i=>i.layer==='infrastructure').length;
+  document.getElementById('diagBanner').innerHTML = `
+    <div class="label">Audit finding — ${S.company}</div>
+    <div class="text">${S.diagnosticStatement || 'No diagnostic statement found.'}</div>
+    <div class="diag-meta">
+      <span><strong>${S.emptyColumn || 'Systemic Outcome'}</strong> is the empty column</span>
+      <span><strong>${(S.confirmedGaps||[]).length}</strong> gaps confirmed</span>
+      <span><strong>${prod}</strong> product / <strong>${intl}</strong> internal / <strong>${infra}</strong> infrastructure</span>
+    </div>`;
 }
 
 function renderOpeningQuestions() {
-  document.getElementById('openingQs').innerHTML = OPENING_QS.map((q,i) => `
-    <div class="q-item" id="oq-${i}" onclick="toggleUsed('oq-${i}')">
-      <div class="q-num">${String(i+1).padStart(2,'0')}</div>
-      <div class="q-body">
-        <div class="q-text">${q.text}</div>
-        <div class="q-tag">${q.tag}</div>
+  document.getElementById('openingQs').innerHTML = OPENING_QS.map((item, i) => {
+    const id = 'oq-' + i;
+    return `<div class="q-block" id="${id}">
+      <div class="q-header">
+        <div class="q-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="q-content">
+          <div class="q-source">${item.tag}</div>
+          <div class="q-text">${item.q}</div>
+        </div>
+        <div class="q-status" onclick="toggleAnswered('${id}')">✓</div>
       </div>
-      <div class="q-mark">✓</div>
-    </div>`).join('');
+      <div class="q-answer">
+        <textarea placeholder="Record the answer here..." oninput="saveAnswer('${id}', this.value)"></textarea>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function renderGapQuestions() {
-  const section = document.getElementById('gapQsSection');
-  if(!S.gaps.length) { section.style.display = 'none'; return; }
-
+  const gaps = S.confirmedGaps || [];
+  if (!gaps.length) {
+    document.getElementById('gapSection').style.display = 'none';
+    return;
+  }
   let html = '';
-  let qNum = 1;
-  S.gaps.forEach(n => {
+  let qNum = OPENING_QS.length + 1;
+  gaps.forEach(n => {
     const g = GAP_DATA[n];
-    if(!g) return;
-    html += `<div style="margin-bottom:20px;">
-      <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;padding:4px 0;border-bottom:1px solid var(--border);">Gap ${n}: ${g.title}</div>
-      ${g.questions.map((q,i) => `
-        <div class="q-item" id="gq-${n}-${i}" onclick="toggleUsed('gq-${n}-${i}')" style="margin-bottom:6px;">
+    if (!g) return;
+    g.questions.forEach((q, i) => {
+      const id = 'gq-' + n + '-' + i;
+      html += `<div class="q-block" id="${id}">
+        <div class="q-header">
           <div class="q-num">${String(qNum++).padStart(2,'0')}</div>
-          <div class="q-body">
-            <div class="q-text">${q.text}</div>
-            <div class="q-tag">${q.tag}</div>
+          <div class="q-content">
+            <div class="q-source">Gap ${n}: ${g.title}</div>
+            <div class="q-text">${q}</div>
           </div>
-          <div class="q-mark">✓</div>
-        </div>`).join('')}
-    </div>`;
+          <div class="q-status" onclick="toggleAnswered('${id}')">✓</div>
+        </div>
+        <div class="q-answer">
+          <textarea placeholder="Record the answer here..." oninput="saveAnswer('${id}', this.value)"></textarea>
+        </div>
+      </div>`;
+    });
   });
   document.getElementById('gapQs').innerHTML = html;
 }
 
 function renderStrategicAsk() {
+  const company = S.company || 'the company';
   const emptyCol = S.emptyColumn || 'Systemic Outcome';
   document.getElementById('strategicAsk').innerHTML = `
-    <div class="strategic">
-      <div class="s-label">Primary question</div>
-      <p>Which AI initiative at ${S.company}, if any, is designed to improve outcomes for both sides of the business simultaneously?</p>
+    <div class="strategic-block">
+      <div class="s-label">Primary strategic question</div>
+      <div class="s-q">Which AI initiative at ${company}, if any, is designed to improve outcomes for both sides of the business simultaneously?</div>
+      <div class="s-q" style="font-size:13px;color:var(--text-dim);margin-bottom:0;">If they cannot name one: The ${emptyCol} column is empty across every row. No initiative has been given a system-level brief. That is the work that has not yet been commissioned.</div>
+      <div class="s-answer">
+        <textarea placeholder="Record the response here..." oninput="strategicAnswer = this.value"></textarea>
+      </div>
     </div>
-    <div class="strategic" style="border-color:var(--border);">
-      <div class="s-label">If they cannot name one</div>
-      <p>The Systemic Outcome column is empty across every row. No initiative has been given a system-level brief. That is the work that has not yet been commissioned.</p>
-    </div>
-    <div class="strategic" style="border-color:var(--border);">
+    <div class="strategic-block" style="border-color:var(--border);background:transparent;margin-top:10px;">
       <div class="s-label">Follow-on</div>
-      <p>Where does the demand-side signal go after it is captured? Does it inform supply-side strategy, or does it stay inside the interaction it was collected in?</p>
+      <div class="s-q">Where does the demand-side signal go after it is captured? Does it inform supply-side strategy, or does it stay inside the interaction it was collected in?</div>
     </div>`;
 }
 
-function renderCapture() {
-  const fixed = [
-    'They confirmed the empty column.',
-    'They disputed the gap analysis.',
-    'They named a cross-participant initiative.',
-    'They could not name a systemic outcome initiative.',
-    'Data architecture came up as a barrier.',
-    'Organizational ownership of the systemic question is unclear.'
-  ];
-  document.getElementById('captureGrid').innerHTML = fixed.map(t =>
-    `<button class="cap-btn" onclick="appendNote('${t}')">${t}</button>`
-  ).join('');
+function toggleAnswered(id) {
+  const block = document.getElementById(id);
+  block.classList.toggle('answered');
+  const status = block.querySelector('.q-status');
+  status.textContent = block.classList.contains('answered') ? '✓' : '✓';
 }
 
-function toggleUsed(id) {
-  document.getElementById(id).classList.toggle('used');
+function saveAnswer(id, val) {
+  answers[id] = val;
 }
 
-function appendNote(text) {
-  const area = document.getElementById('notesArea');
-  const ts = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-  area.value += (area.value ? '\n' : '') + '[' + ts + '] ' + text;
-  S.notes = area.value;
-  updateNotesMeta();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const area = document.getElementById('notesArea');
-  if(area) area.addEventListener('input', () => {
-    S.notes = area.value;
-    updateNotesMeta();
-  });
-});
-
-function updateNotesMeta() {
-  const count = document.getElementById('notesArea').value.length;
-  document.getElementById('noteCount').textContent = count + ' character' + (count !== 1 ? 's' : '');
-  const saved = document.getElementById('noteSaved');
-  saved.textContent = 'Saved';
-  setTimeout(() => saved.textContent = '', 1500);
-}
-
-function buildExport() {
-  const lines = [
-    'INTERVIEW SESSION: ' + S.company.toUpperCase(),
-    '='.repeat(50), '',
-    'DIAGNOSTIC STATEMENT', '-'.repeat(40),
-    S.diagnosticStatement, '',
-    'EMPTY COLUMN', '-'.repeat(40),
-    S.emptyColumn, '',
-    'CONFIRMED GAPS', '-'.repeat(40),
-    ...S.gaps.map(n => 'Gap ' + n + ': ' + (GAP_DATA[n] ? GAP_DATA[n].title : '')), '',
-    'STRATEGIC QUESTION', '-'.repeat(40),
-    'Which AI initiative at ' + S.company + ', if any, is designed to improve outcomes for both sides of the business simultaneously?'
-  ];
-  if(S.notes) {
-    lines.push('', 'LIVE NOTES', '-'.repeat(40), S.notes);
+function buildOutput() {
+  const lines = [];
+  lines.push('INTERVIEW SESSION: ' + (S.company||'').toUpperCase());
+  lines.push('='.repeat(60));
+  lines.push('');
+  lines.push('AUDIT FINDING');
+  lines.push('-'.repeat(40));
+  lines.push(S.diagnosticStatement || '');
+  lines.push('');
+  lines.push('Empty column: ' + (S.emptyColumn || 'Systemic Outcome'));
+  if ((S.confirmedGaps||[]).length) {
+    lines.push('Confirmed gaps: ' + S.confirmedGaps.map(n => 'Gap ' + n + ' (' + (GAP_DATA[n]?.title||'') + ')').join(' | '));
   }
-  const text = lines.join('\n');
-  document.getElementById('exportArea').textContent = text;
-  return text;
+  lines.push('');
+  lines.push('OPENING QUESTIONS');
+  lines.push('-'.repeat(40));
+  OPENING_QS.forEach((item, i) => {
+    const id = 'oq-' + i;
+    lines.push('');
+    lines.push('Q' + String(i+1).padStart(2,'0') + ' [' + item.tag + ']');
+    lines.push(item.q);
+    const ans = answers[id];
+    if (ans && ans.trim()) {
+      lines.push('Answer: ' + ans.trim());
+    } else {
+      lines.push('Answer: —');
+    }
+  });
+
+  const gaps = S.confirmedGaps || [];
+  if (gaps.length) {
+    lines.push('');
+    lines.push('GAP-SPECIFIC QUESTIONS');
+    lines.push('-'.repeat(40));
+    let qNum = OPENING_QS.length + 1;
+    gaps.forEach(n => {
+      const g = GAP_DATA[n];
+      if (!g) return;
+      lines.push('');
+      lines.push('Gap ' + n + ': ' + g.title);
+      g.questions.forEach((q, i) => {
+        const id = 'gq-' + n + '-' + i;
+        lines.push('');
+        lines.push('Q' + String(qNum++).padStart(2,'0') + ' ' + q);
+        const ans = answers[id];
+        if (ans && ans.trim()) {
+          lines.push('Answer: ' + ans.trim());
+        } else {
+          lines.push('Answer: —');
+        }
+      });
+    });
+  }
+
+  lines.push('');
+  lines.push('STRATEGIC ASK');
+  lines.push('-'.repeat(40));
+  lines.push('Which AI initiative at ' + (S.company||'the company') + ', if any, is designed to improve outcomes for both sides of the business simultaneously?');
+  if (strategicAnswer && strategicAnswer.trim()) {
+    lines.push('Answer: ' + strategicAnswer.trim());
+  } else {
+    lines.push('Answer: —');
+  }
+
+  return lines.join('\n');
 }
 
-function downloadTxt() {
-  const text = buildExport();
+function buildAndShowOutput() {
+  const text = buildOutput();
+  document.getElementById('outputPreview').textContent = text;
+  document.getElementById('outputSection').style.display = 'block';
+  document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function downloadSession() {
+  const text = buildOutput();
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain' }));
-  a.download = 'interview-' + S.company.toLowerCase().replace(/\s+/g, '-') + '.txt';
+  a.download = 'interview-' + (S.company||'session').toLowerCase().replace(/\s+/g,'-') + '.txt';
   a.click();
 }
 
-function copyExport(e) {
-  navigator.clipboard.writeText(buildExport()).then(() => {
+function copySession(e) {
+  navigator.clipboard.writeText(buildOutput()).then(() => {
     const b = e.target; b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy', 2000);
   });
+}
+
+function openFullReport() {
+  if (!S.company) return;
+  const GAP_TEXT = {
+    1: 'AI serves one participant type or another, never the relationship between them simultaneously.',
+    2: 'Internal efficiency tools operate entirely inside the organisation. Efficiency gains do not compound into business value.',
+    3: 'A platform or framework exists but has no business-level strategy to serve. The blueprint exists. The strategy does not.',
+    4: 'Financing partners, integrations, and third-party ecosystem participants generate significant value and data. AI is not touching that layer.',
+    5: 'Demand-side behaviour data is not feeding supply-side strategy. The signal is used for one interaction and not completed back.',
+    6: 'AI adoption is driven by teams experimenting independently. That produces local competency without systemic coherence.'
+  };
+  const gaps = (S.confirmedGaps||[]);
+  const gapsHTML = gaps.length
+    ? gaps.map(n => `<div style="margin-bottom:20px;"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">${GAP_DATA[n]?.title||'Gap '+n}</div><div style="font-size:12px;color:#4a4438;line-height:1.65;">${GAP_TEXT[n]||''}</div></div>`).join('')
+    : '<p style="color:#7a7060;font-style:italic;">No gaps confirmed.</p>';
+
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${S.company} — Interview Brief</title>
+  <style>*{box-sizing:border-box;margin:0;padding:0}body{background:#f5f0e8;color:#0e0d0b;font-family:'Courier New',monospace;font-size:13px;line-height:1.6}.page{max-width:800px;margin:0 auto;padding:60px}@media print{body{background:white}.no-print{display:none}@page{margin:2cm}}.print-btn{position:fixed;top:24px;right:24px;background:#b83020;color:white;border:none;padding:10px 22px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;}.print-btn:hover{opacity:.85}h1{font-family:Georgia,serif;font-size:32px;font-weight:700;margin-bottom:6px}h2{font-family:Georgia,serif;font-size:14px;font-weight:400;font-style:italic;color:#7a7060;margin-bottom:40px}.sl{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#b83020;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #b83020}.rule{border:none;border-top:1px solid #d8d2c6;margin:40px 0}.diag{background:#0e0d0b;color:#f5f0e8;padding:28px 32px}.diag .dl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#b83020;margin-bottom:12px}.diag p{font-family:Georgia,serif;font-size:15px;line-height:1.75}.q-item{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #e8e2d8}.q-source{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#b83020;margin-bottom:4px}.q-text{font-family:Georgia,serif;font-size:14px;font-style:italic;line-height:1.6;margin-bottom:8px}.q-ans{font-size:12px;color:#4a4438;background:#ede8dc;padding:10px 12px;min-height:40px;}</style>
+  </head><body>
+  <button class="print-btn no-print" onclick="window.print()">Save as PDF</button>
+  <div class="page">
+  <h1>${S.company}</h1>
+  <h2>Interview Brief — ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</h2>
+
+  <div class="sl">Audit Finding</div>
+  <div class="diag"><div class="dl">Diagnostic statement</div><p>${S.diagnosticStatement||''}</p></div>
+
+  <hr class="rule">
+  <div class="sl">Questions and Answers</div>
+
+  ${OPENING_QS.map((item,i) => {
+    const id = 'oq-' + i;
+    const ans = answers[id] || '';
+    return `<div class="q-item"><div class="q-source">${item.tag}</div><div class="q-text">${item.q}</div><div class="q-ans">${ans || '&nbsp;'}</div></div>`;
+  }).join('')}
+
+  ${gaps.map(n => {
+    const g = GAP_DATA[n];
+    if(!g) return '';
+    return g.questions.map((q,i) => {
+      const id = 'gq-' + n + '-' + i;
+      const ans = answers[id] || '';
+      return `<div class="q-item"><div class="q-source">Gap ${n}: ${g.title}</div><div class="q-text">${q}</div><div class="q-ans">${ans || '&nbsp;'}</div></div>`;
+    }).join('');
+  }).join('')}
+
+  <hr class="rule">
+  <div class="sl">Strategic Ask</div>
+  <div class="q-item">
+    <div class="q-text" style="font-family:Georgia,serif;font-size:14px;font-style:italic;">Which AI initiative at ${S.company}, if any, is designed to improve outcomes for both sides of the business simultaneously?</div>
+    <div class="q-ans">${strategicAnswer || '&nbsp;'}</div>
+  </div>
+
+  <hr class="rule">
+  <div class="sl">Confirmed Gaps</div>
+  ${gapsHTML}
+
+  <p style="margin-top:40px;font-size:10px;color:#9a9080;letter-spacing:.1em;">AI Initiative Audit — sebastianthielke.com</p>
+  </div></body></html>`;
+
+  const w = window.open('', '_blank');
+  w.document.write(html);
+  w.document.close();
 }
 </script>
 </body>
