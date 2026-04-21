@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="How Sebastian Thielke's frameworks emerged from cross-domain synthesis. D&D, rowing, linguistics, dental anatomy, archery, Warhammer, snowboarding. Each domain contributed specific transferable principles to the frameworks that followed.">
+<meta name="keywords" content="Sebastian Thielke, Systems Synthesist, System Decoder, cross-domain synthesis, AME, ANIM, adaptive mesh ecosystem, pattern recognition, enterprise architecture, Berlin">
+<meta name="author" content="Sebastian Thielke">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sebastianthielke.com/synthesis">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sebastianthielke.com/synthesis">
+<meta property="og:title" content="The Synthesis · Sebastian Thielke">
+<meta property="og:description" content="How cross-domain pattern recognition produced 16 original frameworks. D&D, rowing, linguistics, dental anatomy, archery, Warhammer, snowboarding. Each domain contributed specific principles to the frameworks that followed.">
+<meta property="og:site_name" content="Sebastian Thielke">
+<meta name="geo.region" content="DE-BE">
+<meta name="geo.placename" content="Berlin, Germany">
+<title>The Synthesis · Sebastian Thielke</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0e0d0b; --paper: #f2ede3; --rust: #b83020;
+  --gold: #a07828; --muted: #7a7060; --line: rgba(14,13,11,0.13);
+  --serif: Georgia, 'Times New Roman', serif;
+  --mono: 'Courier New', Courier, monospace;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: 17px; line-height: 1.7; overflow-x: hidden; }
+nav { display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 4rem; border-bottom: 1px solid var(--line); }
+.nav-id { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-id:hover { color: var(--rust); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--rust); }
+.page-header { padding: 5rem 4rem 4rem; border-bottom: 1px solid var(--line); }
+.page-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--rust); margin-bottom: 1.5rem; }
+.page-title { font-size: clamp(42px, 7vw, 88px); font-weight: 400; font-style: italic; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 2rem; }
+.page-intro { max-width: 640px; font-size: 1.05rem; font-style: italic; color: var(--muted); line-height: 1.75; }
+.engine-section { padding: 5rem 4rem; border-bottom: 1px solid var(--line); background: var(--ink); color: var(--paper); }
+.engine-label { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; }
+.engine-hed { font-size: clamp(24px, 3vw, 38px); font-style: italic; font-weight: 400; line-height: 1.2; margin-bottom: 2rem; color: var(--paper); max-width: 700px; }
+.engine-body { font-size: 0.95rem; color: rgba(242,237,227,0.65); line-height: 1.8; max-width: 680px; }
+.engine-body p + p { margin-top: 1rem; }
+section.domains { padding: 5rem 4rem; border-bottom: 1px solid var(--line); }
+.section-label { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--rust); margin-bottom: 3rem; display: flex; align-items: center; gap: 1.5rem; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.domain-entry { display: grid; grid-template-columns: 3rem 200px 1fr; gap: 0 3rem; padding: 3rem 0; border-top: 1px solid var(--line); align-items: start; }
+.domain-entry:last-child { border-bottom: 1px solid var(--line); }
+.domain-num { font-family: var(--mono); font-size: 0.55rem; color: var(--muted); padding-top: 0.4rem; }
+.domain-meta { padding-top: 0.3rem; }
+.domain-name { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.6rem; }
+.domain-fw-label { font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; margin-top: 1rem; }
+.domain-fw-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.domain-fw { font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.08em; color: var(--ink); background: rgba(160,120,40,0.08); border: 1px solid rgba(160,120,40,0.2); padding: 0.2rem 0.5rem; }
+.domain-title { font-size: clamp(18px, 2.2vw, 28px); font-style: italic; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 0.8rem; }
+.domain-body { font-size: 0.92rem; color: var(--muted); line-height: 1.75; max-width: 580px; margin-bottom: 1rem; }
+.domain-principle { font-size: 0.88rem; color: var(--ink); font-style: italic; border-left: 2px solid var(--rust); padding-left: 1rem; margin-top: 1rem; max-width: 520px; }
+.domain-link { display: inline-block; margin-top: 1.2rem; font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust); text-decoration: none; }
+.domain-link:hover { text-decoration: underline; }
+.series-section { padding: 4rem; border-bottom: 1px solid var(--line); background: rgba(14,13,11,0.02); }
+.series-inner { max-width: 680px; }
+.series-label { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+.series-text { font-size: 0.95rem; color: var(--muted); line-height: 1.8; }
+.series-link { display: inline-block; margin-top: 1.5rem; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust); text-decoration: none; }
+.series-link:hover { text-decoration: underline; }
+footer { padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+.footer-id { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.footer-back { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-back:hover { color: var(--rust); }
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (max-width: 720px) {
+  nav, .page-header, section.domains, .engine-section, .series-section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .domain-entry { grid-template-columns: 2rem 1fr; }
+  .domain-meta { grid-column: 2; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-id">Sebastian Thielke / Systems Synthesist</a>
+  <ul class="nav-links">
+    <li><a href="/#frameworks">Frameworks</a></li>
+    <li><a href="/#writing">Writing</a></li>
+    <li><a href="/work">Work</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-label reveal">The Synthesis</div>
+  <h1 class="page-title reveal">Where the<br>frameworks<br>came from.</h1>
+  <p class="page-intro reveal">The frameworks did not emerge from business literature or consulting methodology. They emerged from pattern recognition across domains most people keep separate. This is the record of which domain contributed what, and why the connection was not obvious until it was.</p>
+</div>
+
+<div class="engine-section">
+  <div class="engine-label reveal">The cognitive engine</div>
+  <h2 class="engine-hed reveal">I think in multi-causal, n-dimensional patterns. Not as a method. As a cognitive architecture.</h2>
+  <div class="engine-body reveal">
+    <p>Most people trace linear paths through problems. A causes B causes C. Fix A, solve the problem. I cannot process problems that way. Not even when I try. I see multiple causes creating single effects, single causes creating multiple effects, and problems existing at multiple layers simultaneously.</p>
+    <p>This is not something I learned. It is how my brain processes complexity. Years of biology, physics, and biochemistry at university taught me that systems exist at multiple levels at once: cellular, organ, organism. You cannot understand one without understanding all three simultaneously. Dante showed me that reality has layers that coexist rather than stack. Homer showed me multi-causal narrative threads across time and space. Leibniz gave me language for the observer effect. Schrödinger showed me that enterprise systems exist in multiple states simultaneously until you measure them. The measurement does not reveal the state. It creates it.</p>
+    <p>AME and ANIM are not frameworks I designed through abstract reasoning. They are how my brain naturally organises complexity, formalised into something others can use.</p>
+  </div>
+</div>
+
+<section class="domains">
+  <div class="section-label reveal">The domains</div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">01</div>
+    <div class="domain-meta">
+      <div class="domain-name">How I See Things</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">AME</span><span class="domain-fw">All frameworks</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">The pattern beneath the chaos</div>
+      <div class="domain-body">I cannot play a game without deconstructing its systems. I cannot study a language without mapping its evolution patterns. I cannot ride a trail without reading the terrain's underlying logic. For years I thought this was just how my brain worked. Maybe even a distraction from real work. It turned out to be the operating principle behind everything that followed. The AME framework did not come from MBA textbooks. It crystallised from decades of pattern recognition across radically different domains. When I tell clients to treat their organisation like a living ecosystem rather than a machine, I am not using a metaphor. I am applying principles observed in mycelial networks, language evolution, rowing synchronisation, and modular game mechanics.</div>
+      <div class="domain-principle">Finding the deep structure beneath surface complexity. This is the work that precedes every framework.</div>
+      <a href="https://schwarzpfad.substack.com/p/system-decoder-how-i-see-things" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">02</div>
+    <div class="domain-meta">
+      <div class="domain-name">Dungeon Mastering</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">AME</span><span class="domain-fw">ANIM</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">Ecosystem orchestration. Creating conditions, not outcomes</div>
+      <div class="domain-body">Early in my D&D campaigns I scripted everything. Planned NPCs, predetermined outcomes. The players always broke it. The best sessions emerged when I stopped orchestrating outcomes and started orchestrating possibilities: clear rules, rich environments, meaningful choices, and consequences that rippled through the world. A great campaign operates like a living ecosystem. You do not dictate. You enable discovery. When a Fortune 500 client faced supply chain disruptions, we did not create a rigid playbook. We created an AME ecosystem where intelligent nodes had clear objectives and adapted locally. The system discovered solutions engineers had not predicted.</div>
+      <div class="domain-principle">Orchestration is not control. It is creating the conditions where intelligence can emerge.</div>
+      <a href="https://schwarzpfad.substack.com/p/what-dungeon-mastering-taught-me" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">03</div>
+    <div class="domain-meta">
+      <div class="domain-name">Gloomhaven</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">AME</span><span class="domain-fw">MLPlat</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">Composability beats optimisation</div>
+      <div class="domain-body">I had a card I almost retired: weak damage, mediocre range, strange timing. Then I discovered that combined with two teammates' abilities it created devastating synergies. What looked like a design oversight was elegant systems thinking. Most enterprises optimise individual components to perfection, then wonder why systems cannot adapt when markets shift. Each piece is perfect in isolation. None can recombine to meet unexpected challenges. The AME framework emphasises composability over optimisation: capability modules designed to be mixed and recombined as needs evolve.</div>
+      <div class="domain-principle">The power is not in individual components. It is in emergent synergies that players discover.</div>
+      <a href="https://schwarzpfad.substack.com/p/the-gloomhaven-problem-why-composability" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">04</div>
+    <div class="domain-meta">
+      <div class="domain-name">Rowing</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">ANIM</span><span class="domain-fw">AME</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">Distributed intelligence. The crew that stops watching and starts feeling</div>
+      <div class="domain-body">From 1992 to 2011 I taught rowing at the University of Greifswald. New rowers would try to watch the stroke seat, waiting for visual cues. They would fall behind, disrupt the rhythm, fight the boat. Then something would shift. They would stop watching and start feeling. The real coordination happened through distributed sensing: hull pressure, rigger vibration, blade resistance. I recognised this pattern during a manufacturing implementation. Centralised orchestration was too slow. Switching to distributed intelligence, with quality control nodes sensing problems and immediately signalling production nodes, the system found its flow. This is what ANIM does.</div>
+      <div class="domain-principle">You cannot orchestrate an enterprise ecosystem with detailed central commands. You set strategic rhythm, then trust the system to find its flow.</div>
+      <a href="https://schwarzpfad.substack.com/p/what-rowing-taught-me-about-distributed" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">05</div>
+    <div class="domain-meta">
+      <div class="domain-name">Linguistics</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">AME</span><span class="domain-fw">Drift Detection</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">Organic evolution. No committee decided to change Old English</div>
+      <div class="domain-body">No committee decided to change Old English into Middle English into Modern English. No CEO issued a memo. Yet organically, through millions of individual interactions over centuries, English evolved from an unrecognisable Germanic dialect into the global lingua franca. Complex adaptive systems do not transform through central planning. They evolve through distributed mutation and selection pressure. Early in my platform transformation work I tried to force centralised data platform transitions. Teams resisted, workarounds proliferated. Switching to composable modules that teams could adopt piecemeal, one team discovered real-time data mesh made their work faster, word spread, another adapted the approach, and adoption exceeded what months of mandates could not achieve.</div>
+      <div class="domain-principle">You cannot design evolution. You can create conditions that favour it.</div>
+      <a href="https://schwarzpfad.substack.com/p/from-old-english-to-adaptive-systems" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">06</div>
+    <div class="domain-meta">
+      <div class="domain-name">Dental Anatomy</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">AME Foundation Layer</span><span class="domain-fw">ANIM</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">Hierarchical modularity with precise interfaces</div>
+      <div class="domain-body">I spent three years studying dentistry before switching to communication sciences. A molar is an intricate modular system: the crown handles stress, the roots anchor, the pulp houses nerves, the dentin provides structure. Each component is specialised and precisely interfaced. If one fails, you can often save the tooth by treating that module alone. When I built the Foundation Layer of AME, dental architecture was the model. The root canal system taught me about communication networks: redundant and localised, so when one pathway fails, others compensate. The periodontal ligament creates feedback where each tooth senses pressure and communicates with surrounding teeth. This is what intelligent platform nodes should do.</div>
+      <div class="domain-principle">The precision of biological interfaces is what software engineers miss. No gap, no overlap. That is what your API boundaries should look like.</div>
+      <a href="https://schwarzpfad.substack.com/p/what-dental-anatomy-reveals-about" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">07</div>
+    <div class="domain-meta">
+      <div class="domain-name">Snowboarding</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">AME Connectivity Layer</span><span class="domain-fw">HAO</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">Momentum creates stability. Slow is not safe</div>
+      <div class="domain-body">When linking turns down a steep slope, going slower feels safer. It is not. Slow turns are unstable. You lose edge control and your board chatters rather than carves. Speed gives you stability. When you commit to the fall line with momentum, your edges bite and you can make precise adjustments. At speed, micro-changes in snow texture come through immediately. You are processing dozens of terrain signals per second. Slow down and those signals blur: you are guessing instead of sensing. Enterprises try to slow down to reduce risk when markets shift rapidly. They add approval layers, demand more analysis. This creates the same instability as slow snowboard turns. The AME Connectivity Layer is designed for momentum-based sensing.</div>
+      <div class="domain-principle">In complex adaptive systems, momentum is not reckless. It is what gives you the stability to sense accurately and respond precisely.</div>
+      <a href="https://schwarzpfad.substack.com/p/why-momentum-beats-caution-in-complex" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">08</div>
+    <div class="domain-meta">
+      <div class="domain-name">Two Bows</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">AME Foundation</span><span class="domain-fw">AME Execution</span><span class="domain-fw">HAO</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">Two architectures. Kyudo and English longbow</div>
+      <div class="domain-body">I learned English longbow as a LARP regiment captain: how different woods behave, how arrow weight affects trajectory, how wind reads through the shaft. Then I experienced Kyudo in a dojo in Hiroshima. Everything I knew about archery became irrelevant. In Kyudo there is no iteration. There is only perfecting the way through repetition. Same weapon. Incompatible operating systems. Enterprises try to run both simultaneously. The answer is both, at different layers. Foundation layer operates like Kyudo: perfect the form, maintain discipline, do not iterate your way to data integrity. Execution layer operates like English longbow: shoot, observe, adjust. Most organisational failures come from applying the wrong system to the wrong layer.</div>
+      <div class="domain-principle">You need both systems. The failure is not choosing one. It is applying the wrong one to the wrong layer.</div>
+      <a href="https://schwarzpfad.substack.com/p/two-bows-two-systems" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">09</div>
+    <div class="domain-meta">
+      <div class="domain-name">Warhammer 40k</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">ANIM</span><span class="domain-fw">AME</span><span class="domain-fw">Drift Detection</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">Two armies, two architectures. Swarm intelligence and entropy resilience</div>
+      <div class="domain-body">I paint Tyranids and Death Guard: two completely different architectures, both valid. Tyranids are swarm and emergent complexity through composition: simple organisms, specialised roles, no master controller. Death Guard are decay, slowness, and inevitability: systems that have accepted entropy as an operational parameter. A plague marine covered in corrosion still has full combat effectiveness. The system does not fight degradation. It incorporates it. Most enterprises treat technical debt and legacy complexity as problems to eliminate. Death Guard show a different approach: build systems that remain functional despite entropy. Tyranids show how ANIM nodes work: distributed intelligence emerging from composition, not central command.</div>
+      <div class="domain-principle">You do not need unified architecture. You need appropriate architecture for each component's function.</div>
+      <a href="https://schwarzpfad.substack.com/p/what-painting-warhammer-40k-reveals" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">10</div>
+    <div class="domain-meta">
+      <div class="domain-name">The Cognitive Engine</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">All frameworks</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">N-dimensional multi-causality. The engine beneath everything</div>
+      <div class="domain-body">During my IBM years I noticed something. When colleagues approached challenges, they traced linear paths. I did not process problems that way and could not, even when I tried. I saw multiple causes creating single effects, problems existing at multiple layers simultaneously, and systems in superposition states until acted upon. During the transition from IBM to AWS I recognised this was not just multi-causality: it was n-dimensional thinking. Holding multiple perspectives, layers, and causal pathways simultaneously without collapsing them into a single linear sequence. Traditional architecture assumes linear causality. AME assumes multi-causality. Traditional architecture optimises single dimensions. ANIM operates in n-dimensional state space. This cognitive engine is not a methodology. It is how my brain processes complexity, and everything else in this series emerges from it.</div>
+      <div class="domain-principle">The frameworks are not designed artefacts. They are my cognitive pattern, externalised.</div>
+      <a href="https://schwarzpfad.substack.com/p/how-i-discovered-my-cognitive-engine" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+  <div class="domain-entry reveal">
+    <div class="domain-num">11</div>
+    <div class="domain-meta">
+      <div class="domain-name">The Synthesis</div>
+      <div class="domain-fw-label">Feeds into</div>
+      <div class="domain-fw-list"><span class="domain-fw">All frameworks</span></div>
+    </div>
+    <div class="domain-content">
+      <div class="domain-title">I see connections where everyone else asks: which connection?</div>
+      <div class="domain-body">When I built the Foundation Layer, I was applying dental architecture principles. When I designed the Intelligence Layer, I was implementing mycelial coordination. When I created the Connectivity Layer, I was encoding momentum-based sensing from snowboarding. When I structured the Value Creation Layer, I was enabling D&D-style emergence. Every principle has roots in multiple domains: composability from gaming and linguistics and dental structure; distributed intelligence from rowing and fungi and language evolution; ecosystem orchestration from D&D and terrain reading and biological systems; dual operating systems from Kyudo and English longbow. Most consultants study enterprise transformation by reading about enterprise transformation. Breakthrough insights do not come from inside your domain. They come from asking how other complex adaptive systems solve the same problem.</div>
+      <div class="domain-principle">I decode systems. Then I build frameworks that work the way those systems work.</div>
+      <a href="https://schwarzpfad.substack.com/p/system-decoder-part-11-the-synthesis" target="_blank" class="domain-link">Read on System Decoder &#8594;</a>
+    </div>
+  </div>
+
+</section>
+
+<div class="series-section">
+  <div class="series-inner reveal">
+    <div class="series-label">System Decoder Series</div>
+    <p class="series-text">This page is the distilled record of the System Decoder series published on schwarzpfad.substack.com. Eleven parts documenting the domains, the patterns, and the connections that produced the frameworks. The series is published in full on System Decoder. Read it there for the complete arguments.</p>
+    <a href="https://schwarzpfad.substack.com/s/system-decoder" target="_blank" class="series-link">Read the full series on System Decoder &#8594;</a>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-id">Sebastian Thielke · Systems Synthesist · Berlin</span>
+  <a href="/" class="footer-back">← Back to sebastianthielke.com</a>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), i * 70);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  els.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
