@@ -3,537 +3,1021 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Sebastian Thielke is a Systems Synthesist based in Berlin. Creator of 16 original frameworks spanning agentic enterprise architecture, platform economics, and organizational design including AME, ANIM, MLPlat, and Human in Meaning.">
-<meta name="keywords" content="Sebastian Thielke, Systems Synthesist, System Decoder, schwarzpfad, platform economics, agentic enterprise, AME, ANIM, Human in Meaning, AAST, MLPlat, Minimal Loveable Platform, Fifth Participant, Disjunction Matrix, Human-Agent Organisation Architecture, Drift Detection, Temporary Company, Liquid Talent Deployment, enterprise AI, Berlin">
-<meta name="author" content="Sebastian Thielke">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://sebastianthielke.com/">
-
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://sebastianthielke.com/">
-<meta property="og:title" content="Sebastian Thielke · Systems Synthesist">
-<meta property="og:description" content="16 original frameworks spanning agentic enterprise, platform economics, and organizational design. Built from cross-domain synthesis across 11+ disciplines.">
-<meta property="og:site_name" content="Sebastian Thielke">
-<meta property="og:locale" content="en_GB">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sebastian Thielke · Systems Synthesist">
-<meta name="twitter:description" content="16 original frameworks spanning agentic enterprise, platform economics, and organizational design.">
-<meta name="twitter:site" content="@sebastianthielke">
-
-<!-- Geo -->
-<meta name="geo.region" content="DE-BE">
-<meta name="geo.placename" content="Berlin, Germany">
-<meta name="geo.position" content="52.5200;13.4050">
-<meta name="ICBM" content="52.5200, 13.4050">
-
-<!-- Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Sebastian Thielke",
-  "jobTitle": "Systems Synthesist",
-  "url": "https://sebastianthielke.com",
-  "email": "sebastian@sebastianthielke.com",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Berlin",
-    "addressCountry": "DE"
-  },
-  "sameAs": [
-    "https://www.linkedin.com/in/sebastianthielke/",
-    "https://schwarzpfad.substack.com"
-  ],
-  "knowsAbout": [
-    "Platform Economics",
-    "Agentic Enterprise Architecture",
-    "Organizational Design",
-    "AI Deployment",
-    "Systems Synthesis"
-  ],
-  "publishingPrinciples": "https://schwarzpfad.substack.com",
-  "workExample": {
-    "@type": "Blog",
-    "name": "System Decoder",
-    "url": "https://schwarzpfad.substack.com",
-    "description": "Publication by Sebastian Thielke on agentic systems, platform economics, and organizational entropy."
-  }
-}
-</script>
-<title>Sebastian Thielke · Systems Synthesist</title>
+<title>AI Initiative Audit — Sebastian Thielke</title>
+<meta name="robots" content="noindex">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --ink: #0e0d0b; --paper: #f2ede3; --rust: #b83020;
-  --gold: #a07828; --muted: #7a7060; --line: rgba(14,13,11,0.13);
-  --serif: Georgia, 'Times New Roman', serif;
-  --mono: 'Courier New', Courier, monospace;
+  --bg: #f2ede3;
+  --surface: #ede8dc;
+  --border: rgba(14,13,11,0.13);
+  --border-light: rgba(14,13,11,0.2);
+  --text: #0e0d0b;
+  --text-dim: #7a7060;
+  --text-mid: #4a4438;
+  --accent: #b83020;
+  --accent-dim: rgba(184,48,32,0.08);
+  --green: #2a6040;
+  --green-dim: rgba(42,96,64,0.1);
+  --amber: #a07828;
+  --amber-dim: rgba(160,120,40,0.1);
+  --mono: 'Courier New', monospace;
+  --serif: Georgia, serif;
 }
-html { scroll-behavior: smooth; }
-body { background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: 17px; line-height: 1.7; overflow-x: hidden; }
-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 4rem; border-bottom: 1px solid var(--line); }
-.nav-id { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
-.nav-links a { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--muted); transition: color 0.2s; }
-.nav-links a:hover { color: var(--rust); }
-.hero { padding: 6rem 4rem 5rem; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
-.hero-bg { position: absolute; font-size: clamp(180px, 28vw, 380px); font-family: var(--mono); font-weight: 700; color: rgba(14,13,11,0.03); top: 50%; right: -1rem; transform: translateY(-50%); pointer-events: none; user-select: none; line-height: 1; }
-.hero-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--rust); margin-bottom: 2rem; animation: fadeUp 0.7s ease both 0.1s; }
-.hero-name { font-size: clamp(56px, 9vw, 120px); font-weight: 400; font-style: italic; line-height: 0.92; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 2.5rem; animation: fadeUp 0.8s ease both 0.25s; }
-.hero-name strong { display: block; font-style: normal; font-weight: 400; color: var(--rust); }
-.hero-desc { max-width: 540px; font-size: 1.1rem; font-style: italic; color: var(--muted); line-height: 1.75; margin-bottom: 3.5rem; animation: fadeUp 0.9s ease both 0.4s; }
-.hero-stats { display: flex; gap: 4rem; border-top: 1px solid var(--line); padding-top: 2rem; flex-wrap: wrap; animation: fadeUp 1s ease both 0.6s; }
-.stat-num { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-style: italic; color: var(--ink); line-height: 1; margin-bottom: 0.25rem; }
-.stat-label { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-section { padding: 6rem 4rem; border-bottom: 1px solid var(--line); }
-.section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--rust); margin-bottom: 3rem; display: flex; align-items: center; gap: 1rem; }
-.section-label::after { content: ''; width: 60px; height: 1px; background: var(--line); }
-.about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; }
-.about-hed { font-size: clamp(26px, 3vw, 44px); font-weight: 400; font-style: italic; line-height: 1.2; color: var(--ink); }
-.about-body { font-size: 1rem; color: #3d3830; line-height: 1.85; }
-.about-body p + p { margin-top: 1rem; }
-.tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 2rem; }
-.tag { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; border: 1px solid var(--line); color: var(--muted); transition: all 0.2s; cursor: default; }
-.tag:hover { border-color: var(--rust); color: var(--rust); }
-a.tag { text-decoration: none; cursor: pointer; }
-.fw-intro { max-width: 620px; font-size: 1.05rem; font-style: italic; color: var(--muted); margin-bottom: 3rem; line-height: 1.75; }
-.fw-group { margin-bottom: 2rem; border: 1px solid var(--line); }
-.fw-group-toggle { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink); padding: 1.4rem 2rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: transparent; border: none; width: 100%; text-align: left; transition: background 0.2s; }
-.fw-group-toggle:hover { background: rgba(14,13,11,0.03); }
-.fw-group-toggle.open { background: var(--ink); color: var(--paper); }
-.fw-group-toggle .toggle-label { color: inherit; }
-.fw-group-toggle .toggle-cat { font-size: 0.58rem; letter-spacing: 0.18em; }
-.fw-group-toggle.open .toggle-cat { color: var(--gold); }
-.toggle-cat { color: var(--gold); }
-.fw-toggle-icon { font-family: var(--mono); font-size: 0.9rem; transition: transform 0.3s ease; display: inline-block; }
-.fw-group-toggle.open .fw-toggle-icon { transform: rotate(45deg); }
-.fw-group-body { display: none; border-top: 1px solid var(--line); }
-.fw-group-body.open { display: block; }
-.fw-item { display: grid; grid-template-columns: 2.5rem 1fr 1.5rem; gap: 0 1.5rem; align-items: start; padding: 1.8rem 2rem; border-top: 1px solid var(--line); cursor: default; }
-.fw-item:first-child { border-top: none; }
-.fw-item:hover .fw-name { color: var(--rust); }
-.fw-item:hover .fw-arrow { transform: translateX(4px); color: var(--rust); }
-.fw-num { font-family: var(--mono); font-size: 0.55rem; color: var(--muted); padding-top: 0.45rem; }
-.fw-name { font-size: clamp(17px, 2vw, 26px); font-weight: 400; font-style: italic; color: var(--ink); line-height: 1.15; margin-bottom: 0.55rem; transition: color 0.2s; }
-.fw-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; max-width: 560px; }
-.fw-arrow { font-family: var(--mono); font-size: 0.9rem; color: var(--muted); padding-top: 0.35rem; transition: transform 0.2s, color 0.2s; }
-.writing-section { background: var(--ink); color: var(--paper); }
-.writing-section .section-label { color: var(--gold); }
-.writing-section .section-label::after { background: rgba(242,237,227,0.1); }
-.writing-intro { font-size: 1rem; font-style: italic; color: rgba(242,237,227,0.5); max-width: 580px; margin-bottom: 3rem; line-height: 1.75; }
-.wc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
-.wc { padding: 2.5rem; border: 1px solid rgba(242,237,227,0.08); text-decoration: none; color: inherit; display: block; position: relative; overflow: hidden; transition: border-color 0.3s; }
-.wc:hover { border-color: var(--gold); }
-.wc::before { content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 0; background: var(--gold); transition: height 0.35s ease; }
-.wc:hover::before { height: 100%; }
-.wc-type { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
-.wc-title { font-size: clamp(17px, 2vw, 24px); font-style: italic; color: var(--paper); margin-bottom: 1rem; line-height: 1.25; }
-.wc-desc { font-size: 0.88rem; color: rgba(242,237,227,0.5); line-height: 1.65; }
-.wc-cta { margin-top: 1.5rem; font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
-.wc-expand { display: none; margin-top: 1.5rem; font-size: 0.88rem; color: rgba(242,237,227,0.6); line-height: 1.7; border-top: 1px solid rgba(242,237,227,0.08); padding-top: 1.2rem; }
-.wc.expanded .wc-expand { display: block; }
-.wc.expanded .wc-cta-text::after { content: ' ↑'; }
-.wc:not(.expanded) .wc-cta-text::after { content: ' ↓'; }
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-.contact-hed { font-size: clamp(34px, 4.5vw, 64px); font-style: italic; font-weight: 400; line-height: 1.05; color: var(--ink); }
-.contact-hed em { font-style: normal; color: var(--rust); display: block; }
-.contact-body { font-size: 0.97rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
-.clinks { display: flex; flex-direction: column; }
-.clink { display: flex; align-items: center; justify-content: space-between; text-decoration: none; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); padding: 1rem 0; border-bottom: 1px solid var(--line); transition: color 0.2s; }
-.clink:hover { color: var(--rust); }
-footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; align-items: center; }
-.foot-id { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
-.reveal.in { opacity: 1; transform: none; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 13px; line-height: 1.6; min-height: 100vh; }
 
-.substack-preview {
-  margin-top: 4rem;
-  padding-top: 3rem;
-  border-top: 2px solid var(--rust);
-}
-.sp-label {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--rust);
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.sp-label::after { content: ''; width: 40px; height: 1px; background: var(--rust); opacity: 0.4; }
-.sp-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  padding: 2rem;
-  border: 1px solid var(--line);
-  transition: border-color 0.25s;
-  position: relative;
-  overflow: hidden;
-}
-.sp-card:hover { border-color: var(--rust); }
-.sp-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0;
-  width: 3px; height: 0;
-  background: var(--rust);
-  transition: height 0.35s ease;
-}
-.sp-card:hover::before { height: 100%; }
-.sp-date {
-  font-family: var(--mono);
-  font-size: 0.55rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.7rem;
-}
-.sp-title {
-  font-size: clamp(18px, 2.2vw, 28px);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--ink);
-  line-height: 1.2;
-  margin-bottom: 0.8rem;
-  transition: color 0.2s;
-}
-.sp-card:hover .sp-title { color: var(--rust); }
-.sp-excerpt {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.65;
-  max-width: 640px;
-}
-.sp-cta {
-  margin-top: 1.2rem;
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--rust);
-}
-.sp-loading {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  color: var(--muted);
-  letter-spacing: 0.1em;
-}
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@media (max-width: 720px) {
-  nav, .hero, section, footer { padding-left: 1.6rem; padding-right: 1.6rem; }
-  .nav-links { display: none; }
-  .about-grid, .contact-grid, .wc-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .fw-item { grid-template-columns: 2rem 1fr 1.2rem; }
-}
+/* MASK */
+#mask { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 100; }
+.mask-inner { width: 460px; border: 1px solid var(--border-light); padding: 48px; position: relative; background: var(--bg); }
+.mask-inner::before { content: ''; position: absolute; top: -1px; left: 40px; width: 80px; height: 2px; background: var(--accent); }
+.mask-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; font-family: var(--mono); }
+.mask-title { font-family: var(--serif); font-size: 28px; font-weight: 400; font-style: italic; line-height: 1.2; margin-bottom: 10px; color: var(--text); }
+.mask-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 36px; line-height: 1.7; }
+.mask-field-label { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; font-family: var(--mono); }
+.mask-input { width: 100%; background: transparent; border: none; border-bottom: 1.5px solid var(--text-dim); padding: 10px 0; font-family: var(--serif); font-size: 20px; font-style: italic; color: var(--text); outline: none; margin-bottom: 28px; transition: border-color .2s; }
+.mask-input:focus { border-bottom-color: var(--accent); }
+.mask-input::placeholder { color: var(--border-light); }
+.mask-btn { background: var(--accent); color: #fff; border: none; padding: 12px 28px; font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; width: 100%; transition: opacity .15s; }
+.mask-btn:hover { opacity: .85; }
+.mask-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* APP */
+#app { display: none; }
+header { border-bottom: 1px solid var(--border); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--bg); z-index: 10; }
+.header-left { display: flex; align-items: baseline; gap: 14px; }
+.app-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); font-family: var(--mono); }
+.company-name { font-family: var(--serif); font-size: 18px; font-weight: 400; font-style: italic; color: var(--text); }
+.header-right { display: flex; align-items: center; gap: 20px; }
+.step-ind { font-size: 10px; letter-spacing: .1em; color: var(--text-dim); text-transform: uppercase; font-family: var(--mono); }
+.step-ind span { color: var(--accent); }
+.reset-btn { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); background: none; border: 1px solid var(--border-light); padding: 5px 11px; cursor: pointer; font-family: var(--mono); transition: all .15s; }
+.reset-btn:hover { color: var(--text); border-color: var(--text); }
+
+.layout { display: grid; grid-template-columns: 260px 1fr; height: calc(100vh - 57px); }
+
+/* SIDEBAR */
+.sidebar { border-right: 1px solid var(--border); overflow-y: auto; padding: 20px 0; }
+.sb-head { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--text-dim); padding: 6px 20px; font-family: var(--mono); }
+.sb-item { padding: 9px 20px; cursor: pointer; display: flex; align-items: center; gap: 8px; border-left: 2px solid transparent; transition: background .1s; font-size: 11px; color: var(--text-dim); font-family: var(--mono); }
+.sb-item:hover { background: var(--surface); }
+.sb-item.active { background: var(--surface); border-left-color: var(--accent); color: var(--text); }
+.sb-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border-light); flex-shrink: 0; margin-left: auto; }
+.sb-dot.done { background: var(--green); }
+.sb-dot.active { background: var(--accent); }
+
+/* MAIN */
+.main { overflow-y: auto; padding: 36px 44px; }
+.panel { display: none; }
+.panel.active { display: block; }
+.eyebrow { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; font-family: var(--mono); }
+.ptitle { font-family: var(--serif); font-size: 26px; font-weight: 400; font-style: italic; margin-bottom: 10px; color: var(--text); }
+.pdesc { font-size: 12px; color: var(--text-dim); line-height: 1.75; max-width: 560px; margin-bottom: 28px; }
+
+/* BUTTONS */
+.btn-main { background: var(--accent); color: #fff; border: none; padding: 10px 22px; font-family: var(--mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: opacity .15s; }
+.btn-main:hover { opacity: .85; }
+.btn-main:disabled { opacity: .4; cursor: not-allowed; }
+.btn-ghost { background: transparent; color: var(--text-mid); border: 1px solid var(--border); padding: 9px 18px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: all .15s; }
+.btn-ghost:hover { color: var(--text); border-color: var(--text-dim); }
+
+/* STATUS */
+.status { font-size: 11px; color: var(--text-dim); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; min-height: 18px; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.2} }
+.pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.4s infinite; flex-shrink: 0; }
+.warn { border: 1px solid var(--amber); background: var(--amber-dim); padding: 12px 16px; font-size: 11px; color: var(--text-mid); line-height: 1.65; margin-bottom: 20px; display: none; }
+.warn.on { display: block; }
+
+/* INITIATIVE CARDS */
+.ini-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.ini-card { border: 1px solid var(--border); background: var(--surface); }
+.ini-header { padding: 10px 14px; display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--border); }
+.ini-num { font-size: 9px; color: var(--text-dim); flex-shrink: 0; }
+.ini-name { font-weight: 700; font-family: var(--serif); font-size: 13px; flex: 1; }
+.layer-tag { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; padding: 2px 7px; border: 1px solid; flex-shrink: 0; }
+.layer-tag.product { color: var(--green); border-color: var(--green); }
+.layer-tag.internal { color: var(--text-dim); border-color: var(--border-light); }
+.layer-tag.infrastructure { color: var(--amber); border-color: var(--amber); }
+.ini-body { padding: 10px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.card-f label { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 3px; }
+.card-f p { font-size: 11px; color: var(--text-mid); line-height: 1.5; }
+.conf-flag { font-size: 10px; color: var(--amber); margin-top: 2px; }
+
+/* ADD FORM */
+.add-form { border: 1px solid var(--border); background: var(--surface); padding: 16px; margin-bottom: 16px; display: none; }
+.add-form-title { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 14px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.fg label { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 4px; }
+.fg input, .fg select, .fg textarea { width: 100%; background: var(--bg); border: 1px solid var(--border-light); padding: 7px 10px; font-family: var(--mono); font-size: 11px; color: var(--text); outline: none; resize: vertical; }
+.fg select option { background: var(--bg); }
+.form-actions { display: flex; gap: 8px; }
+
+/* MATRIX */
+.matrix-wrap { overflow-x: auto; margin-bottom: 24px; }
+table.mx { width: 100%; border-collapse: collapse; min-width: 600px; }
+.mx th { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.mx td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.mx tr:last-child td { border-bottom: none; }
+.ini-nc { font-weight: 700; font-family: var(--serif); font-size: 12px; }
+.ini-ns { font-size: 9px; color: var(--text-dim); margin-top: 2px; }
+.score-sel { background: transparent; border: 1px solid var(--border); color: var(--text-mid); font-family: var(--mono); font-size: 10px; padding: 4px 6px; outline: none; cursor: pointer; width: 100%; }
+.score-sel option { background: var(--bg); }
+.score-sel.in-scope { background: var(--green-dim); border-color: var(--green); color: #6dbd7a; }
+.score-sel.partial { background: var(--amber-dim); border-color: var(--amber); color: #d4a43a; }
+.mx-note { font-size: 11px; color: var(--text-dim); padding: 12px 14px; border: 1px solid var(--border); background: var(--surface); margin-bottom: 16px; line-height: 1.65; }
+.empty-col-banner { display: none; padding: 10px 14px; border: 1px solid var(--accent); background: var(--accent-dim); font-size: 11px; color: var(--text-mid); margin-bottom: 16px; }
+.empty-col-banner.on { display: block; }
+.score-legend { display: flex; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text-dim); }
+.leg-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* GAPS */
+.gaps-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.gap-row { border: 1px solid var(--border); display: flex; align-items: stretch; }
+.gap-num { width: 40px; background: var(--surface); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-dim); border-right: 1px solid var(--border); flex-shrink: 0; }
+.gap-body { padding: 12px 14px; flex: 1; }
+.gap-title { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.gap-desc { font-size: 11px; color: var(--text-dim); line-height: 1.6; }
+.gap-toggle { display: flex; align-items: center; padding: 12px 14px; flex-shrink: 0; }
+.chk { width: 16px; height: 16px; border: 1px solid var(--border-light); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; background: transparent; flex-shrink: 0; font-size: 9px; color: transparent; }
+.chk.on { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* DIAGNOSIS */
+.diag-block { border-left: 3px solid var(--accent); padding: 18px 22px; background: var(--surface); margin-bottom: 14px; position: relative; }
+.diag-label { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.diag-text { font-family: var(--serif); font-size: 15px; line-height: 1.75; }
+.copy-btn { position: absolute; top: 12px; right: 12px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--text-dim); padding: 4px 8px; cursor: pointer; transition: all .15s; }
+.copy-btn:hover { color: var(--text); border-color: var(--text-mid); }
+
+/* EXPORT */
+.export-box { background: var(--surface); border: 1px solid var(--border); padding: 18px; font-size: 11px; line-height: 1.75; color: var(--text-mid); white-space: pre-wrap; font-family: var(--mono); max-height: 320px; overflow-y: auto; margin-bottom: 16px; }
+.action-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* NAV */
+.nav-actions { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid var(--border); margin-top: 8px; }
+.empty-state { text-align: center; padding: 32px; color: var(--text-dim); font-size: 12px; border: 1px dashed var(--border); }
 </style>
 </head>
 <body>
 
-<nav>
-  <span class="nav-id">Sebastian Thielke / Systems Synthesist</span>
-  <ul class="nav-links">
-    <li><a href="#frameworks">Frameworks</a></li>
-    <li><a href="#writing">Writing</a></li>
-    <li><a href="#contact">Contact</a></li>
-      <li><a href="/work">Work</a></li>
-      <li><a href="/synthesis">Synthesis</a></li>
-  </ul>
-</nav>
-
-<div class="hero">
-  <div class="hero-bg">ST</div>
-  <p class="hero-eyebrow">Systems Synthesist · Berlin</p>
-  <h1 class="hero-name">Sebastian<strong>Thielke.</strong></h1>
-  <p class="hero-desc">I build original frameworks from the intersection of domains most people keep separate: dentistry, rowing, nursing, LARP command, linguistics, and enterprise platform economics. The synthesis is the work.</p>
-  <div class="hero-stats">
-    <div><div class="stat-num">11+</div><div class="stat-label">Domains synthesised</div></div>
-    <div><div class="stat-num">16</div><div class="stat-label">Original frameworks</div></div>
-    <div><div class="stat-num">15+</div><div class="stat-label">Fortune 500 clients</div></div>
+<div id="mask">
+  <div class="mask-inner">
+    <div class="mask-label">AI Initiative Audit</div>
+    <div class="mask-title">Name the organization.</div>
+    <div class="mask-sub">The framework runs against this company throughout all six steps.</div>
+    <div class="mask-field-label">Organization name</div>
+    <input class="mask-input" id="orgInput" type="text" placeholder="e.g. Zalando" autocomplete="off" />
+    <button class="mask-btn" id="startBtn">Begin audit</button>
   </div>
 </div>
 
-<section id="about">
-  <div class="section-label">Who this is</div>
-  <div class="about-grid">
-    <div class="reveal"><h2 class="about-hed">Not a consultant. Not an advisor. A synthesist.</h2></div>
-    <div class="reveal">
-      <div class="about-body">
-        <p>Most people who reach my work arrive through one thread: a framework, a Substack article, a LinkedIn post. And then notice the others do not fit neatly into the same drawer. That is intentional.</p>
-        <p>I have spent decades acquiring deep capability in domains that seem unrelated: the timing mechanics of rowing synchronization, the command structures of large-scale LARP events, the semantic drift patterns in Old and Middle English, the thermodynamics of enterprise scaling. Each domain contributed specific, transferable principles. The synthesis is the rare thing.</p>
-        <p>The result is a set of frameworks for how agentic systems, platforms, and organizations can be designed to reduce entropy rather than fight it. Built from lived experience at every level, not borrowed from existing literature. <a href="/synthesis" style="color:var(--rust);text-decoration:none;font-style:normal;font-family:var(--mono);font-size:0.75em;letter-spacing:0.1em;text-transform:uppercase;">Where they came from &#8594;</a></p>
+<div id="app">
+  <header>
+    <div class="header-left">
+      <span class="app-label">AI Audit</span>
+      <span class="company-name" id="hCompany"></span>
+    </div>
+    <div class="header-right">
+      <span class="step-ind">Step <span id="hStep">1</span> of 6</span>
+      <button class="reset-btn" onclick="resetApp()">New audit</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar">
+      <div class="sb-head">Workflow</div>
+      <div class="sb-item active" data-p="research" onclick="goTo('research')"><span>01 Research</span><span class="sb-dot active" id="sd-research"></span></div>
+      <div class="sb-item" data-p="map" onclick="goTo('map')"><span>02 Map</span><span class="sb-dot" id="sd-map"></span></div>
+      <div class="sb-item" data-p="matrix" onclick="goTo('matrix')"><span>03 Matrix</span><span class="sb-dot" id="sd-matrix"></span></div>
+      <div class="sb-item" data-p="gaps" onclick="goTo('gaps')"><span>04 Gaps</span><span class="sb-dot" id="sd-gaps"></span></div>
+      <div class="sb-item" data-p="diagnosis" onclick="goTo('diagnosis')"><span>05 Diagnosis</span><span class="sb-dot" id="sd-diagnosis"></span></div>
+      <div class="sb-item" data-p="export" onclick="goTo('export')"><span>06 Report</span><span class="sb-dot" id="sd-export"></span></div>
+    </nav>
+
+    <main class="main">
+
+      <!-- RESEARCH -->
+      <div class="panel active" id="panel-research">
+        <div class="eyebrow">Part 1 — Input Gathering</div>
+        <div class="ptitle" id="researchTitle">Research initiatives</div>
+        <div class="pdesc">The LLM searches public sources for AI initiatives: product announcements, engineering blogs, job postings, investor materials. Verify every result. Low-confidence items are flagged.</div>
+        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+          <button class="btn-main" id="researchBtn" onclick="runResearch()">Generate research prompt</button>
+          <button class="btn-ghost" onclick="toggleAddForm()">+ Add manually</button>
+        </div>
+        <div class="status" id="statusLine"></div>
+
+        <div id="promptBox" style="display:none;margin-bottom:20px;">
+          <div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-family:var(--mono);">Step 1 — Copy this prompt and run it in Claude or any LLM</div>
+          <textarea id="promptText" readonly style="width:100%;height:160px;background:var(--surface);border:1px solid var(--border);padding:14px;font-family:var(--mono);font-size:11px;color:var(--text-mid);line-height:1.65;resize:vertical;outline:none;"></textarea>
+          <div style="margin-top:8px;display:flex;gap:10px;margin-bottom:28px;">
+            <button class="btn-main" id="copyPromptBtn" onclick="copyPrompt()">Copy prompt</button>
+            <a href="#" onclick="openInClaude();return false;" class="btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center;">Open in Claude</a>
+          </div>
+
+          <div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-family:var(--mono);">Step 2 — Paste the full LLM response here</div>
+          <textarea id="pasteBack" style="width:100%;height:200px;background:var(--surface);border:1px solid var(--border);padding:14px;font-family:var(--mono);font-size:11px;color:var(--text);line-height:1.65;resize:vertical;outline:none;" placeholder="Paste the full response from Claude or your LLM here. The tool will extract the initiatives automatically."></textarea>
+          <div style="margin-top:8px;">
+            <button class="btn-main" onclick="parseFromPaste()">Extract initiatives from response</button>
+          </div>
+          <div id="parseStatus" style="font-size:11px;color:var(--amber);margin-top:10px;font-family:var(--mono);"></div>
+        </div>
+        <div class="warn" id="warnBox"><b>Verification required.</b> Results are derived from public sources and inference. Treat every initiative as a hypothesis until verified against a primary source.</div>
+        <div class="ini-list" id="iniList"><div class="empty-state">No initiatives yet. Run research or add manually.</div></div>
+        <div class="add-form" id="addForm">
+          <div class="add-form-title">Add initiative manually</div>
+          <div class="form-grid">
+            <div class="fg" style="grid-column:1/-1"><label>Initiative name</label><input type="text" id="f-name" placeholder="e.g. ML pricing engine" /></div>
+            <div class="fg"><label>Who it serves</label><select id="f-serves"><option value="">Select...</option><option>Buyer</option><option>Seller or dealer</option><option>Internal employee</option><option>Partner or ecosystem participant</option></select></div>
+            <div class="fg"><label>Layer</label><select id="f-layer"><option value="">Select...</option><option value="product">Product</option><option value="internal">Internal efficiency</option><option value="infrastructure">Infrastructure</option></select></div>
+            <div class="fg" style="grid-column:1/-1"><label>Signal consumed</label><textarea id="f-signal" rows="2" placeholder="What data flows in as primary input?"></textarea></div>
+          </div>
+          <div class="form-actions"><button class="btn-main" onclick="addManual()">Add</button><button class="btn-ghost" onclick="toggleAddForm()">Cancel</button></div>
+        </div>
+        <div class="nav-actions"><div></div><button class="btn-main" onclick="goTo('map')">Continue to mapping</button></div>
       </div>
-      <div class="tags">
-        <a href="https://schwarzpfad.substack.com/p/what-dental-anatomy-reveals-about" target="_blank" class="tag">Dentistry</a><a href="https://schwarzpfad.substack.com/p/what-rowing-taught-me-about-distributed" target="_blank" class="tag">Rowing Coaching</a><a href="/synthesis" class="tag">Nursing</a>
-        <a href="https://schwarzpfad.substack.com/p/two-bows-two-systems" target="_blank" class="tag">LARP Command</a><a href="https://schwarzpfad.substack.com/p/from-old-english-to-adaptive-systems" target="_blank" class="tag">Old &amp; Middle English</a>
-        <a href="/synthesis" class="tag">Communication Science</a><a href="/work" class="tag">Platform Economics</a>
-        <a href="/#frameworks" class="tag">Agentic Systems</a><a href="/work" class="tag">Enterprise Delivery</a>
-        <a href="/synthesis" class="tag">Cloud Architecture</a><a href="https://schwarzpfad.substack.com/p/from-old-english-to-adaptive-systems" target="_blank" class="tag">Linguistics</a>
+
+      <!-- MAP -->
+      <div class="panel" id="panel-map">
+        <div class="eyebrow">Part 2 — Mapping</div>
+        <div class="ptitle">Classify each initiative</div>
+        <div class="pdesc">Confirm the layer and participant for each initiative. Use the language that fits the business model.</div>
+        <div class="ini-list" id="mapList"></div>
+        <div class="nav-actions"><button class="btn-ghost" onclick="goTo('research')">Back</button><button class="btn-main" onclick="goTo('matrix')">Continue to matrix</button></div>
       </div>
-    </div>
-  </div>
-</section>
 
-<section id="frameworks">
-  <div class="section-label">The work</div>
-  <p class="fw-intro reveal">16 original frameworks. None borrowed from existing literature. Each emerged from a specific problem encountered in practice, resolved through cross-domain synthesis, and stress-tested against real organizational conditions.</p>
-
-  <div class="fw-group reveal">
-    <button class="fw-group-toggle open" onclick="toggleGroup(this)">
-      <span class="toggle-cat">Agentic Enterprise</span>
-      <span class="fw-toggle-icon">+</span>
-    </button>
-    <div class="fw-group-body open">
-    <div class="fw-item">
-      <span class="fw-num">01</span>
-      <div><div class="fw-name">Adaptive Mesh Ecosystem (AME)</div><div class="fw-desc">A four-layer architecture: Foundation, Intelligence, Connectivity, Value Creation. For organizations where meaning is the prerequisite for agentic coordination, not an afterthought. The structural answer to why most AI deployments fail at scale.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">02</span>
-      <div><div class="fw-name">Human in Meaning</div><div class="fw-desc">A governance principle that rejects Human-in-the-Loop as insufficient. Meaning must be architecturally embedded before agents act. Not inserted as a checkpoint after. Replaces oversight theater with semantic grounding.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">03</span>
-      <div><div class="fw-name">Adversarial Agent Stress Testing (AAST)</div><div class="fw-desc">A two-pass pre-deployment methodology for multi-agent systems addressing technical, semantic, and structural failure categories. Built from analysis of real platform failures, not theoretical scenarios.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">04</span>
-      <div><div class="fw-name">Adaptive Nodal Intelligence Mesh (ANIM)</div><div class="fw-desc">The active executor layer within the AME Foundation. ANIM operationalizes meaning as a dynamic signal across agent nodes, enabling coordinated action without centralized control. The connective tissue of agentic deployment at scale.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">05</span>
-      <div><div class="fw-name">Agent Deployability and Deployment Measurement</div><div class="fw-desc">A structured evaluation framework that assesses whether an AI agent is genuinely ready for deployment and measures actual value generated post-launch. Separates readiness theater from operational reality.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">06</span>
-      <div><div class="fw-name">Drift Detection</div><div class="fw-desc">A methodology for identifying semantic, behavioral, and structural drift in agentic systems over time. Addresses the gap between what an agent was designed to do and what it actually does after extended deployment.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <div class="fw-num">07</div>
-      <div>
-        <div class="fw-name">Human-Agent Organisation Architecture</div>
-        <div class="fw-desc">Most organisations add agents to existing structures and wonder why nothing fundamentally changes. This architecture starts from a different premise. The organisation operates across three levels simultaneously: team, platform, and ecosystem, with agents woven in from the foundation up. Humans hold meaning. Augments maintain coherence against that meaning. Outcome-driven speed at scale.</div>
+      <!-- MATRIX -->
+      <div class="panel" id="panel-matrix">
+        <div class="eyebrow">Part 3 — Disjunction Matrix</div>
+        <div class="ptitle">Score each initiative</div>
+        <div class="pdesc">Apply the four-question test per cell. In Scope requires primary data input, output affecting the dimension, and stated design intent. Partial covers incidental data or unintended output.</div>
+        <div class="score-legend">
+          <div class="leg"><div class="leg-dot" style="background:var(--green)"></div>In Scope</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--amber)"></div>Partial</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--border-light)"></div>Not in Scope</div>
+        </div>
+        <div class="mx-note"><b>Infrastructure and internal efficiency initiatives</b> score Not in Scope on all participant-facing dimensions. Internal efficiency scores In Scope on Internal Ops by definition. Infrastructure may or may not, depending on whether employees benefit directly from the platform itself.</div>
+        <div class="empty-col-banner" id="emptyColBanner"></div>
+        <div class="matrix-wrap">
+          <table class="mx">
+            <thead><tr>
+              <th>Initiative</th>
+              <th title="Reads demand-side behavior as primary input">Buyer Signal</th>
+              <th title="Reads supply-side behavior as primary input">Seller Signal</th>
+              <th title="Touches ecosystem partners">Partner Layer</th>
+              <th title="Processes both participant signals simultaneously">Cross-Participant</th>
+              <th title="Primary beneficiary is internal employee">Internal Ops</th>
+              <th title="Optimizes aggregate value across all participants">Systemic Outcome</th>
+            </tr></thead>
+            <tbody id="mxBody"></tbody>
+          </table>
+        </div>
+        <div class="nav-actions"><button class="btn-ghost" onclick="goTo('map')">Back</button><button class="btn-main" onclick="goTo('gaps')">Continue to gaps</button></div>
       </div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    </div>
-  </div>
 
-  <div class="fw-group reveal">
-    <button class="fw-group-toggle" onclick="toggleGroup(this)">
-      <span class="toggle-cat">Platform Economics</span>
-      <span class="fw-toggle-icon">+</span>
-    </button>
-    <div class="fw-group-body">
-    <div class="fw-item">
-      <span class="fw-num">08</span>
-      <div><div class="fw-name">Platform Economics Acceleration (PEA)</div><div class="fw-desc">Built from zero. L100 to L300 certification pathways, multi-sided platform architecture, and ecosystem design applied across Fortune 500 clients in EMEA, APAC, and AMER.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">09</span>
-      <div><div class="fw-name">The Fifth Participant</div><div class="fw-desc">AI agents as a distinct participant type in platform economics: their own win condition, deployment value accumulation logic, and network effects. Distinct from the traditional four: producers, consumers, partners, orchestrators.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">10</span>
-      <div><div class="fw-name">Disjunction Matrix</div><div class="fw-desc">A structural analysis framework that makes the invisible visible in AI portfolios. Every initiative is mapped against six dimensions of the business. One column is almost always empty across every row. Not because the capability is absent, but because nobody commissioned the work. That column is the diagnosis. The gap between individual initiative quality and systemic portfolio outcome.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">11</span>
-      <div><div class="fw-name">Launchpad</div><div class="fw-desc">A structured acceleration framework for platform initiatives moving from concept to market. Defines the sequencing logic, stakeholder alignment, and minimum viable ecosystem conditions required for a platform to reach self-sustaining network effects.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">12</span>
-      <div><div class="fw-name">Minimal Loveable Platform (MLPlat)</div><div class="fw-desc">A platform cannot start with two participants. MLPlat defines the minimum viable starting condition: three participants, each interaction driven by a challenge, each challenge solved generating a product. Three products working in concert create the first transactions. Value flows across four dimensions: money, data, innovation, and collaboration. This is the missing logic in platform business creation. It is how you innovate, build, run, and scale a platform economy from the ground up.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">13</span>
-      <div><div class="fw-name">End-to-End Capability Framework</div><div class="fw-desc">A mapping of the full capability chain required to deliver platform value: from technical infrastructure through product, commercial, and ecosystem layers. Exposes the gaps organizations mistake for execution problems when they are architecture problems.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    </div>
-  </div>
-
-  <div class="fw-group reveal">
-    <button class="fw-group-toggle" onclick="toggleGroup(this)">
-      <span class="toggle-cat">Organizational Design</span>
-      <span class="fw-toggle-icon">+</span>
-    </button>
-    <div class="fw-group-body">
-    <div class="fw-item">
-      <span class="fw-num">14</span>
-      <div><div class="fw-name">The Temporary Company</div><div class="fw-desc">A model for organizations that scale through composable, temporary structures rather than permanent headcount accumulation. Informed by the thermodynamic principle that fighting entropy with entropy generates disorder.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">15</span>
-      <div><div class="fw-name">Liquid Talent Deployment</div><div class="fw-desc">A framework for matching capability to demand in real time across organizational boundaries. Treats talent as a flow rather than a stock, enabling organizations to respond to complexity without accumulating structural rigidity.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    <div class="fw-item">
-      <span class="fw-num">16</span>
-      <div><div class="fw-name">Enterprise Product Management Enablement</div><div class="fw-desc">A capability-building system for product management in large organizations. Addresses the structural reasons enterprise PM fails: misaligned incentives, absent discovery discipline, and conflation of roadmap management with product leadership.</div></div>
-      <span class="fw-arrow">&#8594;</span>
-    </div>
-    </div>
-  </div>
-
-  <div class="substack-preview reveal">
-    <div class="sp-label">Latest from System Decoder</div>
-    <a id="sp-card" href="https://schwarzpfad.substack.com" target="_blank" class="sp-card">
-      <div class="sp-loading" id="sp-loading">Loading latest article...</div>
-      <div id="sp-content" style="display:none">
-        <div class="sp-date" id="sp-date"></div>
-        <div class="sp-title" id="sp-title"></div>
-        <div class="sp-excerpt" id="sp-excerpt"></div>
-        <div class="sp-cta">Read on Substack &#8594;</div>
+      <!-- GAPS -->
+      <div class="panel" id="panel-gaps">
+        <div class="eyebrow">Part 4 — Structural Gaps</div>
+        <div class="ptitle">Mark which gaps are present</div>
+        <div class="pdesc">Gap 6 is not what the portfolio is missing. It is why the portfolio is unlikely to close the other gaps without deliberate structural intervention.</div>
+        <div class="gaps-grid" id="gapsGrid"></div>
+        <div class="nav-actions"><button class="btn-ghost" onclick="goTo('matrix')">Back</button><button class="btn-main" onclick="buildDiagnosis();goTo('diagnosis')">Build diagnostic statement</button></div>
       </div>
-    </a>
-  </div>
 
-  <div class="substack-preview reveal" style="margin-top:2rem;">
-    <div class="sp-label">Latest from Medium</div>
-    <a id="med-card" href="https://medium.com/@SThielke" target="_blank" class="sp-card">
-      <div class="sp-loading" id="med-loading">Loading latest article...</div>
-      <div id="med-content" style="display:none">
-        <div class="sp-date" id="med-date"></div>
-        <div class="sp-title" id="med-title"></div>
-        <div class="sp-excerpt" id="med-excerpt"></div>
-        <div class="sp-cta">Read on Medium &#8594;</div>
+      <!-- DIAGNOSIS -->
+      <div class="panel" id="panel-diagnosis">
+        <div class="eyebrow">Part 5 and 6 — Diagnosis and Strategic Ask</div>
+        <div class="ptitle">The compressed analysis</div>
+        <div class="pdesc">Built from your matrix and gap selections. Deliver it early. Let it land.</div>
+        <div class="diag-block">
+          <div class="diag-label">Diagnostic statement</div>
+          <div class="diag-text" id="diagText"></div>
+          <button class="copy-btn" onclick="copyDiag(event)">Copy</button>
+        </div>
+        <div class="diag-block" style="border-color:var(--border)">
+          <div class="diag-label">Confirmed gaps</div>
+          <div id="gapsSummary" style="font-size:12px;color:var(--text-mid);line-height:1.8"></div>
+        </div>
+        <div class="diag-block" style="border-color:var(--border)">
+          <div class="diag-label">The strategic ask</div>
+          <div style="font-size:13px;line-height:1.7;font-family:var(--serif)">Which AI initiative, if any, is designed to improve outcomes for both sides of the business simultaneously? If no one can name one, the gap has been located.</div>
+        </div>
+        <div class="diag-block" style="border-color:var(--border)">
+          <div class="diag-label">What filling it requires</div>
+          <div id="fillingText" style="font-size:12px;color:var(--text-mid);line-height:1.7"></div>
+        </div>
+        <div class="nav-actions"><button class="btn-ghost" onclick="goTo('gaps')">Back</button><button class="btn-main" onclick="buildDiagnosis();goTo('export')">Generate report</button></div>
       </div>
-    </a>
-  </div>
 
-</section>
-
-<section id="writing" class="writing-section">
-  <div class="section-label">Writing</div>
-  <p class="writing-intro reveal">The Substack is where frameworks develop in public. LinkedIn is where they get tested against the people who disagree.</p>
-  <div class="wc-grid">
-    <a href="https://schwarzpfad.substack.com" target="_blank" class="wc reveal">
-      <div class="wc-type">Substack · System Decoder</div>
-      <div class="wc-title">System Decoder</div>
-      <div class="wc-desc">Active publication decoding agentic systems, platform economics, and organizational entropy. Frameworks developed in public. Arguments stress-tested against real organizational conditions.</div>
-      <div class="wc-cta">Read &#8594; System Decoder</div>
-    </a>
-    <div class="wc reveal" onclick="this.classList.toggle('expanded')" style="cursor:pointer;">
-      <div class="wc-type">Framework</div>
-      <div class="wc-title">Human-Agent Organisation Architecture</div>
-      <div class="wc-desc">Most organisations add agents to existing structures. The Human-Agent Organisation Architecture is what you build instead. A three-level operating system for outcome-driven speed at scale.</div>
-      <div class="wc-expand">Speed without direction fills the bin faster. Direction without speed fills it with things nobody needed in time. Most organisations solve one and neglect the other. HAO is the architecture that runs both simultaneously.<br><br>HAO organises around three levels. The team is the operating unit. It crystallises around an outcome, activates when the viability conditions are met, and dissolves when the work is done. The platform is organisational memory. It retains what every team learns and makes it available to the next team before they start. The ecosystem is the compounding mechanism. Each build makes the next one faster and cheaper to validate.<br><br>Agents are not added to this system. They are woven into it as augments. Not tools. Not teammates. Extensions of human reach that maintain coherence against the meaning humans hold. ANIM routes signal without command and control. AME orchestrates participants without hierarchy. Human in Meaning keeps the whole system oriented toward what the work is actually for.</div>
-      <div class="wc-cta"><span class="wc-cta-text">Read more</span></div>
-    </div>
-    <a href="https://www.linkedin.com/in/sebastianthielke/" target="_blank" class="wc reveal">
-      <div class="wc-type">LinkedIn</div>
-      <div class="wc-title">Where frameworks meet pushback</div>
-      <div class="wc-desc">Framework introductions, contrarian positions on AI governance, platform economics, and organizational design. The place where the ideas get stress-tested in public by people who disagree.</div>
-      <div class="wc-cta">Follow &#8594; linkedin.com/in/sebastianthielke</div>
-    </a>
-  </div>
-</section>
-
-<section id="contact" style="border-bottom: none;">
-  <div class="section-label">Reach</div>
-  <div class="contact-grid">
-    <div class="reveal"><h2 class="contact-hed">If you<em>recognise the work.</em></h2></div>
-    <div class="reveal">
-      <img src="sebastian.png" alt="Sebastian Thielke" style="width:160px;height:160px;object-fit:cover;object-position:center top;display:block;border:1px solid rgba(14,13,11,0.13);margin-bottom:1.8rem;">
-      <p class="contact-body">I am not difficult to find, but I am selective about where I spend conversation. If you have read enough to understand what is being built here and have something worth exchanging. Reach out.</p>
-      <div class="clinks">
-        <a href="https://www.linkedin.com/in/sebastianthielke/" target="_blank" class="clink"><span>LinkedIn</span><span>&#8594;</span></a>
-        <a href="https://schwarzpfad.substack.com" target="_blank" class="clink"><span>Substack · System Decoder</span><span>&#8594;</span></a>
-        <a href="mailto:sebastian@sebastianthielke.com" class="clink"><span>Email</span><span>&#8594;</span></a>
+      <!-- EXPORT -->
+      <div class="panel" id="panel-export">
+        <div class="eyebrow">Part 6 — Output</div>
+        <div class="ptitle">Your analysis document.</div>
+        <div class="pdesc">Opens in a new browser window formatted like the AutoScout24 analysis. Print or save as PDF from there.</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn-main" onclick="openReport()">Open analysis document</button>
+          <button class="btn-ghost" onclick="exportJSON()">Export for Interview Tool (.json)</button>
+        </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<footer>
-  <span class="foot-id">Sebastian Thielke · Systems Synthesist · Berlin</span>
-  <span class="foot-id">&copy; 2026</span>
-</footer>
+    </main>
+  </div>
+</div>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('in'), i * 70);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.07 });
-  els.forEach(el => obs.observe(el));
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+// Replace with your Cloudflare Worker URL after deployment
+const WORKER_URL = 'https://ai-audit-proxy.sebastian-thielke.workers.dev';
 
-  function toggleGroup(btn) {
-    const body = btn.nextElementSibling;
-    const isOpen = body.classList.contains('open');
-    document.querySelectorAll('.fw-group-body').forEach(b => b.classList.remove('open'));
-    document.querySelectorAll('.fw-group-toggle').forEach(b => b.classList.remove('open'));
-    if (!isOpen) {
-      body.classList.add('open');
-      btn.classList.add('open');
+// ── STATE ───────────────────────────────────────────────────────────────────
+const DIMS = ['buyerSignal','sellerSignal','partnerLayer','crossParticipant','internalOps','systemicOutcome'];
+const DIM_LABELS = {buyerSignal:'Buyer Signal',sellerSignal:'Seller Signal',partnerLayer:'Partner Layer',crossParticipant:'Cross-Participant',internalOps:'Internal Ops',systemicOutcome:'Systemic Outcome'};
+const GAPS = {
+  1:{title:'No cross-participant intelligence',desc:'AI serves one participant type or another, never the relationship between them simultaneously.'},
+  2:{title:'Internal and external are disconnected',desc:'Efficiency gains from internal AI do not compound into business value for external participants.'},
+  3:{title:'Infrastructure without brief',desc:'A platform exists but has no business-level strategy to serve. The blueprint exists. The strategy does not.'},
+  4:{title:'Partner and ecosystem layer absent',desc:'Third-party ecosystem participants generate value and data. AI is not touching that layer.'},
+  5:{title:'No demand-to-supply feedback loop',desc:'Demand-side data is not feeding supply-side strategy. The signal is used once and not connected back.'},
+  6:{title:'Adoption is cultural, not structural',desc:'Teams experiment independently. This produces local competency without systemic coherence. Gap 6 is the condition that prevents the others from being closed.',meta:true}
+};
+
+let S = { company:'', initiatives:[], matrix:{}, gaps:{} };
+
+// ── MASK ────────────────────────────────────────────────────────────────────
+document.getElementById('orgInput').addEventListener('keydown', e => { if(e.key==='Enter') startApp(); });
+document.getElementById('startBtn').addEventListener('click', startApp);
+
+function startApp() {
+  const v = document.getElementById('orgInput').value.trim();
+  if(!v) return;
+  S.company = v;
+  document.getElementById('mask').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('hCompany').textContent = v;
+  document.getElementById('researchTitle').textContent = 'Research AI initiatives at ' + v;
+  renderGapsGrid();
+}
+
+function resetApp() { S = {company:'',initiatives:[],matrix:{},gaps:{}}; location.reload(); }
+
+// ── NAVIGATION ───────────────────────────────────────────────────────────────
+function goTo(p) {
+  document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(x => x.classList.remove('active'));
+  document.getElementById('panel-'+p).classList.add('active');
+  document.querySelector('[data-p="'+p+'"]').classList.add('active');
+  const steps = ['research','map','matrix','gaps','diagnosis','export'];
+  document.getElementById('hStep').textContent = steps.indexOf(p)+1;
+  if(p==='map') renderMapList();
+  if(p==='matrix') renderMatrix();
+  if(p==='gaps') { renderGapsGrid(); autoSuggestGaps(); }
+  if(p==='export') {}
+}
+
+function updateSidebarDots(current) {
+  const steps = ['research','map','matrix','gaps','diagnosis','export'];
+  const idx = steps.indexOf(current);
+  steps.forEach((s,i) => {
+    const el = document.getElementById('sd-'+s);
+    if(!el) return;
+    el.className = 'sb-dot';
+    if(i < idx) el.classList.add('done');
+    else if(i === idx) el.classList.add('active');
+  });
+}
+
+// ── RESEARCH ─────────────────────────────────────────────────────────────────
+function runResearch() {
+  const prompt = `Research all known AI initiatives at ${S.company}. Return ONLY a JSON object in this exact format with no other text, no markdown, no explanation before or after:
+
+{"initiatives":[{"name":"...","serves":"...","layer":"...","signal":"...","confidence":"...","source":"..."}]}
+
+Field rules:
+- name: short descriptive name
+- serves: exactly one of these values: Buyer | Seller or dealer | Internal employee | Partner or ecosystem participant
+- layer: exactly one of these values: product | internal | infrastructure
+- signal: what data flows in as primary input, 1 sentence
+- confidence: high if from direct announcement, low if inferred
+- source: where you found it
+
+Sources to search: product announcements, engineering blog, job postings, investor materials, the product itself.
+Only include initiatives confirmed in public information. Do not invent. Return raw JSON only.`;
+
+  const promptBox = document.getElementById('promptBox');
+  const promptText = document.getElementById('promptText');
+  promptText.value = prompt;
+  promptBox.style.display = 'block';
+  document.getElementById('statusLine').innerHTML = '<span>Research prompt generated. Copy and run it in your preferred LLM or search tool.</span>';
+}
+
+function openInClaude() {
+  const text = document.getElementById('promptText').value;
+  const url = 'https://claude.ai/new?q=' + encodeURIComponent(text);
+  window.open(url, '_blank');
+}
+
+function parseFromPaste() {
+  const raw = document.getElementById('pasteBack').value.trim();
+  const status = document.getElementById('parseStatus');
+  if(!raw) { status.textContent = 'Nothing pasted yet.'; return; }
+
+  // Strategy 1: direct JSON with initiatives array
+  try {
+    const direct = JSON.parse(raw);
+    if(direct.initiatives && direct.initiatives.length) {
+      loadInitiatives(direct.initiatives);
+      status.textContent = '';
+      return;
+    }
+  } catch(e) {}
+
+  // Strategy 2: find {"initiatives":[...]} JSON block anywhere in text
+  const jsonMatch = raw.match(/\{[\s\S]*?"initiatives"\s*:\s*\[/);
+  if(jsonMatch) {
+    try {
+      const start = raw.indexOf(jsonMatch[0]);
+      let depth = 0, i = start, jsonStr = '';
+      for(; i < raw.length; i++) {
+        if(raw[i] === '{') depth++;
+        else if(raw[i] === '}') { depth--; if(depth === 0) { jsonStr = raw.slice(start, i+1); break; } }
+      }
+      if(jsonStr) {
+        const parsed = JSON.parse(jsonStr);
+        if(parsed.initiatives && parsed.initiatives.length) {
+          loadInitiatives(parsed.initiatives);
+          status.textContent = '';
+          return;
+        }
+      }
+    } catch(e) {}
+  }
+
+  // Strategy 3: markdown table rows — | name | serves | layer | signal | conf | source |
+  const tableRows = raw.match(/\|[^\n]+\|/g);
+  if(tableRows && tableRows.length > 1) {
+    const initiatives = [];
+    for(const row of tableRows) {
+      const cells = row.split('|').map(c => c.trim()).filter(Boolean);
+      if(cells.length < 3) continue;
+      if(cells[0].match(/^[-:]+$/)) continue; // separator row
+      if(cells[0].toLowerCase().includes('name') || cells[0].toLowerCase().includes('initiative')) continue; // header
+      initiatives.push({
+        name: cells[0],
+        serves: normalizeServes(cells[1] || ''),
+        layer: normalizeLayer(cells[2] || ''),
+        signal: cells[3] || 'Not specified',
+        confidence: (cells[4] || '').toLowerCase().includes('high') ? 'high' : 'low',
+        source: cells[5] || ''
+      });
+    }
+    if(initiatives.length > 0) {
+      loadInitiatives(initiatives);
+      status.textContent = '';
+      return;
     }
   }
 
-  fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://schwarzpfad.substack.com/feed'))
-    .then(r => r.json())
-    .then(data => {
-      if (!data.items || !data.items.length) return;
-      const item = data.items[0];
-      const title = item.title;
-      const link = item.link;
-      const pubDate = new Date(item.pubDate);
-      const desc = item.description || item.content || '';
-      const stripped = desc.replace(/<[^>]+>/g, '').substring(0, 200).trim() + '...';
-      const dateStr = pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-      document.getElementById('sp-date').textContent = dateStr;
-      document.getElementById('sp-title').textContent = title;
-      document.getElementById('sp-excerpt').textContent = stripped;
-      document.getElementById('sp-card').href = link;
-      document.getElementById('sp-loading').style.display = 'none';
-      document.getElementById('sp-content').style.display = 'block';
-    })
-    .catch(() => {
-      document.getElementById('sp-loading').textContent = 'Read the latest on schwarzpfad.substack.com';
-    });
+  // Strategy 4: structured text blocks with name:/serves:/layer: fields
+  const initiatives = [];
+  const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+  let current = null;
+  for(const line of lines) {
+    const nameMatch = line.match(/^(?:\d+\.\s*)?(?:name|initiative)\s*[:\-]\s*(.+)$/i);
+    const servesMatch = line.match(/^(?:serves?|participant|audience|who)\s*[:\-]\s*(.+)$/i);
+    const layerMatch = line.match(/^(?:layer|type|category)\s*[:\-]\s*(.+)$/i);
+    const signalMatch = line.match(/^(?:signal|data|input|primary input)\s*[:\-]\s*(.+)$/i);
+    const sourceMatch = line.match(/^(?:source|from|found at|reference)\s*[:\-]\s*(.+)$/i);
+    const confMatch = line.match(/^(?:confidence|conf)\s*[:\-]\s*(.+)$/i);
+    const numHeader = line.match(/^\d+\.\s+\*{0,2}([^\*\n]+?)\*{0,2}\s*$/);
 
-  fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://medium.com/feed/@SThielke'))
-    .then(r => r.json())
-    .then(data => {
-      if (!data.items || !data.items.length) return;
-      const item = data.items[0];
-      const title = item.title;
-      const link = item.link;
-      const pubDate = new Date(item.pubDate);
-      const desc = item.description || item.content || '';
-      const stripped = desc.replace(/<[^>]+>/g, '').substring(0, 200).trim() + '...';
-      const dateStr = pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-      document.getElementById('med-date').textContent = dateStr;
-      document.getElementById('med-title').textContent = title;
-      document.getElementById('med-excerpt').textContent = stripped;
-      document.getElementById('med-card').href = link;
-      document.getElementById('med-loading').style.display = 'none';
-      document.getElementById('med-content').style.display = 'block';
-    })
-    .catch(() => {
-      document.getElementById('med-loading').textContent = 'Read the latest on medium.com/@SThielke';
+    if(nameMatch) {
+      if(current) initiatives.push(current);
+      current = { name: nameMatch[1].trim(), serves:'Internal employee', layer:'internal', signal:'Not specified', confidence:'low', source:'' };
+    } else if(numHeader && !servesMatch && !layerMatch) {
+      if(current) initiatives.push(current);
+      current = { name: numHeader[1].trim(), serves:'Internal employee', layer:'internal', signal:'Not specified', confidence:'low', source:'' };
+    } else if(current) {
+      if(servesMatch) current.serves = normalizeServes(servesMatch[1].trim());
+      if(layerMatch) current.layer = normalizeLayer(layerMatch[1].trim());
+      if(signalMatch) current.signal = signalMatch[1].trim();
+      if(sourceMatch) current.source = sourceMatch[1].trim();
+      if(confMatch) current.confidence = confMatch[1].toLowerCase().includes('high') ? 'high' : 'low';
+    }
+  }
+  if(current) initiatives.push(current);
+
+  if(initiatives.length > 0) {
+    loadInitiatives(initiatives);
+    status.textContent = '';
+    return;
+  }
+
+  status.textContent = 'Could not parse automatically. Paste the JSON format shown in the prompt, or use Add manually.';
+}
+
+function normalizeServes(s) {
+  s = s.toLowerCase();
+  if(s.includes('buyer') || s.includes('customer') || s.includes('demand')) return 'Buyer';
+  if(s.includes('seller') || s.includes('dealer') || s.includes('supply') || s.includes('vendor')) return 'Seller or dealer';
+  if(s.includes('partner') || s.includes('ecosystem') || s.includes('oem') || s.includes('insurance')) return 'Partner or ecosystem participant';
+  return 'Internal employee';
+}
+
+function normalizeLayer(s) {
+  s = s.toLowerCase();
+  if(s.includes('product') || s.includes('customer-facing') || s.includes('buyer') || s.includes('seller')) return 'product';
+  if(s.includes('infra') || s.includes('platform') || s.includes('framework')) return 'infrastructure';
+  return 'internal';
+}
+
+function loadInitiatives(list) {
+  S.initiatives = list.map((x,i) => ({
+    id: 'ini-' + Date.now() + '-' + i,
+    name: x.name || 'Unnamed',
+    serves: x.serves || 'Internal employee',
+    layer: x.layer || 'internal',
+    signal: x.signal || 'Not specified',
+    confidence: x.confidence || 'low',
+    source: x.source || ''
+  }));
+  S.initiatives.forEach(ini => {
+    if(!S.matrix[ini.id]) { S.matrix[ini.id] = {}; DIMS.forEach(d => S.matrix[ini.id][d] = 'not-scope'); }
+  });
+  renderIniList();
+  document.getElementById('warnBox').classList.add('on');
+  document.getElementById('sd-research').classList.add('done');
+  document.getElementById('statusLine').innerHTML = '<span>Loaded ' + S.initiatives.length + ' initiative' + (S.initiatives.length!==1?'s':'') + '. Verify before proceeding.</span>';
+}
+
+function copyPrompt() {
+  const t = document.getElementById('promptText');
+  t.select();
+  navigator.clipboard.writeText(t.value).then(() => {
+    const btn = document.getElementById('copyPromptBtn');
+    btn.textContent = 'Copied';
+    setTimeout(() => btn.textContent = 'Copy prompt', 2000);
+  });
+}
+
+function renderIniList() {
+  const c = document.getElementById('iniList');
+  if(!S.initiatives.length) { c.innerHTML = '<div class="empty-state">No initiatives yet.</div>'; return; }
+  c.innerHTML = S.initiatives.map((ini,i) => `
+    <div class="ini-card">
+      <div class="ini-header">
+        <span class="ini-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="ini-name">${ini.name}</span>
+        <span class="layer-tag ${ini.layer}">${ini.layer}</span>
+      </div>
+      <div class="ini-body">
+        <div class="card-f"><label>Serves</label><p>${ini.serves}</p></div>
+        <div class="card-f"><label>Signal consumed</label><p>${ini.signal}${ini.confidence==='low'?'<div class="conf-flag">⚠ Low confidence</div>':''}</p></div>
+        ${ini.source?`<div class="card-f" style="grid-column:1/-1"><label>Source</label><p style="color:var(--text-dim)">${ini.source}</p></div>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function toggleAddForm() {
+  const f = document.getElementById('addForm');
+  f.style.display = f.style.display === 'block' ? 'none' : 'block';
+}
+
+function addManual() {
+  const name = document.getElementById('f-name').value.trim();
+  const serves = document.getElementById('f-serves').value;
+  const layer = document.getElementById('f-layer').value;
+  const signal = document.getElementById('f-signal').value.trim();
+  if(!name||!serves||!layer) return;
+  const ini = { id:'ini-m-'+Date.now(), name, serves, layer, signal:signal||'Not specified', confidence:'high', source:'Manual entry' };
+  S.initiatives.push(ini);
+  S.matrix[ini.id] = {}; DIMS.forEach(d => S.matrix[ini.id][d] = 'not-scope');
+  ['f-name','f-signal'].forEach(id => document.getElementById(id).value='');
+  ['f-serves','f-layer'].forEach(id => document.getElementById(id).value='');
+  toggleAddForm(); renderIniList();
+}
+
+// ── MAP ───────────────────────────────────────────────────────────────────────
+function renderMapList() {
+  const c = document.getElementById('mapList');
+  if(!S.initiatives.length) { c.innerHTML = '<div class="empty-state">No initiatives. Go back and add some.</div>'; return; }
+  c.innerHTML = S.initiatives.map((ini,i) => `
+    <div class="ini-card">
+      <div class="ini-header">
+        <span class="ini-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="ini-name">${ini.name}</span>
+        <span class="layer-tag ${ini.layer}">${ini.layer}</span>
+      </div>
+      <div class="ini-body">
+        <div class="card-f"><label>Participant served</label>
+          <select onchange="updateF('${ini.id}','serves',this.value)" style="width:100%;background:var(--bg);border:1px solid var(--border-light);color:var(--text);font-family:var(--mono);font-size:11px;padding:6px 8px;outline:none">
+            ${['Buyer','Seller or dealer','Internal employee','Partner or ecosystem participant'].map(o=>`<option ${ini.serves===o?'selected':''}>${o}</option>`).join('')}
+          </select>
+        </div>
+        <div class="card-f"><label>Layer</label>
+          <select onchange="updateF('${ini.id}','layer',this.value)" style="width:100%;background:var(--bg);border:1px solid var(--border-light);color:var(--text);font-family:var(--mono);font-size:11px;padding:6px 8px;outline:none">
+            ${[['product','Product'],['internal','Internal efficiency'],['infrastructure','Infrastructure']].map(([v,l])=>`<option value="${v}" ${ini.layer===v?'selected':''}>${l}</option>`).join('')}
+          </select>
+        </div>
+        <div class="card-f" style="grid-column:1/-1"><label>Signal consumed</label><p style="color:var(--text-dim)">${ini.signal}</p></div>
+      </div>
+    </div>`).join('');
+}
+
+function updateF(id, field, val) { const ini = S.initiatives.find(i=>i.id===id); if(ini) ini[field]=val; }
+
+// ── MATRIX ────────────────────────────────────────────────────────────────────
+function renderMatrix() {
+  const tbody = document.getElementById('mxBody');
+  if(!S.initiatives.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-dim)">No initiatives. Go back and add some.</td></tr>'; return; }
+
+  // Auto-score cells using framework logic, preserve any manual overrides
+  S.initiatives.forEach(ini => {
+    if(!S.matrix[ini.id]) S.matrix[ini.id] = {};
+    const auto = autoScore(ini);
+    DIMS.forEach(d => {
+      if(!S.matrix[ini.id][d] || S.matrix[ini.id][d] === 'not-scope') {
+        S.matrix[ini.id][d] = auto[d];
+      }
     });
+  });
+
+  tbody.innerHTML = S.initiatives.map(ini => `
+    <tr>
+      <td><div class="ini-nc">${ini.name}</div><div class="ini-ns">${ini.serves}</div></td>
+      ${DIMS.map(d => {
+        const v = S.matrix[ini.id]?.[d]||'not-scope';
+        return `<td><select class="score-sel ${v}" onchange="updateScore('${ini.id}','${d}',this.value);this.className='score-sel '+this.value;checkEmpty()">
+          <option value="in-scope" ${v==='in-scope'?'selected':''}>In Scope</option>
+          <option value="partial" ${v==='partial'?'selected':''}>Partial</option>
+          <option value="not-scope" ${v==='not-scope'?'selected':''}>Not in Scope</option>
+        </select></td>`;
+      }).join('')}
+    </tr>`).join('');
+  checkEmpty();
+}
+
+function autoScore(ini) {
+  const serves = ini.serves || '';
+  const layer = ini.layer || '';
+  const signal = (ini.signal || '').toLowerCase();
+  const isBuyer = serves === 'Buyer';
+  const isSeller = serves === 'Seller or dealer';
+  const isPartner = serves === 'Partner or ecosystem participant';
+  const isEmployee = serves === 'Internal employee';
+  const isInternal = layer === 'internal';
+  const isInfra = layer === 'infrastructure';
+
+  // Check signal text for additional clues
+  const signalHasBuyer = signal.includes('buyer') || signal.includes('customer') || signal.includes('demand') || signal.includes('search') || signal.includes('owner') || signal.includes('driver');
+  const signalHasSeller = signal.includes('dealer') || signal.includes('seller') || signal.includes('vendor') || signal.includes('oem') || signal.includes('supplier');
+
+  // Buyer signal: in scope if serves buyer, OR if signal explicitly reads buyer behaviour
+  const buyerScore = (isBuyer || (isSeller && signalHasBuyer)) ? 'in-scope' : (signalHasBuyer ? 'partial' : 'not-scope');
+  // Seller signal: in scope if serves seller, OR if signal explicitly reads seller behaviour
+  const sellerScore = (isSeller || (isBuyer && signalHasSeller)) ? 'in-scope' : (signalHasSeller ? 'partial' : 'not-scope');
+
+  return {
+    buyerSignal: buyerScore,
+    sellerSignal: sellerScore,
+    partnerLayer: isPartner ? 'in-scope' : 'not-scope',
+    crossParticipant: 'not-scope',
+    internalOps: (isEmployee || isInternal || isInfra) ? 'in-scope' : 'not-scope',
+    systemicOutcome: 'not-scope'
+  };
+}
+
+function updateScore(id, dim, val) { if(!S.matrix[id]) S.matrix[id]={}; S.matrix[id][dim]=val; }
+
+function checkEmpty() {
+  if(!S.initiatives.length) return;
+  const empty = DIMS.filter(d => S.initiatives.every(i => (S.matrix[i.id]?.[d]||'not-scope')==='not-scope'));
+  const b = document.getElementById('emptyColBanner');
+  if(empty.length) {
+    b.classList.add('on');
+    b.innerHTML = '<b>Empty column' + (empty.length>1?'s':'') + ' detected:</b> ' + empty.map(d=>DIM_LABELS[d]).join(', ') + '. Every initiative scores Not in Scope. This is your primary structural finding.';
+  } else { b.classList.remove('on'); }
+}
+
+// ── GAPS ──────────────────────────────────────────────────────────────────────
+function autoSuggestGaps() {
+  const empty = DIMS.filter(d => S.initiatives.length > 0 && S.initiatives.every(i => (S.matrix[i.id]?.[d]||'not-scope') === 'not-scope'));
+  const hasInternal = S.initiatives.some(i => i.layer === 'internal' || i.layer === 'infrastructure');
+  const hasExternal = S.initiatives.some(i => i.layer === 'product');
+  const hasInfra = S.initiatives.some(i => i.layer === 'infrastructure');
+  const crossEmpty = empty.includes('crossParticipant');
+  const feedbackEmpty = empty.includes('buyerSignal') || empty.includes('sellerSignal');
+  const partnerEmpty = empty.includes('partnerLayer');
+  const systemicEmpty = empty.includes('systemicOutcome');
+  const culturalAdoption = S.initiatives.some(i => i.source && i.source.toLowerCase().includes('community')) ||
+    S.initiatives.filter(i => i.layer === 'internal').length > 3;
+
+  const suggest = [];
+  if(crossEmpty) suggest.push(1);
+  if(hasInternal && hasExternal) suggest.push(2);
+  if(hasInfra) suggest.push(3);
+  if(partnerEmpty) suggest.push(4);
+  if(feedbackEmpty && hasExternal) suggest.push(5);
+  if(culturalAdoption) suggest.push(6);
+
+  suggest.forEach(n => {
+    const el = document.getElementById('gap-' + n);
+    if(el && !el.classList.contains('on')) {
+      el.classList.add('on');
+      S.gaps[n] = true;
+      el.textContent = '✓';
+    }
+  });
+}
+
+function renderGapsGrid() {
+  document.getElementById('gapsGrid').innerHTML = Object.entries(GAPS).map(([n,g]) => `
+    <div class="gap-row" ${g.meta?'style="opacity:.8"':''}>
+      <div class="gap-num">${n}</div>
+      <div class="gap-body"><div class="gap-title">${g.title}</div><div class="gap-desc">${g.desc}</div></div>
+      <div class="gap-toggle"><div class="chk" id="gap-${n}" onclick="toggleGap(${n})"></div></div>
+    </div>`).join('');
+}
+
+function toggleGap(n) {
+  const el = document.getElementById('gap-'+n);
+  el.classList.toggle('on');
+  S.gaps[n] = el.classList.contains('on');
+  el.textContent = el.classList.contains('on') ? '✓' : '';
+}
+
+// ── DIAGNOSIS ─────────────────────────────────────────────────────────────────
+function buildDiagnosis() {
+  const total = S.initiatives.length;
+  const prod = S.initiatives.filter(i=>i.layer==='product').length;
+  const intl = S.initiatives.filter(i=>i.layer==='internal').length;
+  const infra = S.initiatives.filter(i=>i.layer==='infrastructure').length;
+  const emptyCols = DIMS.filter(d => S.initiatives.length>0 && S.initiatives.every(i=>(S.matrix[i.id]?.[d]||'not-scope')==='not-scope'));
+  const confirmed = Object.entries(S.gaps).filter(([,v])=>v).map(([k])=>parseInt(k));
+
+  let parts = [];
+  if(total>0) {
+    parts.push(S.company + ' has ' + total + ' AI initiative' + (total!==1?'s':'') + ': ');
+    const bd = [];
+    if(prod) bd.push(prod + ' optimise' + (prod===1?'s':'') + ' individual interactions');
+    if(intl) bd.push(intl + ' improve' + (intl===1?'s':'') + ' internal efficiency');
+    if(infra) bd.push(infra + ' provide' + (infra===1?'s':'') + ' infrastructure');
+    parts.push(bd.join(', ') + '. ');
+  }
+  if(emptyCols.length) {
+    // Systemic Outcome is always the primary finding if present
+    if(emptyCols.includes('systemicOutcome')) {
+      const others = emptyCols.filter(d=>d!=='systemicOutcome');
+      if(others.length) {
+        parts.push('No initiative addresses the ' + others.map(d=>DIM_LABELS[d]).join(' or ') + ' dimension. ');
+      }
+      parts.push('The Systemic Outcome column is empty across every row because no initiative has been given a system-level brief. That is the work that has not yet been commissioned.');
+    } else {
+      const names = emptyCols.map(d=>DIM_LABELS[d]).join(' and ');
+      parts.push('The ' + names + ' column' + (emptyCols.length>1?'s are':' is') + ' empty across every row. No initiative was designed to address this dimension. Name what the business should be producing at this level that no initiative currently creates.');
+    }
+  } else if(!total) { parts.push('No initiatives entered yet.'); }
+  else { parts.push('No column is fully empty. Review Partial scores — partial coverage is not the same as designed-in intent.'); }
+
+  document.getElementById('diagText').textContent = parts.join('');
+
+  document.getElementById('gapsSummary').innerHTML = confirmed.length
+    ? confirmed.map(n=>`<div style="margin-bottom:5px"><span style="color:var(--accent);margin-right:8px">Gap ${n}</span>${GAPS[n]?GAPS[n].title:''}</div>`).join('')
+    : 'No gaps marked. Go back to Part 4.';
+
+  const filling = [];
+  if(confirmed.includes(1)||confirmed.includes(5)) filling.push('A cross-participant intelligence layer needs to be commissioned: a single initiative reading both participant signals simultaneously.');
+  if(confirmed.includes(2)) filling.push('Internal AI investments need a design brief connecting them to external participant outcomes.');
+  if(confirmed.includes(3)) filling.push('The infrastructure layer needs a business-level brief. The capability exists. The strategy it should serve does not yet exist.');
+  if(confirmed.includes(4)) filling.push('The ecosystem and partner layer needs to be brought into scope.');
+  if(confirmed.includes(6)) filling.push('Structural adoption mechanisms need to replace cultural ones. Closing systemic gaps requires centrally-commissioned strategy.');
+  document.getElementById('fillingText').innerHTML = filling.length ? filling.map(f=>`<p style="margin-bottom:8px">${f}</p>`).join('') : 'Mark gaps to generate the filling argument.';
+
+  document.getElementById('sd-diagnosis').classList.add('done');
+}
+
+function copyDiag(e) {
+  navigator.clipboard.writeText(document.getElementById('diagText').textContent).then(() => {
+    const b = e.target; b.textContent = 'Copied'; setTimeout(()=>b.textContent='Copy', 2000);
+  });
+}
+
+// ── EXPORT ────────────────────────────────────────────────────────────────────
+function buildPayload() {
+  const emptyCols = DIMS.filter(d => S.initiatives.length>0 && S.initiatives.every(i=>(S.matrix[i.id]?.[d]||'not-scope')==='not-scope'));
+  const confirmed = Object.entries(S.gaps).filter(([,v])=>v).map(([k])=>parseInt(k));
+  return {
+    company: S.company,
+    diagnosticStatement: document.getElementById('diagText').textContent,
+    confirmedGaps: confirmed,
+    emptyColumn: emptyCols.includes('systemicOutcome') ? 'Systemic Outcome' : (emptyCols.length ? DIM_LABELS[emptyCols[0]] : 'Systemic Outcome'),
+    emptyCols: emptyCols,
+    initiatives: S.initiatives,
+    matrix: S.matrix
+  };
+}
+
+function exportJSON() {
+  const p = buildPayload();
+  document.getElementById('sd-export').classList.add('done');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(p,null,2)],{type:'application/json'}));
+  a.download = 'audit-' + S.company.toLowerCase().replace(/\s+/g,'-') + '.json';
+  a.click();
+}
+
+function openReport() {
+  buildDiagnosis();
+  const p = buildPayload();
+  document.getElementById('sd-export').classList.add('done');
+
+  const DOT_IN   = '<span style="font-size:18px;color:#0e0d0b">●</span>';
+  const DOT_PART = '<span style="font-size:18px;color:#a07828">◑</span>';
+  const DOT_OUT  = '<span style="font-size:18px;color:#ccc8be">○</span>';
+
+  function dot(score) {
+    if(score === 'in-scope') return DOT_IN;
+    if(score === 'partial')  return DOT_PART;
+    return DOT_OUT;
+  }
+
+  const GAP_TEXT = {
+    1: 'AI serves one participant type or another, never the relationship between them simultaneously. The business is a system. None of the AI treats it as one.',
+    2: 'Internal efficiency tools operate entirely inside the organisation. Efficiency gains do not compound into business value. There is no design intent connecting internal AI behaviour to external outcomes for participants.',
+    3: 'A platform or framework exists but has no business-level strategy to serve. The capability is ahead of the intent. The blueprint exists. The strategy it should serve does not yet exist.',
+    4: 'Financing partners, integrations, and third-party ecosystem participants generate significant value and data. AI is not touching that layer at all.',
+    5: 'Demand-side behaviour data is not feeding supply-side strategy recommendations. The signal is used for one interaction. It is not completing a circuit back to supply-side participants at system level.',
+    6: 'AI adoption is driven by teams experimenting independently and sharing learnings. That produces local competency without systemic coherence. The more teams experiment independently, the harder convergence becomes.'
+  };
+
+  const GAP_TITLE = {
+    1: 'No cross-participant intelligence',
+    2: 'Internal and external are disconnected',
+    3: 'Infrastructure without brief',
+    4: 'Partner and ecosystem layer absent',
+    5: 'No demand-to-supply feedback loop',
+    6: 'Adoption is cultural, not structural'
+  };
+
+  const LAYER_LABEL = { product:'Product', internal:'Internal', infrastructure:'Infrastructure' };
+  const CAT_LABEL   = { product:'Channel Optimisation', internal:'Internal Efficiency', infrastructure:'Infrastructure' };
+
+  // Initiatives section
+  const iniHTML = p.initiatives.map((ini, i) => `
+    <div style="margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid #d8d2c6;">
+      <div style="display:flex;align-items:flex-start;gap:24px;">
+        <div style="font-size:28px;font-weight:700;color:#d8d2c6;min-width:40px;font-family:Georgia,serif;">${String(i+1).padStart(2,'0')}</div>
+        <div style="flex:1;">
+          <div style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#b83020;margin-bottom:4px;font-family:'Courier New',monospace;">${LAYER_LABEL[ini.layer]||ini.layer} / ${ini.serves}</div>
+          <div style="font-size:18px;font-weight:700;font-family:Georgia,serif;margin-bottom:8px;">${ini.name}</div>
+          <div style="font-size:13px;color:#4a4438;line-height:1.65;margin-bottom:10px;">${ini.signal}</div>
+          <div style="display:flex;gap:16px;font-size:11px;font-family:'Courier New',monospace;">
+            <span><span style="color:#7a7060;">Participant served:</span> ${ini.serves}</span>
+            <span style="color:#7a7060;">[ ${CAT_LABEL[ini.layer]||ini.layer} ]</span>
+          </div>
+          ${ini.source ? `<div style="font-size:11px;color:#9a9080;margin-top:4px;font-family:'Courier New',monospace;">Source: ${ini.source}</div>` : ''}
+        </div>
+      </div>
+    </div>`).join('');
+
+  // Gaps section
+  const confirmedGaps = p.confirmedGaps;
+  const gapsHTML = confirmedGaps.length > 0
+    ? confirmedGaps.map(n => `
+        <div style="margin-bottom:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div>
+            <div style="font-size:11px;font-weight:700;font-family:'Courier New',monospace;margin-bottom:6px;">${GAP_TITLE[n]||'Gap '+n}</div>
+            <div style="font-size:12px;color:#4a4438;line-height:1.65;">${GAP_TEXT[n]||''}</div>
+          </div>
+        </div>`).join('')
+    : '<p style="color:#7a7060;font-size:12px;font-style:italic;">No structural gaps confirmed. Go back to Part 4 to mark which gaps are present.</p>';
+
+  // Matrix section
+  const dimKeys   = ['buyerSignal','sellerSignal','partnerLayer','crossParticipant','internalOps','systemicOutcome'];
+  const dimLabels = ['Buyer\nSignal','Seller\nSignal','Partner\nLayer','Cross-\nParticipant','Internal\nOps','Systemic\nOutcome'];
+
+  const matrixRows = p.initiatives.map(ini => {
+    const cells = dimKeys.map(d => `<td style="text-align:center;padding:8px 6px;border-bottom:1px solid #e8e2d8;">${dot(p.matrix[ini.id]?.[d]||'not-scope')}</td>`).join('');
+    return `<tr>
+      <td style="padding:8px 12px;border-bottom:1px solid #e8e2d8;font-family:Georgia,serif;font-size:13px;font-weight:600;">${ini.name}</td>
+      ${cells}
+    </tr>`;
+  }).join('');
+
+  const matrixHeaders = dimLabels.map(l =>
+    `<th style="text-align:center;padding:8px 6px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-family:'Courier New',monospace;color:#7a7060;font-weight:400;white-space:pre-line;">${l}</th>`
+  ).join('');
+
+  // Empty column analysis
+  const emptyNames = p.emptyCols.map(d => ({
+    buyerSignal:'Buyer Signal', sellerSignal:'Seller Signal', partnerLayer:'Partner Layer',
+    crossParticipant:'Cross-Participant', internalOps:'Internal Ops', systemicOutcome:'Systemic Outcome'
+  }[d])).join(', ');
+
+  const prod  = p.initiatives.filter(i=>i.layer==='product').length;
+  const intl  = p.initiatives.filter(i=>i.layer==='internal').length;
+  const infra = p.initiatives.filter(i=>i.layer==='infrastructure').length;
+  const total = p.initiatives.length;
+
+  const diagText = p.diagnosticStatement || (() => {
+    const bd = [];
+    if(prod)  bd.push(prod + ' optimise' + (prod===1?'s':'') + ' individual interactions');
+    if(intl)  bd.push(intl + ' improve' + (intl===1?'s':'') + ' internal efficiency');
+    if(infra) bd.push(infra + ' provide' + (infra===1?'s':'') + ' infrastructure');
+    return `${p.company} has ${total} AI initiative${total!==1?'s':''}. ${bd.join(', ')}. The column that is empty across every single row is ${p.emptyColumn}. That is the work that has not yet been commissioned.`;
+  })();
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>${p.company} — AI Initiative Audit</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f5f0e8; color: #0e0d0b; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6; }
+  .page { max-width: 860px; margin: 0 auto; padding: 60px 60px 80px; }
+  @media print {
+    body { background: white; }
+    .page { padding: 40px; }
+    .no-print { display: none; }
+    @page { margin: 2cm; }
+  }
+  .print-btn { position: fixed; top: 24px; right: 24px; background: #b83020; color: white; border: none; padding: 10px 22px; font-family: 'Courier New', monospace; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; z-index: 100; }
+  .print-btn:hover { opacity: .85; }
+  h1 { font-family: Georgia, serif; font-size: 36px; font-weight: 700; line-height: 1.1; margin-bottom: 6px; }
+  h2 { font-family: Georgia, serif; font-size: 11px; font-weight: 400; font-style: italic; color: #7a7060; letter-spacing: .05em; margin-bottom: 48px; }
+  .section-label { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: #b83020; margin-bottom: 24px; padding-bottom: 10px; border-bottom: 2px solid #b83020; }
+  .rule { border: none; border-top: 1px solid #d8d2c6; margin: 48px 0; }
+  .diagnosis-box { background: #0e0d0b; color: #f5f0e8; padding: 32px 36px; margin-top: 32px; }
+  .diagnosis-box .label { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: #b83020; margin-bottom: 14px; }
+  .diagnosis-box p { font-family: Georgia, serif; font-size: 16px; line-height: 1.75; }
+  .legend { display: flex; gap: 24px; margin-bottom: 20px; font-size: 11px; color: #7a7060; align-items: center; }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  table { width: 100%; border-collapse: collapse; }
+  .gaps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 40px; }
+  .gap-item .gap-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+  .gap-item .gap-body { font-size: 12px; color: #4a4438; line-height: 1.65; }
+</style>
+</head>
+<body>
+<button class="print-btn no-print" onclick="window.print()">Save as PDF</button>
+<div class="page">
+
+  <h1>${p.company}</h1>
+  <h2>${total} AI Initiative${total!==1?'s':''}. ${p.emptyCols.length > 0 ? 'Empty column: ' + emptyNames + '.' : 'Full matrix coverage.'}</h2>
+
+  <div class="section-label">The Initiatives</div>
+  ${iniHTML}
+
+  <hr class="rule">
+
+  <div class="section-label">Structural Gaps</div>
+  <div class="gaps-grid">
+    ${confirmedGaps.length > 0
+      ? confirmedGaps.map(n => `
+          <div class="gap-item">
+            <div class="gap-title">${GAP_TITLE[n]||'Gap '+n}</div>
+            <div class="gap-body">${GAP_TEXT[n]||''}</div>
+          </div>`).join('')
+      : '<p style="color:#7a7060;font-size:12px;font-style:italic;grid-column:1/-1;">No structural gaps confirmed.</p>'
+    }
+  </div>
+
+  <hr class="rule">
+
+  <div class="section-label">Disjunction Matrix</div>
+  <div class="legend">
+    <span>${DOT_IN} In scope</span>
+    <span>${DOT_PART} Partial</span>
+    <span>${DOT_OUT} Not in scope</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left;padding:8px 12px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-family:'Courier New',monospace;color:#7a7060;font-weight:400;border-bottom:1px solid #d8d2c6;">Initiative</th>
+        ${matrixHeaders}
+      </tr>
+    </thead>
+    <tbody>${matrixRows}</tbody>
+  </table>
+
+  <hr class="rule">
+
+  <div class="section-label">Diagnosis</div>
+  <div class="diagnosis-box">
+    <div class="label">The finding</div>
+    <p>${diagText}</p>
+  </div>
+
+  <p style="margin-top:48px;font-size:10px;color:#9a9080;letter-spacing:.1em;">AI Initiative Audit — sebastianthielke.com</p>
+</div>
+</body>
+</html>`;
+
+  const w = window.open('', '_blank');
+  w.document.write(html);
+  w.document.close();
+}
 </script>
 </body>
 </html>
