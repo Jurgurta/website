@@ -190,7 +190,7 @@ table.mx { width: 100%; border-collapse: collapse; min-width: 600px; }
       <div class="sb-item" data-p="matrix" onclick="goTo('matrix')"><span>03 Matrix</span><span class="sb-dot" id="sd-matrix"></span></div>
       <div class="sb-item" data-p="gaps" onclick="goTo('gaps')"><span>04 Gaps</span><span class="sb-dot" id="sd-gaps"></span></div>
       <div class="sb-item" data-p="diagnosis" onclick="goTo('diagnosis')"><span>05 Diagnosis</span><span class="sb-dot" id="sd-diagnosis"></span></div>
-      <div class="sb-item" data-p="export" onclick="goTo('export')"><span>06 Export</span><span class="sb-dot" id="sd-export"></span></div>
+      <div class="sb-item" data-p="export" onclick="goTo('export')"><span>06 Report</span><span class="sb-dot" id="sd-export"></span></div>
     </nav>
 
     <main class="main">
@@ -305,19 +305,18 @@ table.mx { width: 100%; border-collapse: collapse; min-width: 600px; }
           <div class="diag-label">What filling it requires</div>
           <div id="fillingText" style="font-size:12px;color:var(--text-mid);line-height:1.7"></div>
         </div>
-        <div class="nav-actions"><button class="btn-ghost" onclick="goTo('gaps')">Back</button><button class="btn-main" onclick="goTo('export')">Export session</button></div>
+        <div class="nav-actions"><button class="btn-ghost" onclick="goTo('gaps')">Back</button><button class="btn-main" onclick="buildDiagnosis();goTo('export')">Generate report</button></div>
       </div>
 
       <!-- EXPORT -->
       <div class="panel" id="panel-export">
-        <div class="eyebrow">Part 6 — Export</div>
-        <div class="ptitle">Take your analysis with you.</div>
-        <div class="pdesc">Export as JSON to import into the Interview Tool, or download as plain text.</div>
-        <div class="export-box" id="exportBox"></div>
-        <div class="action-row">
-          <button class="btn-main" onclick="exportJSON()">Export for Interview Tool (.json)</button>
-          <button class="btn-ghost" onclick="exportTxt()">Download .txt</button>
-          <button class="btn-ghost" onclick="copyExport(event)">Copy</button>
+        <div class="eyebrow">Part 6 — Output</div>
+        <div class="ptitle">Your analysis document.</div>
+        <div class="pdesc">Opens in a new browser window formatted like the AutoScout24 analysis. Print or save as PDF from there.</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn-main" onclick="openReport()">Open analysis document</button>
+          <button class="btn-ghost" onclick="exportJSON()">Export for Interview Tool (.json)</button>
+        </div>
         </div>
       </div>
 
@@ -371,7 +370,8 @@ function goTo(p) {
   document.getElementById('hStep').textContent = steps.indexOf(p)+1;
   if(p==='map') renderMapList();
   if(p==='matrix') renderMatrix();
-  if(p==='export') buildExport();
+  if(p==='gaps') { renderGapsGrid(); autoSuggestGaps(); }
+  if(p==='export') {}
 }
 
 function updateSidebarDots(current) {
@@ -667,9 +667,18 @@ function autoScore(ini) {
   const isInternal = layer === 'internal';
   const isInfra = layer === 'infrastructure';
 
+  // Check signal text for additional clues
+  const signalHasBuyer = signal.includes('buyer') || signal.includes('customer') || signal.includes('demand') || signal.includes('search') || signal.includes('owner') || signal.includes('driver');
+  const signalHasSeller = signal.includes('dealer') || signal.includes('seller') || signal.includes('vendor') || signal.includes('oem') || signal.includes('supplier');
+
+  // Buyer signal: in scope if serves buyer, OR if signal explicitly reads buyer behaviour
+  const buyerScore = (isBuyer || (isSeller && signalHasBuyer)) ? 'in-scope' : (signalHasBuyer ? 'partial' : 'not-scope');
+  // Seller signal: in scope if serves seller, OR if signal explicitly reads seller behaviour
+  const sellerScore = (isSeller || (isBuyer && signalHasSeller)) ? 'in-scope' : (signalHasSeller ? 'partial' : 'not-scope');
+
   return {
-    buyerSignal: isBuyer ? 'in-scope' : 'not-scope',
-    sellerSignal: isSeller ? 'in-scope' : 'not-scope',
+    buyerSignal: buyerScore,
+    sellerSignal: sellerScore,
     partnerLayer: isPartner ? 'in-scope' : 'not-scope',
     crossParticipant: 'not-scope',
     internalOps: (isEmployee || isInternal || isInfra) ? 'in-scope' : 'not-scope',
@@ -690,6 +699,36 @@ function checkEmpty() {
 }
 
 // ── GAPS ──────────────────────────────────────────────────────────────────────
+function autoSuggestGaps() {
+  const empty = DIMS.filter(d => S.initiatives.length > 0 && S.initiatives.every(i => (S.matrix[i.id]?.[d]||'not-scope') === 'not-scope'));
+  const hasInternal = S.initiatives.some(i => i.layer === 'internal' || i.layer === 'infrastructure');
+  const hasExternal = S.initiatives.some(i => i.layer === 'product');
+  const hasInfra = S.initiatives.some(i => i.layer === 'infrastructure');
+  const crossEmpty = empty.includes('crossParticipant');
+  const feedbackEmpty = empty.includes('buyerSignal') || empty.includes('sellerSignal');
+  const partnerEmpty = empty.includes('partnerLayer');
+  const systemicEmpty = empty.includes('systemicOutcome');
+  const culturalAdoption = S.initiatives.some(i => i.source && i.source.toLowerCase().includes('community')) ||
+    S.initiatives.filter(i => i.layer === 'internal').length > 3;
+
+  const suggest = [];
+  if(crossEmpty) suggest.push(1);
+  if(hasInternal && hasExternal) suggest.push(2);
+  if(hasInfra) suggest.push(3);
+  if(partnerEmpty) suggest.push(4);
+  if(feedbackEmpty && hasExternal) suggest.push(5);
+  if(culturalAdoption) suggest.push(6);
+
+  suggest.forEach(n => {
+    const el = document.getElementById('gap-' + n);
+    if(el && !el.classList.contains('on')) {
+      el.classList.add('on');
+      S.gaps[n] = true;
+      el.textContent = '✓';
+    }
+  });
+}
+
 function renderGapsGrid() {
   document.getElementById('gapsGrid').innerHTML = Object.entries(GAPS).map(([n,g]) => `
     <div class="gap-row" ${g.meta?'style="opacity:.8"':''}>
@@ -756,51 +795,221 @@ function copyDiag(e) {
 }
 
 // ── EXPORT ────────────────────────────────────────────────────────────────────
-function buildExport() {
+function buildPayload() {
   const emptyCols = DIMS.filter(d => S.initiatives.length>0 && S.initiatives.every(i=>(S.matrix[i.id]?.[d]||'not-scope')==='not-scope'));
   const confirmed = Object.entries(S.gaps).filter(([,v])=>v).map(([k])=>parseInt(k));
-  const payload = {
+  return {
     company: S.company,
     diagnosticStatement: document.getElementById('diagText').textContent,
     confirmedGaps: confirmed,
     emptyColumn: emptyCols.length ? DIM_LABELS[emptyCols[0]] : 'Systemic Outcome',
+    emptyCols: emptyCols,
     initiatives: S.initiatives,
     matrix: S.matrix
   };
-  document.getElementById('exportBox').textContent = JSON.stringify(payload, null, 2);
-  document.getElementById('sd-export').classList.add('done');
-  return payload;
 }
 
 function exportJSON() {
-  const p = buildExport();
+  const p = buildPayload();
+  document.getElementById('sd-export').classList.add('done');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(p,null,2)],{type:'application/json'}));
   a.download = 'audit-' + S.company.toLowerCase().replace(/\s+/g,'-') + '.json';
   a.click();
 }
 
-function exportTxt() {
-  const p = buildExport();
-  const confirmed = Object.entries(S.gaps).filter(([,v])=>v).map(([k])=>parseInt(k));
-  const lines = [
-    'AI INITIATIVE AUDIT: ' + S.company.toUpperCase(),
-    '='.repeat(50), '',
-    'DIAGNOSTIC STATEMENT', '-'.repeat(40), p.diagnosticStatement, '',
-    'CONFIRMED GAPS', '-'.repeat(40),
-    ...confirmed.map(n => 'Gap ' + n + ': ' + (GAPS[n]?GAPS[n].title:'')), '',
-    'EMPTY COLUMN', '-'.repeat(40), p.emptyColumn
-  ];
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain'}));
-  a.download = 'audit-' + S.company.toLowerCase().replace(/\s+/g,'-') + '.txt';
-  a.click();
-}
+function openReport() {
+  buildDiagnosis();
+  const p = buildPayload();
+  document.getElementById('sd-export').classList.add('done');
 
-function copyExport(e) {
-  navigator.clipboard.writeText(document.getElementById('exportBox').textContent).then(() => {
-    const b = e.target; b.textContent = 'Copied'; setTimeout(()=>b.textContent='Copy', 2000);
-  });
+  const DOT_IN   = '<span style="font-size:18px;color:#0e0d0b">●</span>';
+  const DOT_PART = '<span style="font-size:18px;color:#a07828">◑</span>';
+  const DOT_OUT  = '<span style="font-size:18px;color:#ccc8be">○</span>';
+
+  function dot(score) {
+    if(score === 'in-scope') return DOT_IN;
+    if(score === 'partial')  return DOT_PART;
+    return DOT_OUT;
+  }
+
+  const GAP_TEXT = {
+    1: 'AI serves one participant type or another, never the relationship between them simultaneously. The business is a system. None of the AI treats it as one.',
+    2: 'Internal efficiency tools operate entirely inside the organisation. Efficiency gains do not compound into business value. There is no design intent connecting internal AI behaviour to external outcomes for participants.',
+    3: 'A platform or framework exists but has no business-level strategy to serve. The capability is ahead of the intent. The blueprint exists. The strategy it should serve does not yet exist.',
+    4: 'Financing partners, integrations, and third-party ecosystem participants generate significant value and data. AI is not touching that layer at all.',
+    5: 'Demand-side behaviour data is not feeding supply-side strategy recommendations. The signal is used for one interaction. It is not completing a circuit back to supply-side participants at system level.',
+    6: 'AI adoption is driven by teams experimenting independently and sharing learnings. That produces local competency without systemic coherence. The more teams experiment independently, the harder convergence becomes.'
+  };
+
+  const GAP_TITLE = {
+    1: 'No cross-participant intelligence',
+    2: 'Internal and external are disconnected',
+    3: 'Infrastructure without brief',
+    4: 'Partner and ecosystem layer absent',
+    5: 'No demand-to-supply feedback loop',
+    6: 'Adoption is cultural, not structural'
+  };
+
+  const LAYER_LABEL = { product:'Product', internal:'Internal', infrastructure:'Infrastructure' };
+  const CAT_LABEL   = { product:'Channel Optimisation', internal:'Internal Efficiency', infrastructure:'Infrastructure' };
+
+  // Initiatives section
+  const iniHTML = p.initiatives.map((ini, i) => `
+    <div style="margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid #d8d2c6;">
+      <div style="display:flex;align-items:flex-start;gap:24px;">
+        <div style="font-size:28px;font-weight:700;color:#d8d2c6;min-width:40px;font-family:Georgia,serif;">${String(i+1).padStart(2,'0')}</div>
+        <div style="flex:1;">
+          <div style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#b83020;margin-bottom:4px;font-family:'Courier New',monospace;">${LAYER_LABEL[ini.layer]||ini.layer} / ${ini.serves}</div>
+          <div style="font-size:18px;font-weight:700;font-family:Georgia,serif;margin-bottom:8px;">${ini.name}</div>
+          <div style="font-size:13px;color:#4a4438;line-height:1.65;margin-bottom:10px;">${ini.signal}</div>
+          <div style="display:flex;gap:16px;font-size:11px;font-family:'Courier New',monospace;">
+            <span><span style="color:#7a7060;">Participant served:</span> ${ini.serves}</span>
+            <span style="color:#7a7060;">[ ${CAT_LABEL[ini.layer]||ini.layer} ]</span>
+          </div>
+          ${ini.source ? `<div style="font-size:11px;color:#9a9080;margin-top:4px;font-family:'Courier New',monospace;">Source: ${ini.source}</div>` : ''}
+        </div>
+      </div>
+    </div>`).join('');
+
+  // Gaps section
+  const confirmedGaps = p.confirmedGaps;
+  const gapsHTML = confirmedGaps.length > 0
+    ? confirmedGaps.map(n => `
+        <div style="margin-bottom:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div>
+            <div style="font-size:11px;font-weight:700;font-family:'Courier New',monospace;margin-bottom:6px;">${GAP_TITLE[n]||'Gap '+n}</div>
+            <div style="font-size:12px;color:#4a4438;line-height:1.65;">${GAP_TEXT[n]||''}</div>
+          </div>
+        </div>`).join('')
+    : '<p style="color:#7a7060;font-size:12px;font-style:italic;">No structural gaps confirmed. Go back to Part 4 to mark which gaps are present.</p>';
+
+  // Matrix section
+  const dimKeys   = ['buyerSignal','sellerSignal','partnerLayer','crossParticipant','internalOps','systemicOutcome'];
+  const dimLabels = ['Buyer\nSignal','Seller\nSignal','Partner\nLayer','Cross-\nParticipant','Internal\nOps','Systemic\nOutcome'];
+
+  const matrixRows = p.initiatives.map(ini => {
+    const cells = dimKeys.map(d => `<td style="text-align:center;padding:8px 6px;border-bottom:1px solid #e8e2d8;">${dot(p.matrix[ini.id]?.[d]||'not-scope')}</td>`).join('');
+    return `<tr>
+      <td style="padding:8px 12px;border-bottom:1px solid #e8e2d8;font-family:Georgia,serif;font-size:13px;font-weight:600;">${ini.name}</td>
+      ${cells}
+    </tr>`;
+  }).join('');
+
+  const matrixHeaders = dimLabels.map(l =>
+    `<th style="text-align:center;padding:8px 6px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-family:'Courier New',monospace;color:#7a7060;font-weight:400;white-space:pre-line;">${l}</th>`
+  ).join('');
+
+  // Empty column analysis
+  const emptyNames = p.emptyCols.map(d => ({
+    buyerSignal:'Buyer Signal', sellerSignal:'Seller Signal', partnerLayer:'Partner Layer',
+    crossParticipant:'Cross-Participant', internalOps:'Internal Ops', systemicOutcome:'Systemic Outcome'
+  }[d])).join(', ');
+
+  const prod  = p.initiatives.filter(i=>i.layer==='product').length;
+  const intl  = p.initiatives.filter(i=>i.layer==='internal').length;
+  const infra = p.initiatives.filter(i=>i.layer==='infrastructure').length;
+  const total = p.initiatives.length;
+
+  const diagText = p.diagnosticStatement || (() => {
+    const bd = [];
+    if(prod)  bd.push(prod + ' optimise' + (prod===1?'s':'') + ' individual interactions');
+    if(intl)  bd.push(intl + ' improve' + (intl===1?'s':'') + ' internal efficiency');
+    if(infra) bd.push(infra + ' provide' + (infra===1?'s':'') + ' infrastructure');
+    return `${p.company} has ${total} AI initiative${total!==1?'s':''}. ${bd.join(', ')}. The column that is empty across every single row is ${p.emptyColumn}. That is the work that has not yet been commissioned.`;
+  })();
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>${p.company} — AI Initiative Audit</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f5f0e8; color: #0e0d0b; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6; }
+  .page { max-width: 860px; margin: 0 auto; padding: 60px 60px 80px; }
+  @media print {
+    body { background: white; }
+    .page { padding: 40px; }
+    .no-print { display: none; }
+    @page { margin: 2cm; }
+  }
+  .print-btn { position: fixed; top: 24px; right: 24px; background: #b83020; color: white; border: none; padding: 10px 22px; font-family: 'Courier New', monospace; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; z-index: 100; }
+  .print-btn:hover { opacity: .85; }
+  h1 { font-family: Georgia, serif; font-size: 36px; font-weight: 700; line-height: 1.1; margin-bottom: 6px; }
+  h2 { font-family: Georgia, serif; font-size: 11px; font-weight: 400; font-style: italic; color: #7a7060; letter-spacing: .05em; margin-bottom: 48px; }
+  .section-label { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: #b83020; margin-bottom: 24px; padding-bottom: 10px; border-bottom: 2px solid #b83020; }
+  .rule { border: none; border-top: 1px solid #d8d2c6; margin: 48px 0; }
+  .diagnosis-box { background: #0e0d0b; color: #f5f0e8; padding: 32px 36px; margin-top: 32px; }
+  .diagnosis-box .label { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: #b83020; margin-bottom: 14px; }
+  .diagnosis-box p { font-family: Georgia, serif; font-size: 16px; line-height: 1.75; }
+  .legend { display: flex; gap: 24px; margin-bottom: 20px; font-size: 11px; color: #7a7060; align-items: center; }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  table { width: 100%; border-collapse: collapse; }
+  .gaps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 40px; }
+  .gap-item .gap-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+  .gap-item .gap-body { font-size: 12px; color: #4a4438; line-height: 1.65; }
+</style>
+</head>
+<body>
+<button class="print-btn no-print" onclick="window.print()">Save as PDF</button>
+<div class="page">
+
+  <h1>${p.company}</h1>
+  <h2>${total} AI Initiative${total!==1?'s':''}. ${p.emptyCols.length > 0 ? 'Empty column: ' + emptyNames + '.' : 'Full matrix coverage.'}</h2>
+
+  <div class="section-label">The Initiatives</div>
+  ${iniHTML}
+
+  <hr class="rule">
+
+  <div class="section-label">Structural Gaps</div>
+  <div class="gaps-grid">
+    ${confirmedGaps.length > 0
+      ? confirmedGaps.map(n => `
+          <div class="gap-item">
+            <div class="gap-title">${GAP_TITLE[n]||'Gap '+n}</div>
+            <div class="gap-body">${GAP_TEXT[n]||''}</div>
+          </div>`).join('')
+      : '<p style="color:#7a7060;font-size:12px;font-style:italic;grid-column:1/-1;">No structural gaps confirmed.</p>'
+    }
+  </div>
+
+  <hr class="rule">
+
+  <div class="section-label">Disjunction Matrix</div>
+  <div class="legend">
+    <span>${DOT_IN} In scope</span>
+    <span>${DOT_PART} Partial</span>
+    <span>${DOT_OUT} Not in scope</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left;padding:8px 12px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-family:'Courier New',monospace;color:#7a7060;font-weight:400;border-bottom:1px solid #d8d2c6;">Initiative</th>
+        ${matrixHeaders}
+      </tr>
+    </thead>
+    <tbody>${matrixRows}</tbody>
+  </table>
+
+  <hr class="rule">
+
+  <div class="section-label">Diagnosis</div>
+  <div class="diagnosis-box">
+    <div class="label">The finding</div>
+    <p>${diagText}</p>
+  </div>
+
+  <p style="margin-top:48px;font-size:10px;color:#9a9080;letter-spacing:.1em;">AI Initiative Audit — sebastianthielke.com</p>
+</div>
+</body>
+</html>`;
+
+  const w = window.open('', '_blank');
+  w.document.write(html);
+  w.document.close();
 }
 </script>
 </body>
