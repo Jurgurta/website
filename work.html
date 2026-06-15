@@ -95,6 +95,14 @@ footer { padding: 2.5rem 4rem; display: flex; justify-content: space-between; al
 /* Reveal */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal.in { opacity: 1; transform: none; }
+.rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 3rem; }
+.rec-item { padding: 2.5rem; border: 1px solid var(--line); position: relative; background: var(--paper); }
+.rec-item::before { content: open-quote; font-family: var(--serif); font-size: 4rem; color: var(--rust); opacity: 0.15; position: absolute; top: 1rem; left: 1.5rem; line-height: 1; }
+.rec-quote { font-size: 0.92rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; font-style: italic; padding-top: 1.5rem; }
+.rec-person { border-top: 1px solid var(--line); padding-top: 1rem; }
+.rec-name { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.3rem; }
+.rec-role { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.08em; color: var(--muted); }
+@media (max-width: 720px) { .rec-grid { grid-template-columns: 1fr; } }
 
 /* Responsive */
 @media (max-width: 720px) {
@@ -330,6 +338,69 @@ footer { padding: 2.5rem 4rem; display: flex; justify-content: space-between; al
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="recommendations" style="padding: 5rem 4rem; border-bottom: 1px solid var(--line);">
+  <div class="section-label reveal">What others say</div>
+  <div class="rec-grid">
+
+    <div class="rec-item reveal">
+      <div class="rec-quote">I had the opportunity to work with Sebastian on a long term customer engagement, and it was one of those collaborations where you immediately recognize you're working with someone operating at a different level. Sebastian's work with the PEA framework and Launchpad was exceptional. He guided us through building the first and second Minimal Loveable Platforms, and what impressed me most was how he balanced technical rigor with practical business value. These weren't theoretical exercises; they were solutions that actually worked in the real world and delivered results quickly. What makes Sebastian different is his ability to see patterns that others miss. He doesn't just think about the technology stack or the cloud architecture. He's constantly considering the organizational dynamics, the coordination challenges between teams, and the communication gaps that can kill even well-designed systems. Working with him, I learned to anticipate problems before they materialized. Sebastian also has this way of asking questions that completely shift how you're thinking about a problem. He's incredibly generous with his knowledge and frameworks, which made our entire team stronger. You don't just get solutions from Sebastian; you get better at solving problems yourself.</div>
+      <div class="rec-person">
+        <div class="rec-name">Philipp Laurim</div>
+        <div class="rec-role">Business Transformation for Energy Companies · Amazon Web Services</div>
+      </div>
+    </div>
+
+    <div class="rec-item reveal">
+      <div class="rec-quote">I truly enjoyed working with Sebastian and can wholeheartedly recommend him. Our collaboration was trusted, energetic, and a shared passion for building impactful platform businesses. Sebastian is a genuine thought leader in Platform Economy, with a rare ability to combine strategic vision with hands-on execution. Together, we co-designed and launched the world's first global Platform Economy Advisory Council, bringing together 12 highly distinguished founding members from leading Top-50 companies across industry and commerce.</div>
+      <div class="rec-person">
+        <div class="rec-name">Susanne Bretfeld</div>
+        <div class="rec-role">Colleague · Platform Economy Advisory Council</div>
+      </div>
+    </div>
+
+    <div class="rec-item reveal">
+      <div class="rec-quote">Sebastian has been an invaluable partner to the Bank over the last two years as we have evolved our platform business strategy. He spent time interviewing key business leaders at our firm and skillfully consolidated the feedback into a comprehensive report. This provided us with a crucial outside-in perspective on our platform strategy. His deep knowledge of platform business models was evident throughout our collaboration, and he was instrumental in helping us create a new product management training programme. Beyond his expertise, he was simply great to work with, and continues to assist us with thought leadership on this fast evolving topic.</div>
+      <div class="rec-person">
+        <div class="rec-name">Shaad Ebrahim, CFA</div>
+        <div class="rec-role">Head of Digital Products, Platforms and Beyond Financial Services · Standard Bank Group · Client</div>
+      </div>
+    </div>
+
+    <div class="rec-item reveal">
+      <div class="rec-quote">I had the privilege of working closely with Sebastian over the past 4 years. Sebastian is a rare talent who seamlessly bridges the worlds of technology and business, bringing strategic insight, technical depth, and a clear focus on delivering value. Throughout our time working together, Sebastian consistently demonstrated a remarkable ability to translate complex technical challenges into actionable business solutions. His understanding of emerging technologies, especially in areas such as cloud computing, Generative AI, Agentic AI and multisided platforms and ecosystems, made him an indispensable asset to both our internal teams and customers. Sebastian has a natural ability to build trust across technical and non-technical audiences, and often played a key role in aligning cross-functional teams around a shared vision.</div>
+      <div class="rec-person">
+        <div class="rec-name">Brittany Lee Anderson</div>
+        <div class="rec-role">Direct Manager · Amazon Web Services · 4 years</div>
+      </div>
+    </div>
+
+    <div class="rec-item reveal">
+      <div class="rec-quote">I had this amazing opportunity to partner with Sebastian on a high priority learning programme that I had to design and deploy for our Product Managers and Owners in Maersk. One key quality that immediately came to the forefront is his ability to ask the right question each time. We were hypothesising and testing and had to ensure that whatever we build would provide that "WoW" feeling and the impact with clearly identified business outcomes. The programme was launched and it was a success and we managed to onboard close to 600+ product owners and leaders to it. The NPS was always close to 65. I would always vouch for Seb's work as he has the eye to detail quality and likes to keep it simple with the value realisation piece being the most important to focus on.</div>
+      <div class="rec-person">
+        <div class="rec-name">Priyanku Nandi</div>
+        <div class="rec-role">Strategic Advisor and Transformation Leader · Maersk · Client</div>
+      </div>
+    </div>
+
+    <div class="rec-item reveal">
+      <div class="rec-quote">I had the privilege of working closely with Sebastian on innovation projects especially in financial services. He has a rare combination of strategic vision and hands-on execution that makes him invaluable when working with banks and insurance companies. Sebastian excels at engaging C-level executives and translating complex market dynamics into actionable strategies. He guides leadership teams in shaping compelling visions for multisided platforms and marketplaces, then masterfully aligns stakeholders behind these initiatives. His talent for uncovering market needs and architecting solutions that create genuine value is exceptional. Every project exceeded client expectations, delivering measurably improved business outcomes and satisfied customers. I recommend Sebastian without reservation.</div>
+      <div class="rec-person">
+        <div class="rec-name">Feras Alsamawi</div>
+        <div class="rec-role">Generative and Agentic AI Strategist · AWS</div>
+      </div>
+    </div>
+
+    <div class="rec-item reveal">
+      <div class="rec-quote">During my tenure at Swiss Re, I had the pleasure of working closely with Sebastian on several high-stakes projects characterized by their innovative nature and potential for significant disruption. Sebastian's contributions were nothing short of transformative, consistently expanding our collective thinking while distilling complex ideas into actionable, simplified strategies. One of Sebastian's most notable strengths is his capacity to reduce complexity. He has an exceptional talent for identifying the core elements that matter most, focusing the team's efforts on these priorities, and pushing for clarity and simplicity. Sebastian is a strategic thinker and an effective doer, a not so usual mix, capable of steering projects through complex corporate landscapes to successful completion.</div>
+      <div class="rec-person">
+        <div class="rec-name">Pierluigi Fasano</div>
+        <div class="rec-role">Enterprise Architect · Swiss Re · Client</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
