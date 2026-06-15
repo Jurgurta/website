@@ -148,6 +148,13 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
 .foot-id { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal.in { opacity: 1; transform: none; }
+.pull-quote-section { padding: 5rem 4rem; border-bottom: 1px solid var(--line); }
+.pull-quote { font-size: clamp(20px, 2.8vw, 34px); font-style: italic; font-weight: 400; color: var(--ink); line-height: 1.35; max-width: 740px; margin-bottom: 1.5rem; border-left: 3px solid var(--rust); padding-left: 2rem; }
+.pull-quote-attr { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding-left: 2rem; }
+.pull-quote-link { display: inline-block; margin-top: 1.5rem; margin-left: 2rem; font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust); text-decoration: none; }
+.pull-quote-link:hover { text-decoration: underline; }
+@media (max-width: 720px) { .pull-quote-section { padding: 3rem 1.5rem; } .pull-quote { padding-left: 1.2rem; } .pull-quote-attr, .pull-quote-link { padding-left: 1.2rem; margin-left: 0; } }
+ .rec-section { padding: 3rem 1.5rem; } }
 
 .substack-preview {
   margin-top: 4rem;
@@ -421,6 +428,14 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
 
 </section>
 
+
+
+<section class="pull-quote-section">
+  <div class="pull-quote reveal">Sebastian is a rare talent who seamlessly bridges the worlds of technology and business.</div>
+  <div class="pull-quote-attr reveal">Brittany Lee Anderson · Direct Manager · Amazon Web Services · 4 years</div>
+  <a href="/work#recommendations" class="pull-quote-link reveal">Read what others say &#8594;</a>
+</section>
+
 <section id="writing" class="writing-section">
   <div class="section-label">Writing</div>
   <p class="writing-intro reveal">The Substack is where frameworks develop in public. LinkedIn is where they get tested against the people who disagree.</p>
@@ -453,7 +468,7 @@ footer { padding: 1.8rem 4rem; display: flex; justify-content: space-between; al
     <div class="reveal"><h2 class="contact-hed">If you<em>recognise the work.</em></h2></div>
     <div class="reveal">
       <img src="sebastian.png" alt="Sebastian Thielke" style="width:160px;height:160px;object-fit:cover;object-position:center top;display:block;border:1px solid rgba(14,13,11,0.13);margin-bottom:1.8rem;">
-      <p class="contact-body">I am not difficult to find, but I am selective about where I spend conversation. If you have read enough to understand what is being built here and have something worth exchanging. Reach out.</p>
+      <p class="contact-body">If you arrived here through the frameworks or the writing, you already know whether this is worth a conversation.</p>
       <div class="clinks">
         <a href="https://www.linkedin.com/in/sebastianthielke/" target="_blank" class="clink"><span>LinkedIn</span><span>&#8594;</span></a>
         <a href="https://schwarzpfad.substack.com" target="_blank" class="clink"><span>Substack · System Decoder</span><span>&#8594;</span></a>
